@@ -552,7 +552,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
   - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
@@ -640,23 +639,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attenuationObject: {fileID: 0}
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47924a25e3e109438ed3f2d300604ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  maxTiltAngle: 80
-  rotationSpeed: 5
-  MaxY: 50
-  MinY: 0
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,10 +926,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  maxTiltAngle: 30
+  maxTiltAngle: 80
   rotationSpeed: 5
   MaxY: 50
   MinY: 0
+  VirtualCameras: {fileID: 1549608406}
 --- !u!1 &1818818119
 GameObject:
   m_ObjectHideFlags: 3
