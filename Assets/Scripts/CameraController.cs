@@ -43,11 +43,11 @@ public class CameraController : MonoBehaviour
         float fieldOfViewIncreaseAmount = 5f;
         if(Input.mouseScrollDelta.y > 0)
         {
-            targetFieldOfView += fieldOfViewIncreaseAmount;
+            targetFieldOfView -= fieldOfViewIncreaseAmount;
         }
         if (Input.mouseScrollDelta.y < 0)
         {
-            targetFieldOfView -= fieldOfViewIncreaseAmount;
+            targetFieldOfView += fieldOfViewIncreaseAmount;
         }
         targetFieldOfView = Mathf.Clamp(targetFieldOfView, targetFieldOfViewMin, targetFieldOfViewMax);
 
