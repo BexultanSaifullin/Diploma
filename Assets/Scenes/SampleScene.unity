@@ -931,6 +931,8 @@ MonoBehaviour:
   MaxY: 50
   MinY: 0
   VirtualCameras: {fileID: 1549608406}
+  maxZ: 20
+  minZ: 0
 --- !u!1 &1818818119
 GameObject:
   m_ObjectHideFlags: 3

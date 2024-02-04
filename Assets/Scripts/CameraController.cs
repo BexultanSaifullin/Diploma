@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour
     public float MaxY = 50.0f;
     public float MinY = 0.0f;
     public CinemachineVirtualCamera VirtualCameras;
+    float zSpeed = 5.0f;
+    public float maxZ = 20.0f;
+    public float minZ = 0.0f;
 
     void Update()
     {
@@ -18,6 +21,10 @@ public class CameraController : MonoBehaviour
             float vertical = Input.GetAxis("Vertical");
             float newY = Mathf.Clamp(transform.position.y + vertical * moveSpeed * Time.deltaTime, MinY, MaxY);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            float mouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
+            float newZCoordinate = transform.position.z + mouseScrollWheel * zSpeed;
+            newZCoordinate = Mathf.Clamp(newZCoordinate, minZ, maxZ);
+            transform.position = new Vector3(transform.position.x, transform.position.y, newZCoordinate);
         }
 
         // Tilt camera downwards based on height
