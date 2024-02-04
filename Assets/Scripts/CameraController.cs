@@ -13,9 +13,6 @@ public class CameraController : MonoBehaviour
     private float targetFieldOfViewMin = 10;
     private float targetFieldOfViewMax = 60;
 
-    //float zSpeed = 5.0f;
-    //public float maxZ = 20.0f;
-    //public float minZ = 0.0f;
 
     void Update()
     {
@@ -27,10 +24,6 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             HandleCameraZoom();
 
-            //float mousescrollwheel = input.getaxis("mouse scrollwheel");
-            //float newzcoordinate = transform.position.z + mousescrollwheel * zspeed;
-            //newzcoordinate = mathf.clamp(newzcoordinate, minz, maxz);
-            //transform.position = new vector3(transform.position.x, transform.position.y, newzcoordinate);
         }
 
         // Tilt camera downwards based on height
