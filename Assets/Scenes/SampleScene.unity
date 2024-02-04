@@ -593,7 +593,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -879,7 +879,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -931,8 +931,6 @@ MonoBehaviour:
   MaxY: 50
   MinY: 0
   VirtualCameras: {fileID: 1549608406}
-  maxZ: 20
-  minZ: 0
 --- !u!1 &1818818119
 GameObject:
   m_ObjectHideFlags: 3
