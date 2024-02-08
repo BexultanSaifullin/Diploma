@@ -25,7 +25,7 @@ public class CameraChanger : MonoBehaviour
     {
         VirtualCameras[currentCameraIndex].Priority = 0;
         currentCameraIndex++;
-        if(currentCameraIndex >= VirtualCameras.Length)
+        if (currentCameraIndex >= VirtualCameras.Length)
             currentCameraIndex = 0;
         VirtualCameras[currentCameraIndex].Priority = 1;
     }

@@ -13,7 +13,6 @@ public class CameraController : MonoBehaviour
     private float targetFieldOfViewMin = 10;
     private float targetFieldOfViewMax = 60;
 
-
     void Update()
     {
         // Change height based on WASD input
@@ -23,9 +22,7 @@ public class CameraController : MonoBehaviour
             float newY = Mathf.Clamp(transform.position.y + vertical * moveSpeed * Time.deltaTime, MinY, MaxY);
             transform.position = new Vector3(transform.position.x, newY, transform.position.z);
             HandleCameraZoom();
-
         }
-
         // Tilt camera downwards based on height
         float tiltAngle = Mathf.Clamp(transform.position.y* rotationSpeed, 0, maxTiltAngle);
         transform.localEulerAngles = new Vector3(tiltAngle, 0, 0);
@@ -34,7 +31,7 @@ public class CameraController : MonoBehaviour
     private void HandleCameraZoom()
     {
         float fieldOfViewIncreaseAmount = 5f;
-        if(Input.mouseScrollDelta.y > 0)
+        if (Input.mouseScrollDelta.y > 0)
         {
             targetFieldOfView -= fieldOfViewIncreaseAmount;
         }
