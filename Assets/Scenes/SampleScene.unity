@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 175294442}
   m_Layer: 3
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
