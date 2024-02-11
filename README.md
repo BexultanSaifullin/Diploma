@@ -19,3 +19,8 @@
 `[CHANGE_TYPE] short descriptive message in English`<br>
 **Пример:**<br>
 `[NF] add get profile command`
+
+## Технологии
+
+- Unity 2022.3.16f1
+- FMOD
