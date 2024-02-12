@@ -40,6 +40,16 @@ public class Drag : MonoBehaviour
                 StartCoroutine(WaitForFiveSeconds());
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                currentCollider2.transform.position = hit.point;
+            }
+        }
         // if (currentCollider2 != null && mainCamera.transform.position.y > 2f && !coroutineCalled)
         // {
         //     newPosition = mainCamera.transform.position + mainCamera.transform.forward * 5f;
