@@ -51,7 +51,7 @@ public class Drag : MonoBehaviour
         // }
 
 
-        DragAndDropObject();
+        //DragAndDropObject();
     }
     private void SelectPart()
     {
@@ -69,16 +69,16 @@ public class Drag : MonoBehaviour
         }
     }
 
-    private void DragAndDropObject()
-    {
-        if (currentCollider == null)
-        {
-            return;
-        }
-        Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        float planeDist;
-        dragPlane.Raycast(camRay, out planeDist);
-        currentCollider.transform.position = camRay.GetPoint(planeDist) + offset;
+    //private void DragAndDropObject()
+    //{
+    //    if (currentCollider == null)
+    //    {
+    //        return;
+    //    }
+    //    Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+    //    float planeDist;
+    //    dragPlane.Raycast(camRay, out planeDist);
+    //    currentCollider.transform.position = camRay.GetPoint(planeDist) + offset;
 
         // if (currentCollider.transform.position.y < 0.5f)
         // {
@@ -88,7 +88,7 @@ public class Drag : MonoBehaviour
         //             currentCollider.transform.position.z);
         // }
 
-    }
+    //}
 
     private void Drop()
     {
