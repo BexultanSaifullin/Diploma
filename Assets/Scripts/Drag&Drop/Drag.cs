@@ -14,6 +14,8 @@ public class Drag : MonoBehaviour
     private Vector3 offset;
     private Vector3 newPosition;
     private bool coroutineCalled = false;
+    public string defaultLayerName = "Default";
+    private GameObject selectedObject;
 
     // Start is called before the first frame update
     private void Start()
@@ -40,7 +42,7 @@ public class Drag : MonoBehaviour
                 StartCoroutine(WaitForFiveSeconds());
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 5.51f)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -48,6 +50,12 @@ public class Drag : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 currentCollider2.transform.position = hit.point;
+                selectedObject.layer = LayerMask.NameToLayer(defaultLayerName);
+                if (selectedObject.layer == LayerMask.NameToLayer("Default"))
+                {
+                    selectedObject = null;
+                    currentCollider2 = null;
+                }
             }
         }
         // if (currentCollider2 != null && mainCamera.transform.position.y > 2f && !coroutineCalled)
@@ -68,6 +76,7 @@ public class Drag : MonoBehaviour
         {
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
+            selectedObject = hit.collider.gameObject;
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
