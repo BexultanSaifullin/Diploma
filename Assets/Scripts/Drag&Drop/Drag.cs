@@ -35,28 +35,13 @@ public class Drag : MonoBehaviour
         {
             Drop();
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f)
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card"))
         {
-            if (currentCollider2.CompareTag("Card"))
-            {
-                StartCoroutine(WaitForFiveSeconds());
-            }
+              StartCoroutine(WaitForFiveSeconds());
         }
         if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 5.51f)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                currentCollider2.transform.position = hit.point;
-                selectedObject.layer = LayerMask.NameToLayer(defaultLayerName);
-                if (selectedObject.layer == LayerMask.NameToLayer("Default"))
-                {
-                    selectedObject = null;
-                    currentCollider2 = null;
-                }
-            }
+            Teleportation();
         }
         // if (currentCollider2 != null && mainCamera.transform.position.y > 2f && !coroutineCalled)
         // {
@@ -133,4 +118,21 @@ public class Drag : MonoBehaviour
         coroutineCalled = true;
     }
 
+
+    private void Teleportation()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            currentCollider2.transform.position = hit.point;
+            selectedObject.layer = LayerMask.NameToLayer(defaultLayerName);
+            if (selectedObject.layer == LayerMask.NameToLayer("Default"))
+            {
+                selectedObject = null;
+                currentCollider2 = null;
+            }
+        }
+    }
 }
