@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentCollider: {fileID: 0}
   defaultLayerName: Default
+  free: free
+  busy: busy
 --- !u!4 &60001710
 Transform:
   m_ObjectHideFlags: 0
@@ -288,11 +290,11 @@ GameObject:
   - component: {fileID: 155719350}
   m_Layer: 3
   m_Name: Quad (1)
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &155719349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -507,11 +509,11 @@ GameObject:
   - component: {fileID: 255218387}
   m_Layer: 3
   m_Name: Quad (2)
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &255218386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -619,7 +621,7 @@ GameObject:
   - component: {fileID: 397180384}
   m_Layer: 0
   m_Name: Selection Box (2)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -871,7 +873,7 @@ GameObject:
   - component: {fileID: 572865472}
   m_Layer: 0
   m_Name: Selection Box (7)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1260,7 +1262,7 @@ GameObject:
   - component: {fileID: 851218512}
   m_Layer: 0
   m_Name: Selection Box (4)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1524,7 +1526,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 70
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1626,7 +1628,7 @@ GameObject:
   - component: {fileID: 961521006}
   m_Layer: 0
   m_Name: Selection Box (3)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1905,7 +1907,7 @@ GameObject:
   - component: {fileID: 1005340538}
   m_Layer: 0
   m_Name: Selection Box (5)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2186,7 +2188,7 @@ GameObject:
   - component: {fileID: 1084086795}
   m_Layer: 0
   m_Name: Selection Box (6)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2438,7 +2440,7 @@ GameObject:
   - component: {fileID: 1319256022}
   m_Layer: 0
   m_Name: Selection Box (1)
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2657,7 +2659,7 @@ GameObject:
   - component: {fileID: 1451055155}
   m_Layer: 0
   m_Name: Selection Box
-  m_TagString: Untagged
+  m_TagString: free
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
