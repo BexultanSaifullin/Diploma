@@ -16,6 +16,8 @@ public class Drag : MonoBehaviour
     private bool coroutineCalled = false;
     public string defaultLayerName = "Default";
     private GameObject selectedObject;
+    public string free = "free";
+    public string busy = "busy";
 
     // Start is called before the first frame update
     private void Start()
@@ -124,10 +126,11 @@ public class Drag : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
         {
             currentCollider2.transform.position = hit.point;
             selectedObject.layer = LayerMask.NameToLayer(defaultLayerName);
+            hit.collider.gameObject.tag = busy;
             if (selectedObject.layer == LayerMask.NameToLayer("Default"))
             {
                 selectedObject = null;
