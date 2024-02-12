@@ -101,15 +101,15 @@ public class Drag : MonoBehaviour
 
     private IEnumerator WaitForFiveSeconds()
     {
-        yield return new WaitForSeconds(2.3f);
+
+        yield return new WaitForSeconds(2.5f);
 
         newPosition = mainCamera.transform.position +
-                                 mainCamera.transform.forward * 0.35f;
+                                 mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
 
-        //currentCollider2.transform.rotation = mainCamera.transform.rotation;
         currentCollider2.transform.position = newPosition;
-        currentCollider2.transform.LookAt(mainCamera.transform);
-        currentCollider2.transform.Rotate(20, 180, 0);
+        Vector3 rotationAngles = new Vector3(70f, 0f, 0f);
+        currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
 
         coroutineCalled = true;
     }
