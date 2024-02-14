@@ -14,11 +14,12 @@ public class Drag : MonoBehaviour
     private Vector3 offset;
     private Vector3 newPosition;
     private bool coroutineCalled = false;
-    public string defaultLayerName = "Default";
+    public string defaultLayerName = "Playing";
     private GameObject selectedObject;
     public string free = "free";
     public string busy = "busy";
-
+    public GameObject parentObject;
+    
     // Start is called before the first frame update
     private void Start()
     {
@@ -33,10 +34,10 @@ public class Drag : MonoBehaviour
         {
             SelectPart();
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            Drop();
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    Drop();
+        //}
         if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card"))
         {
               StartCoroutine(WaitForFiveSeconds());
@@ -45,6 +46,11 @@ public class Drag : MonoBehaviour
         {
             Teleportation();
         }
+        //Wait();
+
+
+
+
         // if (currentCollider2 != null && mainCamera.transform.position.y > 2f && !coroutineCalled)
         // {
         //     newPosition = mainCamera.transform.position + mainCamera.transform.forward * 5f;
@@ -59,16 +65,28 @@ public class Drag : MonoBehaviour
     {
         RaycastHit hit;
         Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot")))
+        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot","Playing")))
         {
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
+            if(mainCamera.transform.position.y == 5.51f)
+            {
+                newPosition = mainCamera.transform.position +
+                                 mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
+                currentCollider2.transform.position = newPosition;
+                Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
+                currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+                GameObject a = currentCollider.transform.parent.gameObject;
+                selectedObject.transform.parent = parentObject.transform;
+                a.gameObject.tag = free;
+            }
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider.transform.position - camRay.GetPoint(planeDist);
         }
+        currentCollider = null;
     }
 
     //private void DragAndDropObject()
@@ -92,18 +110,18 @@ public class Drag : MonoBehaviour
 
     //}
 
-    private void Drop()
-    {
-        if (currentCollider == null)
-        {
-            return;
-        }
-        // currentCollider.transform.position =
-        //     new Vector3(currentCollider.transform.position.x,
-        //         0.5f,
-        //         currentCollider.transform.position.z);
-        currentCollider = null;
-    }
+    //private void Drop()
+    //{
+    //    if (currentCollider == null)
+    //    {
+    //        return;
+    //    }
+    //    // currentCollider.transform.position =
+    //    //     new Vector3(currentCollider.transform.position.x,
+    //    //         0.5f,
+    //    //         currentCollider.transform.position.z);
+    //    currentCollider = null;
+    //}
 
     private IEnumerator WaitForFiveSeconds()
     {
@@ -127,11 +145,12 @@ public class Drag : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
-        {
+        {   
+
             currentCollider2.transform.position = hit.point;
-            selectedObject.layer = LayerMask.NameToLayer(defaultLayerName);
+            selectedObject.layer = LayerMask.NameToLayer("Playing");
             hit.collider.gameObject.tag = busy;
-            if (selectedObject.layer == LayerMask.NameToLayer("Default"))
+            if (selectedObject.layer == LayerMask.NameToLayer("Playing"))
             {
                 selectedObject = null;
                 currentCollider2 = null;
