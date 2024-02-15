@@ -19,7 +19,9 @@ public class Drag : MonoBehaviour
     public string free = "free";
     public string busy = "busy";
     public GameObject parentObject;
-    
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -40,7 +42,11 @@ public class Drag : MonoBehaviour
         //}
         if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card"))
         {
-              StartCoroutine(WaitForFiveSeconds());
+            StartCoroutine(StepFromAbove());
+        }
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 5.51f && currentCollider2.CompareTag("Card"))
+        {
+            BackFromAbove();
         }
         if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 5.51f)
         {
@@ -65,12 +71,12 @@ public class Drag : MonoBehaviour
     {
         RaycastHit hit;
         Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot","Playing")))
+        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot", "Playing")))
         {
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
-            if(mainCamera.transform.position.y == 5.51f)
+            if (mainCamera.transform.position.y == 5.51f)
             {
                 newPosition = mainCamera.transform.position +
                                  mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
@@ -100,13 +106,13 @@ public class Drag : MonoBehaviour
     //    dragPlane.Raycast(camRay, out planeDist);
     //    currentCollider.transform.position = camRay.GetPoint(planeDist) + offset;
 
-        // if (currentCollider.transform.position.y < 0.5f)
-        // {
-        //     currentCollider.transform.position =
-        //         new Vector3(currentCollider.transform.position.x,
-        //             0.5f,
-        //             currentCollider.transform.position.z);
-        // }
+    // if (currentCollider.transform.position.y < 0.5f)
+    // {
+    //     currentCollider.transform.position =
+    //         new Vector3(currentCollider.transform.position.x,
+    //             0.5f,
+    //             currentCollider.transform.position.z);
+    // }
 
     //}
 
@@ -123,10 +129,13 @@ public class Drag : MonoBehaviour
     //    currentCollider = null;
     //}
 
-    private IEnumerator WaitForFiveSeconds()
+    private IEnumerator StepFromAbove()
     {
 
         yield return new WaitForSeconds(2.5f);
+
+        initialPosition = currentCollider2.transform.position;
+        initialRotation = currentCollider2.transform.rotation;
 
         newPosition = mainCamera.transform.position +
                                  mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
@@ -138,6 +147,11 @@ public class Drag : MonoBehaviour
         coroutineCalled = true;
     }
 
+    private void BackFromAbove()
+    {
+        currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
+    }
+
 
     private void Teleportation()
     {
@@ -145,7 +159,7 @@ public class Drag : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
-        {   
+        {
 
             currentCollider2.transform.position = hit.point;
             selectedObject.layer = LayerMask.NameToLayer("Playing");
