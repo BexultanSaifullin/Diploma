@@ -25,10 +25,10 @@ public class CardManager : MonoBehaviour
 {
     public void Awake()
     {
-        CardManagerList.AllCards.Add(new Card("Ebalo", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Pominki", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Papich", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Musor", "Sprites/Pominki", 5, 5));
+        CardManagerList.AllCards.Add(new Card("Card ¹1", "Sprites/Pominki", 5, 5));
+        CardManagerList.AllCards.Add(new Card("Card ¹2", "Sprites/Pominki", 5, 5));
+        CardManagerList.AllCards.Add(new Card("Card ¹3", "Sprites/Pominki", 5, 5));
+        CardManagerList.AllCards.Add(new Card("Card ¹4", "Sprites/Pominki", 5, 5));
     }
     
 
