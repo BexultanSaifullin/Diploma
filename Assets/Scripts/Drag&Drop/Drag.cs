@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Drag : MonoBehaviour
 {
     [SerializeField] private Collider currentCollider;
-    private Collider currentCollider2;
+    public Collider currentCollider2;
     private Camera mainCamera;
     private Plane dragPlane;
     private bool inputStart;
@@ -32,7 +32,7 @@ public class Drag : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && currentCollider2 == null)
         {
             SelectPart();
         }
