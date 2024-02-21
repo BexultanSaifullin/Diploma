@@ -173,13 +173,6 @@ public class Drag : MonoBehaviour
                     selectedObject = null;
                     currentCollider2 = null;
                 }
-            } else 
-            if(selectedObject.layer == LayerMask.NameToLayer("Playing") && hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                currentCollider2.transform.position = hit.point;
-                hit.collider.gameObject.tag = busy;
-                selectedObject = null;
-                currentCollider2 = null;   
             }
             
         }
