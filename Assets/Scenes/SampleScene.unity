@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCollider: {fileID: 0}
+  currentCollider2: {fileID: 0}
   defaultLayerName: Default
   free: free
   busy: busy
@@ -5062,7 +5063,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6c5e2972ea4bd814c8f1c51d6e38e361, type: 2}
+  - {fileID: 2100000, guid: 2182e8967b4f1de47ae783a848f200fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

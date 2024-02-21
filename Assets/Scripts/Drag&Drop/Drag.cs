@@ -150,6 +150,7 @@ public class Drag : MonoBehaviour
     private void BackFromAbove()
     {
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
+        currentCollider2 = null;
     }
 
 
