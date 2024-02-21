@@ -3019,6 +3019,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1270485093}
   - component: {fileID: 1270485092}
+  - component: {fileID: 1270485094}
   m_Layer: 0
   m_Name: True Hand
   m_TagString: Untagged
@@ -3048,17 +3049,59 @@ Transform:
   m_GameObject: {fileID: 1270485091}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0.5, z: -0.32000017}
+  m_LocalPosition: {x: 0, y: 0.5, z: -5.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1718472104}
   - {fileID: 2007328129}
   - {fileID: 1470425831}
   - {fileID: 1547327329}
   - {fileID: 1950638609}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1882639551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1270485094
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270485091}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1319256020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4936,6 +4979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1270485093}
   - {fileID: 1011235343}
   - {fileID: 1402949245}
   m_Father: {fileID: 0}
@@ -5038,7 +5082,6 @@ GameObject:
   - component: {fileID: 1969150541}
   - component: {fileID: 1969150540}
   - component: {fileID: 1969150539}
-  - component: {fileID: 1969150542}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -5133,19 +5176,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969150537}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1969150542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969150537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
 --- !u!1 &2007328128
 GameObject:
   m_ObjectHideFlags: 0
@@ -5388,6 +5418,5 @@ SceneRoots:
   - {fileID: 893766300}
   - {fileID: 60001710}
   - {fileID: 1521462568}
-  - {fileID: 1270485093}
   - {fileID: 1969150538}
   - {fileID: 1882639551}

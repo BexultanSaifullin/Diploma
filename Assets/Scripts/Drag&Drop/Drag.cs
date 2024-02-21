@@ -141,7 +141,7 @@ public class Drag : MonoBehaviour
                                  mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
 
         currentCollider2.transform.position = newPosition;
-        Vector3 rotationAngles = new Vector3(70f, 0f, 0f);
+        Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
 
         coroutineCalled = true;
