@@ -542,6 +542,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.21568629
       objectReference: {fileID: 0}
+    - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9067957508291091196, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Name
       value: CardPref
@@ -2179,6 +2183,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.21568629
       objectReference: {fileID: 0}
+    - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9067957508291091196, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Name
       value: CardPref
@@ -2744,6 +2752,10 @@ PrefabInstance:
     - target: {fileID: 4758081057591298504, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Color.r
       value: 0.21568629
+      objectReference: {fileID: 0}
+    - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9067957508291091196, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Name
@@ -3627,6 +3639,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.21568629
       objectReference: {fileID: 0}
+    - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9067957508291091196, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Name
       value: CardPref
@@ -4463,6 +4479,10 @@ PrefabInstance:
     - target: {fileID: 4758081057591298504, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Color.r
       value: 0.21568629
+      objectReference: {fileID: 0}
+    - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9067957508291091196, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Name
