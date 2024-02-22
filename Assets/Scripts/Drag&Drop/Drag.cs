@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Drag : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Drag : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        ArrangeCards();
     }
 
     // Update is called once per frame
@@ -134,17 +136,20 @@ public class Drag : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        initialPosition = currentCollider2.transform.position;
-        initialRotation = currentCollider2.transform.rotation;
+        if (mainCamera.transform.position.y == 5.51f)
+        {
+            initialPosition = currentCollider2.transform.position;
+            initialRotation = currentCollider2.transform.rotation;
 
-        newPosition = mainCamera.transform.position +
-                                 mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
+            newPosition = mainCamera.transform.position +
+                                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
 
-        currentCollider2.transform.position = newPosition;
-        Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
-        currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+            currentCollider2.transform.position = newPosition;
+            Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
+            currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
 
-        coroutineCalled = true;
+            coroutineCalled = true;
+        }
     }
 
     private void BackFromAbove()
@@ -159,11 +164,11 @@ public class Drag : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-     
+
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
         {
-            if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 currentCollider2.transform.position = hit.point;
                 selectedObject.layer = LayerMask.NameToLayer("Playing");
@@ -174,7 +179,71 @@ public class Drag : MonoBehaviour
                     currentCollider2 = null;
                 }
             }
-            
+
+        }
+    }
+
+    // public void ArrangeCards()
+    // {
+    //     float distanceBetweenCards = 0.2f;
+
+    //     int robotLayer = LayerMask.NameToLayer("Robot");
+    //     List<GameObject> robotCards = new List<GameObject>();
+    //     GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
+
+    //     for (int i = 0; i < origin.Length; i++)
+    //     {
+    //         if (origin[i].layer == robotLayer)
+    //         {
+    //             robotCards.Add(origin[i]);
+    //         }
+    //     }
+    //     GameObject[] cards = robotCards.ToArray();
+
+    //     if (cards.Length == 0)
+    //     {
+    //         return;
+    //     }
+
+    //     float totalWidth = (cards.Length - 1) * distanceBetweenCards;
+    //     Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+
+    //     float startX = centerPosition.x - totalWidth / 2;
+
+    //     for (int i = 0; i < cards.Length; i++)
+    //     {
+    //         float xPos = startX + i * distanceBetweenCards;
+    //         Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
+    //         cards[i].transform.position = cardPosition;
+    //     }
+    // }
+    public void ArrangeCards()
+    {
+        float distanceBetweenCards = 0.2f;
+        int robotLayer = LayerMask.NameToLayer("Robot");
+
+        GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
+
+        // Use LINQ to filter cards by layer
+        GameObject[] cards = origin.Where(card => card.layer == robotLayer).ToArray();
+
+        if (cards.Length == 0)
+        {
+            return;
+        }
+
+        float totalWidth = (cards.Length - 1) * distanceBetweenCards;
+        Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+
+        // Use LINQ to calculate startX
+        float startX = centerPosition.x - totalWidth / 2;
+
+        // Use foreach loop for cleaner code
+        foreach (var card in cards)
+        {
+            float xPos = startX + Array.IndexOf(cards, card) * distanceBetweenCards;
+            Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
+            card.transform.position = cardPosition;
         }
     }
 }

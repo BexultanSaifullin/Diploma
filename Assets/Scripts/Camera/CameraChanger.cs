@@ -10,7 +10,7 @@ public class CameraChanger : MonoBehaviour
     public int currentCameraIndex;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
