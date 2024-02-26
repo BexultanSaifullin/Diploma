@@ -9,6 +9,14 @@ public class CardInfoScr : MonoBehaviour
     public Card SelfCard;
     public Image Logo;
     public TextMeshProUGUI Name;
+    public GameObject selectedObject;
+
+    public void HideCardInfo(Card card)
+    {
+        SelfCard = card;
+        Logo.sprite = null;
+        Name.text = "";
+    }
     public void ShowCardInfo(Card card)
     {
         SelfCard = card;
@@ -19,7 +27,10 @@ public class CardInfoScr : MonoBehaviour
     private void Start()
     {
         int randomNumber = Random.Range(0, 4);
-        ShowCardInfo(CardManagerList.AllCards[randomNumber]);
+        if(selectedObject.layer == LayerMask.NameToLayer("Robot"))
+            ShowCardInfo(CardManagerList.AllCards[randomNumber]);
+        else
+            ShowCardInfo(CardManagerList.AllCards[randomNumber]);
     }
     
 }
