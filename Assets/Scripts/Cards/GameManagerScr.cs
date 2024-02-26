@@ -7,7 +7,6 @@ using TMPro;
 
 
 
-}
 public class GameManagerScr : MonoBehaviour
 {
     
