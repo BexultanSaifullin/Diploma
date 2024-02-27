@@ -75,7 +75,7 @@ public class Drag : MonoBehaviour
     {
         RaycastHit hit;
         Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot", "Playing")))
+        if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot")))
         {
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
