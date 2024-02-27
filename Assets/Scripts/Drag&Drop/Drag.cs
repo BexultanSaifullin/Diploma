@@ -22,19 +22,21 @@ public class Drag : MonoBehaviour
     public GameObject parentObject;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
+    GameManagerScr GameManager;
 
     // Start is called before the first frame update
     private void Start()
     {
         mainCamera = Camera.main;
         ArrangeCards();
+        GameManager = FindObjectOfType<GameManagerScr>();
     }
 
     // Update is called once per frame
     private void Update()
     {
 
-        if (Input.GetMouseButtonDown(0) && currentCollider2 == null)
+        if (Input.GetMouseButtonDown(0) && currentCollider2 == null && GameManager.IsPlayerTurn)
         {
             SelectPart();
         }
