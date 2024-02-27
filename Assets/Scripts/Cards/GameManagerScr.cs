@@ -38,7 +38,7 @@ public class GameManagerScr : MonoBehaviour
         }
         else
         {
-            while (TurnTime-- > 27)
+            while (TurnTime-- > 20)
             {
                 TurnTimeTxt.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
