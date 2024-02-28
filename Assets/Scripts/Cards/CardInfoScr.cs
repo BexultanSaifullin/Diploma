@@ -8,7 +8,7 @@ public class CardInfoScr : MonoBehaviour
 {
     public Card SelfCard;
     public Image Logo;
-    public TextMeshProUGUI Name;
+    public TextMeshProUGUI Name, Attack, Defense;
     public GameObject selectedObject;
 
     public void HideCardInfo(Card card)
@@ -23,6 +23,8 @@ public class CardInfoScr : MonoBehaviour
         Logo.sprite = card.Logo;
         Logo.preserveAspect = true;
         Name.text = card.Name;
+        Attack.text = SelfCard.Attack.ToString();
+        Defense.text = SelfCard.Defense.ToString();
     }
     private void Start()
     {
