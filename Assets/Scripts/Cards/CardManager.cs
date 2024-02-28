@@ -26,9 +26,9 @@ public class CardManager : MonoBehaviour
     public void Awake()
     {
         CardManagerList.AllCards.Add(new Card("Card ¹1", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Card ¹2", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Card ¹3", "Sprites/Pominki", 5, 5));
-        CardManagerList.AllCards.Add(new Card("Card ¹4", "Sprites/Pominki", 5, 5));
+        CardManagerList.AllCards.Add(new Card("Card ¹2", "Sprites/Pominki", 1, 1));
+        CardManagerList.AllCards.Add(new Card("Card ¹3", "Sprites/Pominki", 10, 1));
+        CardManagerList.AllCards.Add(new Card("Card ¹4", "Sprites/Pominki", 3, 3));
     }
     
 

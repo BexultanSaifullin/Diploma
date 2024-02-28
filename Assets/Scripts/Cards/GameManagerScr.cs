@@ -13,6 +13,7 @@ public class GameManagerScr : MonoBehaviour
     public TextMeshProUGUI TurnTimeTxt;
     public Button EndTurnBtn;
     CardSpawnerScr Spawner;
+    CardSpawnerEnemyScr SpawnerEnemy;
     public bool IsPlayerTurn
     {
         get
@@ -25,7 +26,8 @@ public class GameManagerScr : MonoBehaviour
         Turn = 0;
         StartCoroutine(TurnFunc());
         Spawner = FindObjectOfType<CardSpawnerScr>();
-}
+        SpawnerEnemy = FindObjectOfType<CardSpawnerEnemyScr>();
+    }
     IEnumerator TurnFunc()
     {
         TurnTime = 30;
@@ -56,11 +58,18 @@ public class GameManagerScr : MonoBehaviour
         if (IsPlayerTurn)
         {
             GivenNewCards();
-        }  
+        } else if(Turn !=1)
+        {
+            GivenNewCardsToEnemy();
+        }
         StartCoroutine(TurnFunc());
     }
     void GivenNewCards()
     {
         Spawner.Spawn();
+    }
+    void GivenNewCardsToEnemy()
+    {
+        SpawnerEnemy.SpawnEnemy();
     }
 }

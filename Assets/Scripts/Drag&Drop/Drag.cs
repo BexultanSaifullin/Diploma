@@ -248,4 +248,33 @@ public class Drag : MonoBehaviour
             card.transform.position = cardPosition;
         }
     }
+    public void ArrangeCardsToEnemy()
+    {
+        float distanceBetweenCards = 0.2f;
+        int robotLayer = LayerMask.NameToLayer("Enemy");
+
+        GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
+
+        // Use LINQ to filter cards by layer
+        GameObject[] cards = origin.Where(card => card.layer == robotLayer).ToArray();
+
+        if (cards.Length == 0)
+        {
+            return;
+        }
+
+        float totalWidth = (cards.Length - 1) * distanceBetweenCards;
+        Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+
+        // Use LINQ to calculate startX
+        float startX = centerPosition.x - totalWidth / 2;
+
+        // Use foreach loop for cleaner code
+        foreach (var card in cards)
+        {
+            float xPos = startX + Array.IndexOf(cards, card) * distanceBetweenCards;
+            Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
+            card.transform.position = cardPosition;
+        }
+    }
 }
