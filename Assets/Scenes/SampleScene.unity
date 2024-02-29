@@ -668,6 +668,7 @@ GameObject:
   - component: {fileID: 435354136}
   - component: {fileID: 435354138}
   - component: {fileID: 435354137}
+  - component: {fileID: 435354139}
   m_Layer: 7
   m_Name: EnemyHand
   m_TagString: Untagged
@@ -749,6 +750,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newParent: {fileID: 0}
+--- !u!114 &435354139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435354135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b19c93b7e4a824c8668f3b06f53165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToSpawnEnemy: {fileID: 8431657843038023626, guid: aaa98db2559a9024299f6bdbaedef49c, type: 3}
 --- !u!1001 &520833877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1849,8 +1863,6 @@ MonoBehaviour:
   VirtualCameras:
   - {fileID: 1549608406}
   - {fileID: 871613673}
-  - {fileID: 1352083741}
-  - {fileID: 1964035381}
   currentCameraIndex: 0
 --- !u!4 &893766300
 Transform:
@@ -3323,6 +3335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToSpawn: {fileID: 480989721105490077, guid: 02633eece4ff82f44b879208cd9c29e6, type: 3}
+  objectToSpawnEnemy: {fileID: 0}
 --- !u!1 &1319256020
 GameObject:
   m_ObjectHideFlags: 0
@@ -3646,7 +3659,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352083740}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -4581,7 +4594,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964035378}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 

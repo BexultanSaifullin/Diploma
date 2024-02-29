@@ -80,17 +80,17 @@ public class Drag : MonoBehaviour
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
-            if (mainCamera.transform.position.y == 5.51f)
-            {
-                newPosition = mainCamera.transform.position +
-                                 mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
-                currentCollider2.transform.position = newPosition;
-                Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
-                currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
-                GameObject a = currentCollider.transform.parent.gameObject;
-                selectedObject.transform.parent = parentObject.transform;
-                a.gameObject.tag = free;
-            }
+            //if (mainCamera.transform.position.y == 5.51f)
+            //{
+            //    newPosition = mainCamera.transform.position +
+            //                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
+            //    currentCollider2.transform.position = newPosition;
+            //    Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
+            //    currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+            //    GameObject a = currentCollider.transform.parent.gameObject;
+            //    selectedObject.transform.parent = parentObject.transform;
+            //    a.gameObject.tag = free;
+            //} COD CHTOBI SDELAT POLE NA KOTOROM STOYALA KARTA SVOBODNIM PRI PODNYTII
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
@@ -251,12 +251,12 @@ public class Drag : MonoBehaviour
     public void ArrangeCardsToEnemy()
     {
         float distanceBetweenCards = 0.2f;
-        int robotLayer = LayerMask.NameToLayer("Enemy");
+        int EnemyLayer = LayerMask.NameToLayer("Enemy");
 
-        GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
+        GameObject[] origin = GameObject.FindGameObjectsWithTag("EnemyCard");
 
         // Use LINQ to filter cards by layer
-        GameObject[] cards = origin.Where(card => card.layer == robotLayer).ToArray();
+        GameObject[] cards = origin.Where(card => card.layer == EnemyLayer).ToArray();
 
         if (cards.Length == 0)
         {
@@ -264,7 +264,7 @@ public class Drag : MonoBehaviour
         }
 
         float totalWidth = (cards.Length - 1) * distanceBetweenCards;
-        Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+        Vector3 centerPosition = new Vector3(0, 0.54f, 9.429f);
 
         // Use LINQ to calculate startX
         float startX = centerPosition.x - totalWidth / 2;

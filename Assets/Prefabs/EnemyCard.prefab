@@ -10,11 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 480989721105490077, guid: 02633eece4ff82f44b879208cd9c29e6, type: 3}
       propertyPath: m_Name
-      value: EnemyCard Variant
+      value: EnemyCard
       objectReference: {fileID: 0}
     - target: {fileID: 480989721105490077, guid: 02633eece4ff82f44b879208cd9c29e6, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 480989721105490077, guid: 02633eece4ff82f44b879208cd9c29e6, type: 3}
+      propertyPath: m_TagString
+      value: EnemyCard
       objectReference: {fileID: 0}
     - target: {fileID: 3513335874922961443, guid: 02633eece4ff82f44b879208cd9c29e6, type: 3}
       propertyPath: m_Layer
