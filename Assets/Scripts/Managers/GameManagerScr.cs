@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 
-
+//Debug.Log(count);
 
 
 public class GameManagerScr : MonoBehaviour
@@ -84,7 +84,6 @@ public class GameManagerScr : MonoBehaviour
         if(EnemyPlaces.Count > EnemyCard.Count)
         {
             int count = Random.Range(-1, EnemyCard.Count);
-            Debug.Log(count);
             if (count == -1)
                     return;
           
@@ -100,7 +99,6 @@ public class GameManagerScr : MonoBehaviour
         } else
         {
             int count = Random.Range(-1, EnemyPlaces.Count);
-            Debug.Log(count);
             if (count == -1)
                 return;
             for (int i = count; i >= 0; i--)
