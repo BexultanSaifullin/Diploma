@@ -488,7 +488,6 @@ GameObject:
   - component: {fileID: 3306810052445241044}
   - component: {fileID: 3494457196611183495}
   - component: {fileID: 4758081057591298504}
-  - component: {fileID: 8297516613606918419}
   - component: {fileID: 3640748289188908978}
   m_Layer: 3
   m_Name: CardPref
@@ -558,23 +557,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8297516613606918419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9067957508291091196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f87fe87b4e51e0429fc2bf2eef55229, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Logo: {fileID: 8711904171438522532}
-  Name: {fileID: 1596991887530119027}
-  Attack: {fileID: 3045226093903530283}
-  Defense: {fileID: 2395800933463191465}
-  selectedObject: {fileID: 9067957508291091196}
 --- !u!225 &3640748289188908978
 CanvasGroup:
   m_ObjectHideFlags: 0
