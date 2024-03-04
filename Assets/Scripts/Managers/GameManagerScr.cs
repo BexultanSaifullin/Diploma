@@ -115,7 +115,7 @@ public class GameManagerScr : MonoBehaviour
                 Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
-                //CardInfo.ChangeInfo();
+                //CardInfo.ChangeInfo(EnemyCard[i]);
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);

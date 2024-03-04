@@ -36,10 +36,10 @@ public class CardInfoScr : MonoBehaviour
         else
             HideCardInfo(CardManagerList.AllCards[randomNumber]);
     }
-    //public void ChangeInfo()
+    //public void ChangeInfo(GameObject a)
     //{
     //    if (selectedObject.layer != LayerMask.NameToLayer("Enemy"))
     //        ShowCardInfo(SelfCard);
     //}
-    
+
 }
