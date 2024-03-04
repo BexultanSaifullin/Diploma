@@ -15,6 +15,7 @@ public class GameManagerScr : MonoBehaviour
     public Button EndTurnBtn;
     CardSpawnerScr Spawner;
     CardSpawnerEnemyScr SpawnerEnemy;
+    CardInfoScr CardInfo;
     public bool IsPlayerTurn
     {
         get
@@ -106,6 +107,7 @@ public class GameManagerScr : MonoBehaviour
                 int place = Random.Range(0, EnemyPlaces.Count-1);
                 EnemyCard[i].transform.position = EnemyPlaces[place].transform.position;
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
+                //CardInfo.ChangeInfo();
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);

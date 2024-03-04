@@ -31,10 +31,15 @@ public class CardInfoScr : MonoBehaviour
     private void Start()
     {
         int randomNumber = Random.Range(0, 4);
-        if(selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (selectedObject.layer != LayerMask.NameToLayer("Enemy"))
             ShowCardInfo(CardManagerList.AllCards[randomNumber]);
         else
             HideCardInfo(CardManagerList.AllCards[randomNumber]);
     }
+    //public void ChangeInfo()
+    //{
+    //    if (selectedObject.layer != LayerMask.NameToLayer("Enemy"))
+    //        ShowCardInfo(SelfCard);
+    //}
     
 }
