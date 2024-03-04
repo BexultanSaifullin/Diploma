@@ -91,7 +91,11 @@ public class GameManagerScr : MonoBehaviour
             for (int i = count; i >= 0; i--)
             {
                 int place = Random.Range(0, EnemyPlaces.Count-1);
-                EnemyCard[i].transform.position = EnemyPlaces[place].transform.position;
+                Vector3 newPosition = EnemyPlaces[place].transform.position;
+                newPosition.y += 0.2f;
+                EnemyCard[i].transform.position = newPosition;
+                Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
+                EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyPlaces.RemoveAt(place);
@@ -105,7 +109,11 @@ public class GameManagerScr : MonoBehaviour
             for (int i = count; i >= 0; i--)
             {
                 int place = Random.Range(0, EnemyPlaces.Count-1);
-                EnemyCard[i].transform.position = EnemyPlaces[place].transform.position;
+                Vector3 newPosition = EnemyPlaces[place].transform.position;
+                newPosition.y += 0.2f;
+                EnemyCard[i].transform.position = newPosition;
+                Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
+                EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
                 //CardInfo.ChangeInfo();
                 EnemyPlaces[place].gameObject.tag = "busy";
