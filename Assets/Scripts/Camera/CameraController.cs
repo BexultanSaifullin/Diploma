@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
         // Tilt camera downwards based on height
         float tiltAngle = Mathf.Clamp(transform.position.y* rotationSpeed, 0, maxTiltAngle);
         transform.localEulerAngles = new Vector3(tiltAngle, 0, 0);
-
     }
     private void HandleCameraZoom()
     {

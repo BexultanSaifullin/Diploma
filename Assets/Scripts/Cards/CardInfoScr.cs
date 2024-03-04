@@ -16,6 +16,8 @@ public class CardInfoScr : MonoBehaviour
         SelfCard = card;
         Logo.sprite = null;
         Name.text = "";
+        Attack.text = "?";
+        Defense.text ="?";
     }
     public void ShowCardInfo(Card card)
     {
@@ -32,7 +34,7 @@ public class CardInfoScr : MonoBehaviour
         if(selectedObject.layer == LayerMask.NameToLayer("Robot"))
             ShowCardInfo(CardManagerList.AllCards[randomNumber]);
         else
-            ShowCardInfo(CardManagerList.AllCards[randomNumber]);
+            HideCardInfo(CardManagerList.AllCards[randomNumber]);
     }
     
 }

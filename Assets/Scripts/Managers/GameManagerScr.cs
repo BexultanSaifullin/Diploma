@@ -111,7 +111,6 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard.RemoveAt(i);
             }
         }
-
     }
     public void ChangeTurn()
     {
