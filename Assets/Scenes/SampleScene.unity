@@ -304,6 +304,7 @@ MonoBehaviour:
   defaultLayerName: Default
   free: free
   busy: busy
+  newParent: {fileID: 1011235342}
   parentObject: {fileID: 1882639547}
 --- !u!4 &60001710
 Transform:
@@ -2154,6 +2155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnTimeTxt: {fileID: 1078363074}
   EndTurnBtn: {fileID: 224591952}
+  newParent: {fileID: 1402949244}
 --- !u!1 &963720844
 GameObject:
   m_ObjectHideFlags: 0
