@@ -7,6 +7,18 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : Singleton<AudioManager>
 {
+    [Header("Volume")]
+    [Range(0, 1)]
+    public float masterVolume = 1;
+    [Range(0, 1)]
+    public float menuMusicVolume = 1;
+    [Range(0, 1)]
+    public float gameMusicVolume = 1;
+
+    private Bus masterBus;
+    private Bus menuMusicBus;
+    private Bus gameMusicBus;
+
     private List<EventInstance> eventInstances;
     private EventInstance menuMusicEventInstance;
     private EventInstance backgroundMusicEventInstance;
@@ -21,8 +33,18 @@ public class AudioManager : Singleton<AudioManager>
         instance = this;
 
         eventInstances = new List<EventInstance>();
+
+        masterBus = RuntimeManager.GetBus("bus:/");
+        menuMusicBus = RuntimeManager.GetBus("bus:/MenuMusic");
+        gameMusicBus = RuntimeManager.GetBus("bus:/GameMusic");
     }
 
+    private void Update()
+    {
+        masterBus.setVolume(masterVolume);
+        menuMusicBus.setVolume(menuMusicVolume);
+        gameMusicBus.setVolume(gameMusicVolume);
+    }
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
