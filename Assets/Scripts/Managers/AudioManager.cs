@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMOD.Studio;
 using FMODUnity;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : Singleton<AudioManager>
 {
     private List<EventInstance> eventInstances;
     private EventInstance menuMusicEventInstance;
+    private EventInstance backgroundMusicEventInstance;
     public static AudioManager instance { get; private set; }
 
     private void Awake()
@@ -23,12 +25,20 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Start()
     {
-        InitializeMenuMusic(FMODEvents.instance.MenuMusic);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            InitializeMenuMusic(FMODEvents.instance.MenuMusic);
+        else
+            InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
     }
     private void InitializeMenuMusic(EventReference menuMusicEventReference)
     {
         menuMusicEventInstance = CreateInstance(menuMusicEventReference);
         menuMusicEventInstance.start();
+    }
+    private void InitializeBackgroundMusic(EventReference backgroundMusicEventReference)
+    {
+        backgroundMusicEventInstance = CreateInstance(backgroundMusicEventReference);
+        backgroundMusicEventInstance.start();
     }
     public EventInstance CreateInstance(EventReference eventReference)
     {

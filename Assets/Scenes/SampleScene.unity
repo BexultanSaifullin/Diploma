@@ -1359,6 +1359,13 @@ MonoBehaviour:
       Data3: -1155705198
       Data4: -975017441
     Path: event:/MenuMusic
+  <BackgroundMusic>k__BackingField:
+    Guid:
+      Data1: 275140192
+      Data2: 1248558914
+      Data3: 969547914
+      Data4: -2894284
+    Path: event:/BackgroundMusic
 --- !u!1 &558151487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,7 +2837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &941898085
 MonoBehaviour:
   m_ObjectHideFlags: 0

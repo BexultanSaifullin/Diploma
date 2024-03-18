@@ -7,6 +7,8 @@ public class FMODEvents : MonoBehaviour
 {
     [field: Header("Menu Music")]
     [field: SerializeField] public EventReference MenuMusic { get; private set; }
+    [field: Header("Background Music")]
+    [field: SerializeField] public EventReference BackgroundMusic { get; private set; }
     public static FMODEvents instance { get; private set; }
 
     private void Awake()

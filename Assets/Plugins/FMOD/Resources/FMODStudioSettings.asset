@@ -241,6 +241,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
+  - GameBackground
   - Menu
   BanksToLoad: []
   LiveUpdatePort: 9264

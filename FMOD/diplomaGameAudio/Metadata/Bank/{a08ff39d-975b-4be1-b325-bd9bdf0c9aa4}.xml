@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="Bank" id="{a08ff39d-975b-4be1-b325-bd9bdf0c9aa4}">
+		<property name="name">
+			<value>GameBackground</value>
+		</property>
+		<relationship name="folder">
+			<destination>{986e6cf6-d604-4e65-8b90-62dfab65f8f4}</destination>
+		</relationship>
+	</object>
+</objects>
