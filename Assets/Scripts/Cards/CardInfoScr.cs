@@ -22,11 +22,11 @@ public class CardInfoScr : MonoBehaviour
     public void ShowCardInfo(Card card)
     {
         SelfCard = card;
-        Logo.sprite = card.Logo;
+        Logo.sprite = card.logo;
         Logo.preserveAspect = true;
-        Name.text = card.Name;
-        Attack.text = SelfCard.Attack.ToString();
-        Defense.text = SelfCard.Defense.ToString();
+        Name.text = card.heroName;
+        Attack.text = SelfCard.defaultAttack.ToString();
+        Defense.text = SelfCard.defaultHealth.ToString();
     }
     private void Start()
     {
