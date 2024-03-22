@@ -23,6 +23,10 @@ public class CardManager : MonoBehaviour
         //CardManagerList.AllCards.Add(new Card("Card ¹4", "Sprites/Pominki", 3, 3));
     }
 
+    private void Start()
+    {
+    }
+
     /*
         00 10 20 30
         01 11 21 31
@@ -39,21 +43,21 @@ public class CardManager : MonoBehaviour
         {
             for (int j = 0; j < 4; j++)
             {
-                // looks for player's hero standing in front
+                // looks for player's hero standing in front of the column
                 if (grid[i, j].isPlayer())
                 {
                     if (j == 0) // - checks if its an end of the map
                     {
                         // attack the wall
+                        // TODO attack the wall and take the damage from the wall
                     }
                     else if (grid[i, j - 1].isEnemy()) // - checks whether it has an enemy infront
                     {
-                        // attack();
-                        // if killed then replaces the enemy
+                        grid[i, j - 1].getAttackedBy(grid[i, j]);
                     }
                     else
                     {
-                        // move forward
+                        grid[i, j].moveCard(grid[i, j + 1]);
                     }
                     break;
                 }
@@ -67,21 +71,20 @@ public class CardManager : MonoBehaviour
         {
             for (int j = 3; j >= 0; j--)
             {
-                // same with the enemy
+                // looks for enemy's hero standing in front of the column
                 if (grid[i, j].isEnemy())
                 {
                     if (j == 3) // - checks if its an end of the map
                     {
-                        // attack the wall
+                        // TODO AttackTheWall()
                     }
-                    else if (grid[i, j + 1].isEnemy())
+                    else if (grid[i, j + 1].isPlayer())
                     {
-                        // attack();
-                        // if killed then replaces the enemy
+                        grid[i, j + 1].getAttackedBy(grid[i, j]);
                     }
                     else
                     {
-                        // move forward
+                        grid[i, j].moveCard(grid[i, j - 1]);
                     }
                     break;
                 }
@@ -105,21 +108,5 @@ public class CardManager : MonoBehaviour
     {
         // import the player and the enemy's decks
         // add draw animation coroutine
-    }
-}
-class Grid
-{
-    Card standingCard;
-    GameObject landscapeObject;
-    Landscape.Side side;
-
-    public bool isPlayer()
-    {
-        return side.Equals(Landscape.Side.Player);
-    }
-
-    public bool isEnemy()
-    {
-        return side.Equals(Landscape.Side.Enemy);
     }
 }

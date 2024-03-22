@@ -20,8 +20,8 @@ public class Card : MonoBehaviour
 
     public int id;
 
-    public int currentHealth;
-    public int currentAttack;
+    public int currentHealth { set; get; }
+    public int currentAttack { set; get; }
 
     private void Start()
     {
@@ -33,6 +33,7 @@ public class Card : MonoBehaviour
         currentHealth = defaultHealth;
         currentAttack = defaultAttack;
     }
+    
     private void OnMouseEnter()
     {
         mouseIsHovering = true;
