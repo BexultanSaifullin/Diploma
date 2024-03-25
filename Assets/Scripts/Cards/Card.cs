@@ -9,6 +9,7 @@ public class Card : MonoBehaviour
 {
     private static int idCounter = 0;
     private bool mouseIsHovering = false;
+    private bool didWalk;
 
     [SerializeField] public string heroName;
     [SerializeField] public string description;
@@ -25,6 +26,7 @@ public class Card : MonoBehaviour
 
     private void Start()
     {
+        didWalk = false;
         id = idCounter++;
 
         // TODO write utility to transform id from 1 into 0001
@@ -44,6 +46,17 @@ public class Card : MonoBehaviour
     {
         mouseIsHovering = false;
         destroyHoverEffect();
+    }
+
+    public void endOfTurn()
+    {
+        didWalk = false;
+    }
+
+    public void walked()
+    {
+        // used to not allow the card to move twice
+        didWalk = true;
     }
 
     private void createHoverEffect()

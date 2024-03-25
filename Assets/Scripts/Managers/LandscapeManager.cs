@@ -50,7 +50,7 @@ public class LandscapeManager : Singleton<LandscapeManager>
         newGrid[3, 1].landscapeObject = Landscape42;
         newGrid[3, 2].landscapeObject = Landscape43;
         newGrid[3, 3].landscapeObject = Landscape44;
-        
+
         return newGrid;
     }
 }
