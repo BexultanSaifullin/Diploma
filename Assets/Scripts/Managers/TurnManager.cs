@@ -20,7 +20,6 @@ public class TurnManager : Singleton<TurnManager>
         None,
         PlayerTurn,
         EnemyTurn,
-        Battle,
         ChooseDeck,
         Start,
         Victory,
@@ -33,7 +32,6 @@ public class TurnManager : Singleton<TurnManager>
 
     private void ChangeState(TurnState _turnState)
     {
-        // plays animation or invokes UI calls
         switch (_turnState)
         {
             case TurnState.None:
