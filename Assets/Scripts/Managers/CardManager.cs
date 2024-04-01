@@ -23,8 +23,6 @@ public static class CardManagerList
 }
 public class CardManager : MonoBehaviour
 {
-
-
     public void Awake()
     {
         CardManagerList.AllCards.Add(new Card("Card ¹1", "Sprites/Pominki", 5, 5));
@@ -33,21 +31,5 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Card ¹4", "Sprites/Pominki", 3, 3));
     }
     
-    // draw means take !!!!!!!!!
-    // draw not paint !!!!!!!!!
-    public void PlayerDrawCard()
-    {
-        // TODO write coroutine for the draw animation
-        // maybe make a coroutine method outside of this method in order to use less code space
-    }
-    public void EnemyDrawCard()
-    {
-        // TODO write coroutine for the draw animation
-    }
 
-    private void ImportDeck()
-    {
-        // import the player and the enemy's decks
-        // add draw animation coroutine
-    }
 }
