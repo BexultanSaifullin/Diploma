@@ -19,18 +19,20 @@ public class Drag : MonoBehaviour
     private GameObject selectedObject;
     public string free = "free";
     public string busy = "busy";
-    public GameObject newParent;
     public GameObject parentObject;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
 
+    // Start is called before the first frame update
     private void Start()
     {
         mainCamera = Camera.main;
         ArrangeCards();
         GameManager = FindObjectOfType<GameManagerScr>();
     }
+
+    // Update is called once per frame
     private void Update()
     {
 
@@ -38,7 +40,10 @@ public class Drag : MonoBehaviour
         {
             SelectPart();
         }
-       
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    Drop();
+        //}
         if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             StartCoroutine(StepFromAbove());
@@ -51,10 +56,20 @@ public class Drag : MonoBehaviour
         {
             Teleportation();
         }
+        //Wait();
 
 
 
 
+        // if (currentCollider2 != null && mainCamera.transform.position.y > 2f && !coroutineCalled)
+        // {
+        //     newPosition = mainCamera.transform.position + mainCamera.transform.forward * 5f;
+
+        //     currentCollider2.transform.position = newPosition;
+        // }
+
+
+        //DragAndDropObject();
     }
     private void SelectPart()
     {
@@ -65,6 +80,17 @@ public class Drag : MonoBehaviour
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
+            //if (mainCamera.transform.position.y == 5.51f)
+            //{
+            //    newPosition = mainCamera.transform.position +
+            //                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
+            //    currentCollider2.transform.position = newPosition;
+            //    Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
+            //    currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+            //    GameObject a = currentCollider.transform.parent.gameObject;
+            //    selectedObject.transform.parent = parentObject.transform;
+            //    a.gameObject.tag = free;
+            //} COD CHTOBI SDELAT POLE NA KOTOROM STOYALA KARTA SVOBODNIM PRI PODNYTII
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
@@ -72,6 +98,40 @@ public class Drag : MonoBehaviour
         }
         currentCollider = null;
     }
+
+    //private void DragAndDropObject()
+    //{
+    //    if (currentCollider == null)
+    //    {
+    //        return;
+    //    }
+    //    Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+    //    float planeDist;
+    //    dragPlane.Raycast(camRay, out planeDist);
+    //    currentCollider.transform.position = camRay.GetPoint(planeDist) + offset;
+
+    // if (currentCollider.transform.position.y < 0.5f)
+    // {
+    //     currentCollider.transform.position =
+    //         new Vector3(currentCollider.transform.position.x,
+    //             0.5f,
+    //             currentCollider.transform.position.z);
+    // }
+
+    //}
+
+    //private void Drop()
+    //{
+    //    if (currentCollider == null)
+    //    {
+    //        return;
+    //    }
+    //    // currentCollider.transform.position =
+    //    //     new Vector3(currentCollider.transform.position.x,
+    //    //         0.5f,
+    //    //         currentCollider.transform.position.z);
+    //    currentCollider = null;
+    //}
 
     private IEnumerator StepFromAbove()
     {
@@ -106,7 +166,8 @@ public class Drag : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        selectedObject.transform.SetParent(newParent.transform);
+
+
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
@@ -123,6 +184,41 @@ public class Drag : MonoBehaviour
 
         }
     }
+
+    // public void ArrangeCards()
+    // {
+    //     float distanceBetweenCards = 0.2f;
+
+    //     int robotLayer = LayerMask.NameToLayer("Robot");
+    //     List<GameObject> robotCards = new List<GameObject>();
+    //     GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
+
+    //     for (int i = 0; i < origin.Length; i++)
+    //     {
+    //         if (origin[i].layer == robotLayer)
+    //         {
+    //             robotCards.Add(origin[i]);
+    //         }
+    //     }
+    //     GameObject[] cards = robotCards.ToArray();
+
+    //     if (cards.Length == 0)
+    //     {
+    //         return;
+    //     }
+
+    //     float totalWidth = (cards.Length - 1) * distanceBetweenCards;
+    //     Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+
+    //     float startX = centerPosition.x - totalWidth / 2;
+
+    //     for (int i = 0; i < cards.Length; i++)
+    //     {
+    //         float xPos = startX + i * distanceBetweenCards;
+    //         Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
+    //         cards[i].transform.position = cardPosition;
+    //     }
+    // }
     public void ArrangeCards()
     {
         float distanceBetweenCards = 0.2f;

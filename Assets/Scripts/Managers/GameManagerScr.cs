@@ -16,7 +16,6 @@ public class GameManagerScr : MonoBehaviour
     CardSpawnerScr Spawner;
     CardSpawnerEnemyScr SpawnerEnemy;
     CardInfoScr CardInfo;
-    public GameObject newParent;
     public bool IsPlayerTurn
     {
         get
@@ -68,9 +67,10 @@ public class GameManagerScr : MonoBehaviour
 
             int EnemyLayerE = LayerMask.NameToLayer("Enemy");
             GameObject[] objectsOnLayerE = objectsWithTagE.Where(card => card.layer == EnemyLayerE).ToArray();
-            //BOT
+
 
             EnemyCard = objectsOnLayerE.ToList();
+            //List<GameObject> EnemyCard = GameObject.FindGameObjectsWithTag("EnemyCard").ToList();
 
             if (EnemyCard.Count > 0 && EnemyPlaces.Count > 0)
             {
@@ -98,10 +98,8 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
                 EnemyPlaces[place].gameObject.tag = "busy";
-                EnemyCard[i].transform.SetParent(newParent.transform);
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);
-
             }
         } else
         {
@@ -117,6 +115,7 @@ public class GameManagerScr : MonoBehaviour
                 Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
+                //CardInfo.ChangeInfo(EnemyCard[i]);
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);

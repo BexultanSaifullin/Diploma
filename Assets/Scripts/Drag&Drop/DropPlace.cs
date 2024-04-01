@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 
 public class DropPlace : MonoBehaviour
 {
-    public Transform newParent;
+    // Start is called before the first frame update
+    public Transform newParent; // ������ �� ������ ��������
     Material material;
     private Drag instanceOfDrag;
 
@@ -16,7 +17,19 @@ public class DropPlace : MonoBehaviour
     }
     void OnTriggerEnter(Collider cube)
     {
-        instanceOfDrag.ArrangeCards();
+
+        if (cube.transform.IsChildOf(transform))
+        {
+            material.color = Color.blue;
+        }
+        else
+        {
+            // ����� �������� �������
+            cube.transform.parent = transform;
+            material.color = Color.green;
+            instanceOfDrag.ArrangeCards();
+        }
+
     }
 
 }
