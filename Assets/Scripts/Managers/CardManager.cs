@@ -25,8 +25,6 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
-        // import grid array from landscape manager
-        grid = (Grid[,])LandscapeManager.Instance.getGridArray().Clone();
     }
 
     /*
