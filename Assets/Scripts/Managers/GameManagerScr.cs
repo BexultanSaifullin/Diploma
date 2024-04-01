@@ -130,11 +130,9 @@ public class GameManagerScr : MonoBehaviour
         EndTurnBtn.interactable = IsPlayerTurn;
         if (IsPlayerTurn)
         {
-            CardManager.Instance.EnemyAttackTurn();
             GivenNewCards();
         } else if(Turn !=1)
         {
-            CardManager.Instance.PlayerAttackTurn();
             GivenNewCardsToEnemy();
         }
         StartCoroutine(TurnFunc());

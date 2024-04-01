@@ -8,7 +8,7 @@ public static class CardManagerList
     public static List<Card> AllCards = new List<Card>();
 
 }
-public class CardManager : Singleton<CardManager>
+public class CardManager : MonoBehaviour
 {
     public static List<Card> playerCards = new List<Card>();
     public static List<Card> enemyCards = new List<Card>();
