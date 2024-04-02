@@ -16,10 +16,14 @@ public class Drag : MonoBehaviour
     private Vector3 newPosition;
     private bool coroutineCalled = false;
     public string defaultLayerName = "Playing";
-    private GameObject selectedObject;
+    public GameObject selectedObject;
     public string free = "free";
     public string busy = "busy";
+<<<<<<< Updated upstream
     public GameObject parentObject;
+=======
+    public GameObject newParent;
+>>>>>>> Stashed changes
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
