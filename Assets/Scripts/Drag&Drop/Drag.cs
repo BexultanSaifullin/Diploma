@@ -19,14 +19,12 @@ public class Drag : MonoBehaviour
     public GameObject selectedObject;
     public string free = "free";
     public string busy = "busy";
-<<<<<<< Updated upstream
     public GameObject parentObject;
-=======
     public GameObject newParent;
->>>>>>> Stashed changes
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
+    Material material;
 
     // Start is called before the first frame update
     private void Start()
@@ -40,8 +38,9 @@ public class Drag : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetMouseButtonDown(0) && currentCollider2 == null && GameManager.IsPlayerTurn)
+        if (Input.GetMouseButtonDown(0) && GameManager.IsPlayerTurn)
         {
+            
             SelectPart();
         }
         //if (Input.GetMouseButtonUp(0))
@@ -81,9 +80,19 @@ public class Drag : MonoBehaviour
         Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot")))
         {
+            
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana > GameManager.PlayerMana)
+            {
+                selectedObject = null;
+                currentCollider2 = null;
+                currentCollider = null;
+                return;
+            }
+                
+            Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Range); 
             //if (mainCamera.transform.position.y == 5.51f)
             //{
             //    newPosition = mainCamera.transform.position +
@@ -179,13 +188,16 @@ public class Drag : MonoBehaviour
                 currentCollider2.transform.position = hit.point;
                 selectedObject.layer = LayerMask.NameToLayer("Playing");
                 hit.collider.gameObject.tag = busy;
+                selectedObject.transform.parent = hit.collider.gameObject.transform;
+                ArrangeCards();
                 if (selectedObject.layer == LayerMask.NameToLayer("Playing"))
                 {
+                    GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                    GameManager.ShowMana();
                     selectedObject = null;
                     currentCollider2 = null;
                 }
             }
-
         }
     }
 
