@@ -159,14 +159,15 @@ public class GameManagerScr : MonoBehaviour
         if (IsPlayerTurn)
         {
             AttackCards();
+            DestroyCards();
             MoveCards();
             GivenNewCards();
             if (increase < 10)
                 increase += 1;
             if (PlayerMana < 10)
-                PlayerMana = increase;
+                PlayerMana = 10;
             if (EnemyMana < 10)
-                EnemyMana = increase;
+                EnemyMana = 10;
             ShowMana();
         } else if(Turn !=1)
         {
@@ -189,20 +190,20 @@ public class GameManagerScr : MonoBehaviour
     }
     void MoveCards()
     {
-        for(int i = 2; i >= 0; i--)
+        for (int i = 2; i >= 1; i--)
         {
             if (ABoxes[i].transform.childCount > 0)
             {
-                if (ABoxes[i+1].transform.childCount == 0)
+                if (ABoxes[i + 1].transform.childCount == 0)
                 {
                     Transform childGameObject = ABoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = ABoxes[i - 1].transform.position;
+                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
                         newPositiona.y += 0.2f;
-                        childTransform.transform.position = ABoxes[i + 1].transform.position;
+                        childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = ABoxes[i + 1].transform;
                         ABoxes[i + 1].tag = "busy";
                         ABoxes[i].tag = "free";
@@ -219,9 +220,9 @@ public class GameManagerScr : MonoBehaviour
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = BBoxes[i - 1].transform.position;
+                        Vector3 newPositiona = BBoxes[i + 1].transform.position;
                         newPositiona.y += 0.2f;
-                        childTransform.transform.position = BBoxes[i + 1].transform.position;
+                        childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = BBoxes[i + 1].transform;
                         BBoxes[i + 1].tag = "busy";
                         BBoxes[i].tag = "free";
@@ -238,9 +239,9 @@ public class GameManagerScr : MonoBehaviour
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = CBoxes[i - 1].transform.position;
+                        Vector3 newPositiona = CBoxes[i + 1].transform.position;
                         newPositiona.y += 0.2f;
-                        childTransform.transform.position = CBoxes[i + 1].transform.position;
+                        childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = CBoxes[i + 1].transform;
                         CBoxes[i + 1].tag = "busy";
                         CBoxes[i].tag = "free";
@@ -257,9 +258,9 @@ public class GameManagerScr : MonoBehaviour
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = DBoxes[i - 1].transform.position;
+                        Vector3 newPositiona = DBoxes[i + 1].transform.position;
                         newPositiona.y += 0.2f;
-                        childTransform.transform.position = DBoxes[i + 1].transform.position;
+                        childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = DBoxes[i + 1].transform;
                         DBoxes[i + 1].tag = "busy";
                         DBoxes[i].tag = "free";
@@ -267,8 +268,85 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
+        for (int i = 0; i >= 0; i--)
+        {
+            if (ABoxes[i].transform.childCount > 0)
+            {
+                if (ABoxes[i+1].transform.childCount == 0)
+                {
+                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
 
-        for (int i = 1; i < 4; i++)
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = ABoxes[i + 1].transform;
+                        ABoxes[i + 1].tag = "busy";
+                        ABoxes[i].tag = "free";
+                    }
+                }
+            }
+
+            if (BBoxes[i].transform.childCount > 0)
+            {
+                if (BBoxes[i + 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = BBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = BBoxes[i + 1].transform;
+                        BBoxes[i + 1].tag = "busy";
+                        BBoxes[i].tag = "free";
+                    }
+                }
+            }
+
+            if (CBoxes[i].transform.childCount > 0)
+            {
+                if (CBoxes[i + 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = CBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = CBoxes[i + 1].transform;
+                        CBoxes[i + 1].tag = "busy";
+                        CBoxes[i].tag = "free";
+                    }
+                }
+            }
+
+            if (DBoxes[i].transform.childCount > 0)
+            {
+                if (DBoxes[i + 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = DBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = DBoxes[i + 1].transform;
+                        DBoxes[i + 1].tag = "busy";
+                        DBoxes[i].tag = "free";
+                    }
+                }
+            }
+        }
+        for (int i = 1; i <= 2; i++)
         {
             if (ABoxes[i].transform.childCount > 0)
             {
@@ -343,6 +421,85 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
+        for (int i = 3; i <= 3; i++)
+        {
+            if (ABoxes[i].transform.childCount > 0)
+            {
+                if (ABoxes[i - 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    {
+                        Vector3 newPositiona = ABoxes[i - 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = ABoxes[i - 1].transform;
+                        ABoxes[i - 1].tag = "busy";
+                        ABoxes[i].tag = "free";
+                    }
+                }
+            }
+            if (BBoxes[i].transform.childCount > 0)
+            {
+                if (BBoxes[i - 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    {
+                        Vector3 newPositiona = BBoxes[i - 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = BBoxes[i - 1].transform;
+                        BBoxes[i - 1].tag = "busy";
+                        BBoxes[i].tag = "free";
+                    }
+                }
+            }
+            if (CBoxes[i].transform.childCount > 0)
+            {
+                if (CBoxes[i - 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    {
+                        Vector3 newPositiona = CBoxes[i - 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = CBoxes[i - 1].transform;
+                        CBoxes[i - 1].tag = "busy";
+                        CBoxes[i].tag = "free";
+                    }
+                }
+            }
+            if (DBoxes[i].transform.childCount > 0)
+            {
+                if (DBoxes[i - 1].transform.childCount == 0)
+                {
+                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    {
+                        Vector3 newPositiona = DBoxes[i - 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = DBoxes[i - 1].transform;
+                        DBoxes[i - 1].tag = "busy";
+                        DBoxes[i].tag = "free";
+                    }
+                }
+            }
+        }
+
+        
+
+        
     }
     void AttackCards()
     {
@@ -353,24 +510,229 @@ public class GameManagerScr : MonoBehaviour
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
                 int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (ABoxes[i + range].transform.childCount > 0)
+                if (i + range < 4)
                 {
-                    if (i + childTransform.GetComponent<CardInfoScr>().SelfCard.Range > 4)
-                        continue;
-                    Transform EnemychildGameObject = ABoxes[i + range].transform.GetChild(0);
-                    GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                    if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
-                                childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    if (ABoxes[i + range].transform.childCount > 0)
                     {
-                        EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                        EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        Transform EnemychildGameObject = ABoxes[i + range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+
                     }
-                    else
+                }
+            }
+
+            if (BBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i + range < 4) 
+                { 
+                    if (BBoxes[i + range].transform.childCount > 0)
                     {
-                        continue;
+                        Transform EnemychildGameObject = BBoxes[i + range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+
                     }
-                    if (EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
-                        Destroy(EnemychildTransform);
+                }
+            }
+
+            if (CBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i + range < 4)
+                {
+                    if (CBoxes[i + range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = CBoxes[i + range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+
+                    }
+                }
+
+            }
+
+            if (DBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i + range < 4)
+                { 
+                    if (DBoxes[i + range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = DBoxes[i + range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+
+                    }
+                }
+            }
+        }
+
+        for (int i = 1; i < 4; i++)
+        {
+            if (ABoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i - range >= 0)
+                {
+                    if (ABoxes[i - range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = ABoxes[i - range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+                    }
+                }
+            }
+        
+
+        
+            if (BBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i - range >= 0)
+                {
+                    if (BBoxes[i - range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = BBoxes[i - range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+                    }
+                }
+            }
+        
+
+        
+        
+            if (CBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i - range >= 0)
+                {
+                    if (CBoxes[i - range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = CBoxes[i - range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+                    }
+                }
+            }
+        
+
+       
+        
+            if (DBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
+                if (i - range >= 0)
+                {
+                    if (DBoxes[i - range].transform.childCount > 0)
+                    {
+                        Transform EnemychildGameObject = DBoxes[i - range].transform.GetChild(0);
+                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        {
+                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    void DestroyCards()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (ABoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Destroy(childTransform);
+                    ABoxes[i].tag = "free";
+                }
+            }
+            if (BBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Destroy(childTransform);
+                    BBoxes[i].tag = "free";
+                }
+            }
+            if (CBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Destroy(childTransform);
+                    CBoxes[i].tag = "free";
+                }
+            }
+            if (DBoxes[i].transform.childCount > 0)
+            {
+                Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Destroy(childTransform);
+
+                    DBoxes[i].tag = "free";
                 }
             }
         }

@@ -91,8 +91,6 @@ public class Drag : MonoBehaviour
                 currentCollider = null;
                 return;
             }
-                
-            Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Range); 
             //if (mainCamera.transform.position.y == 5.51f)
             //{
             //    newPosition = mainCamera.transform.position +

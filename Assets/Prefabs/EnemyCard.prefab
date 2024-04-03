@@ -176,8 +176,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4292602383
+  m_fontColor: {r: 0.060555227, g: 0.9169811, b: 0.8596533, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -329,6 +329,38 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2395800933463191465, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.074396506
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395800933463191465, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.9169811
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395800933463191465, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.10524344
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395800933463191465, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279495195
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045226093903530283, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.054076135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045226093903530283, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.054076135
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045226093903530283, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.9245283
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045226093903530283, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279111404
+      objectReference: {fileID: 0}
     - target: {fileID: 3306810052445241044, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -435,7 +467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8427428419259528573, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8539604717115205557, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_Layer

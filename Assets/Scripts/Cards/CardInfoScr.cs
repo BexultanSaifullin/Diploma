@@ -27,7 +27,6 @@ public class CardInfoScr : MonoBehaviour
         Name.text = card.Name;
         Mana.text = SelfCard.Mana.ToString();
         RefreshData();
-        
     }
     public void RefreshData()
     {
