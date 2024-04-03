@@ -198,9 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &10306361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1125,9 +1122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &397180386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1291,9 +1285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!114 &435354139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,9 +1718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &572865474
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2172,9 +2160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &756465805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3094,9 +3079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &961521008
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3538,9 +3520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1005340540
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3973,7 +3952,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.69995, y: -50.099976}
+  m_AnchoredPosition: {x: 50.69995, y: -50.100098}
   m_SizeDelta: {x: 105.375, y: 74.19299}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1061129906
@@ -4279,9 +4258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1084086797
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4428,9 +4404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1152148377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4740,7 +4713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d7ddef6e178804bbe56a8ffe2398af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 4611014053301070659}
+  objectToSpawn: {fileID: 7115934593399061590, guid: b1b138248fac27c469e8a09c58b0615b, type: 3}
 --- !u!4 &1291333890 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3713128003041977090, guid: aaa98db2559a9024299f6bdbaedef49c, type: 3}
@@ -4889,9 +4862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1319256024
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5065,9 +5035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1332325659
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5818,9 +5785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &1601678685
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6571,9 +6535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54265ebc54f9704e9946095f070edd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newParent: {fileID: 0}
-  material: {fileID: 0}
-  instanceOfDrag: {fileID: 0}
 --- !u!65 &2055923102
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6901,11 +6862,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3713128003041977090, guid: aaa98db2559a9024299f6bdbaedef49c, type: 3}
   m_PrefabInstance: {fileID: 5557011936410167958}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4611014053301070659 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7115934593399061590, guid: b1b138248fac27c469e8a09c58b0615b, type: 3}
-  m_PrefabInstance: {fileID: 5649972139700374267}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5557011936410167958
 PrefabInstance:
