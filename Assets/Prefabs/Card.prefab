@@ -377,6 +377,10 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4278250506
       objectReference: {fileID: 0}
+    - target: {fileID: 2505212974744277461, guid: 43e5409971847824893cc09ed720fa86, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3045226093903530283, guid: 43e5409971847824893cc09ed720fa86, type: 3}
       propertyPath: m_fontAsset
       value: 

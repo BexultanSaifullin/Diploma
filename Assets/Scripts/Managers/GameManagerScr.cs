@@ -43,9 +43,9 @@ public class GameManagerScr : MonoBehaviour
     {
         TurnTime = 30;
         TurnTimeTxt.text = TurnTime.ToString();
-        if(IsPlayerTurn)
+        if (IsPlayerTurn)
         {
-            while(TurnTime-- > 0)
+            while (TurnTime-- > 0)
             {
                 TurnTimeTxt.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
@@ -58,12 +58,12 @@ public class GameManagerScr : MonoBehaviour
                 TurnTimeTxt.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
-            
+
             List<GameObject> EnemyPlaces;
-            
+
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("free");
 
-            
+
             int EnemyLayer = LayerMask.NameToLayer("EnemyPlace");
             GameObject[] objectsOnLayer = objectsWithTag.Where(card => card.layer == EnemyLayer).ToArray();
 
@@ -83,7 +83,7 @@ public class GameManagerScr : MonoBehaviour
 
             if (EnemyCard.Count > 0 && EnemyPlaces.Count > 0)
             {
-                EnemyTurn(EnemyCard, EnemyPlaces);    
+                EnemyTurn(EnemyCard, EnemyPlaces);
             }
         }
         TurnTime = 5;
@@ -97,15 +97,15 @@ public class GameManagerScr : MonoBehaviour
 
     void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces)
     {
-        if(EnemyPlaces.Count > EnemyCard.Count)
+        if (EnemyPlaces.Count > EnemyCard.Count)
         {
             int count = Random.Range(-1, EnemyCard.Count);
             if (count == -1)
-                    return;
-          
+                return;
+
             for (int i = count; i >= 0; i--)
             {
-                int place = Random.Range(0, EnemyPlaces.Count-1);
+                int place = Random.Range(0, EnemyPlaces.Count - 1);
                 Vector3 newPosition = EnemyPlaces[place].transform.position;
                 newPosition.y += 0.2f;
                 if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
@@ -123,7 +123,8 @@ public class GameManagerScr : MonoBehaviour
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);
             }
-        } else
+        }
+        else
         {
             int count = Random.Range(-1, EnemyPlaces.Count);
             if (count == -1)
@@ -134,7 +135,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     continue;
                 }
-                int place = Random.Range(0, EnemyPlaces.Count-1);
+                int place = Random.Range(0, EnemyPlaces.Count - 1);
                 Vector3 newPosition = EnemyPlaces[place].transform.position;
                 newPosition.y += 0.2f;
                 EnemyCard[i].transform.position = newPosition;
@@ -150,7 +151,7 @@ public class GameManagerScr : MonoBehaviour
             }
         }
     }
- 
+
     public void ChangeTurn()
     {
         StopAllCoroutines();
@@ -169,12 +170,14 @@ public class GameManagerScr : MonoBehaviour
             if (EnemyMana < 10)
                 EnemyMana = 10;
             ShowMana();
-        } else if(Turn !=1)
+        }
+        else if (Turn != 1)
         {
             GivenNewCardsToEnemy();
         }
         StartCoroutine(TurnFunc());
     }
+
     public void ShowMana()
     {
         PlayerManaTxt.text = PlayerMana.ToString();
@@ -188,13 +191,14 @@ public class GameManagerScr : MonoBehaviour
     {
         SpawnerEnemy.SpawnEnemy();
     }
+
     void MoveCards()
     {
-        for (int i = 2; i >= 1; i--)
+        for (int i = 2; i >= 1; i--)//player move
         {
-            if (ABoxes[i].transform.childCount > 0)
+            if (ABoxes[i].tag == "busy")
             {
-                if (ABoxes[i + 1].transform.childCount == 0)
+                if (ABoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = ABoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -211,9 +215,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (BBoxes[i].transform.childCount > 0)
+            if (BBoxes[i].tag == "busy")
             {
-                if (BBoxes[i + 1].transform.childCount == 0)
+                if (BBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = BBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -230,9 +234,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (CBoxes[i].transform.childCount > 0)
+            if (CBoxes[i].tag == "busy")
             {
-                if (CBoxes[i + 1].transform.childCount == 0)
+                if (CBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = CBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -249,9 +253,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (DBoxes[i].transform.childCount > 0)
+            if (DBoxes[i].tag == "busy")
             {
-                if (DBoxes[i + 1].transform.childCount == 0)
+                if (DBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = DBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -268,11 +272,11 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i >= 0; i--)
+        for (int i = 0; i >= 0; i--)//player move
         {
-            if (ABoxes[i].transform.childCount > 0)
+            if (ABoxes[i].tag == "busy")
             {
-                if (ABoxes[i+1].transform.childCount == 0)
+                if (ABoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = ABoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -289,9 +293,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (BBoxes[i].transform.childCount > 0)
+            if (BBoxes[i].tag == "busy")
             {
-                if (BBoxes[i + 1].transform.childCount == 0)
+                if (BBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = BBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -308,9 +312,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (CBoxes[i].transform.childCount > 0)
+            if (CBoxes[i].tag == "busy")
             {
-                if (CBoxes[i + 1].transform.childCount == 0)
+                if (CBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = CBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -327,9 +331,9 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
 
-            if (DBoxes[i].transform.childCount > 0)
+            if (DBoxes[i].tag == "busy")
             {
-                if (DBoxes[i + 1].transform.childCount == 0)
+                if (DBoxes[i + 1].tag == "free")
                 {
                     Transform childGameObject = DBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -346,11 +350,11 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
-        for (int i = 1; i <= 2; i++)
+        for (int i = 1; i <= 2; i++)//Enemy move
         {
-            if (ABoxes[i].transform.childCount > 0)
+            if (ABoxes[i].tag == "busy")
             {
-                if (ABoxes[i - 1].transform.childCount == 0)
+                if (ABoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = ABoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -366,9 +370,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (BBoxes[i].transform.childCount > 0)
+            if (BBoxes[i].tag == "busy")
             {
-                if (BBoxes[i - 1].transform.childCount == 0)
+                if (BBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = BBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -384,9 +388,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (CBoxes[i].transform.childCount > 0)
+            if (CBoxes[i].tag == "busy")
             {
-                if (CBoxes[i - 1].transform.childCount == 0)
+                if (CBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = CBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -402,9 +406,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (DBoxes[i].transform.childCount > 0)
+            if (DBoxes[i].tag == "busy")
             {
-                if (DBoxes[i - 1].transform.childCount == 0)
+                if (DBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = DBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -421,11 +425,11 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
-        for (int i = 3; i <= 3; i++)
+        for (int i = 3; i <= 3; i++)//Enemy move
         {
-            if (ABoxes[i].transform.childCount > 0)
+            if (ABoxes[i].tag == "busy")
             {
-                if (ABoxes[i - 1].transform.childCount == 0)
+                if (ABoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = ABoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -441,9 +445,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (BBoxes[i].transform.childCount > 0)
+            if (BBoxes[i].tag == "busy")
             {
-                if (BBoxes[i - 1].transform.childCount == 0)
+                if (BBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = BBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -459,9 +463,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (CBoxes[i].transform.childCount > 0)
+            if (CBoxes[i].tag == "busy")
             {
-                if (CBoxes[i - 1].transform.childCount == 0)
+                if (CBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = CBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -477,9 +481,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (DBoxes[i].transform.childCount > 0)
+            if (DBoxes[i].tag == "busy")
             {
-                if (DBoxes[i - 1].transform.childCount == 0)
+                if (DBoxes[i - 1].tag == "free")
                 {
                     Transform childGameObject = DBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
@@ -497,10 +501,8 @@ public class GameManagerScr : MonoBehaviour
             }
         }
 
-        
-
-        
     }
+
     void AttackCards()
     {
         for (int i = 2; i >= 0; i--)
@@ -532,8 +534,8 @@ public class GameManagerScr : MonoBehaviour
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
                 int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i + range < 4) 
-                { 
+                if (i + range < 4)
+                {
                     if (BBoxes[i + range].transform.childCount > 0)
                     {
                         Transform EnemychildGameObject = BBoxes[i + range].transform.GetChild(0);
@@ -578,7 +580,7 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
                 if (i + range < 4)
-                { 
+                {
                     if (DBoxes[i + range].transform.childCount > 0)
                     {
                         Transform EnemychildGameObject = DBoxes[i + range].transform.GetChild(0);
@@ -617,9 +619,9 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-        
 
-        
+
+
             if (BBoxes[i].transform.childCount > 0)
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
@@ -640,10 +642,10 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-        
 
-        
-        
+
+
+
             if (CBoxes[i].transform.childCount > 0)
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
@@ -664,10 +666,10 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-        
 
-       
-        
+
+
+
             if (DBoxes[i].transform.childCount > 0)
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
@@ -690,6 +692,7 @@ public class GameManagerScr : MonoBehaviour
             }
         }
     }
+
     void DestroyCards()
     {
         for (int i = 0; i < 4; i++)
@@ -737,4 +740,5 @@ public class GameManagerScr : MonoBehaviour
             }
         }
     }
+
 }
