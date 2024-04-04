@@ -3170,7 +3170,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -3230,7 +3230,8 @@ MonoBehaviour:
   - {fileID: 572865470}
   - {fileID: 10306357}
   - {fileID: 1152148373}
-  parentObject: {fileID: 1011235342}
+  WallHP: 10
+  EnemyWallHP: 10
   PlayerMana: 1
   EnemyMana: 1
   PlayerManaTxt: {fileID: 1019170828}

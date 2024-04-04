@@ -20,7 +20,8 @@ public class GameManagerScr : MonoBehaviour
     public GameObject[] BBoxes;
     public GameObject[] CBoxes;
     public GameObject[] DBoxes;
-    public GameObject parentObject;
+    public int WallHP = 10, EnemyWallHP = 10;  
+   
     public int PlayerMana = 1, EnemyMana = 1;
     int increase = 1;
     public TextMeshProUGUI PlayerManaTxt, EnemyManaTxt;
@@ -194,163 +195,242 @@ public class GameManagerScr : MonoBehaviour
 
     void MoveCards()
     {
-        for (int i = 2; i >= 1; i--)//player move
-        {
-            if (ABoxes[i].tag == "busy")
+            if (ABoxes[2].tag == "busy")
             {
-                if (ABoxes[i + 1].tag == "free")
+                if (ABoxes[3].tag == "free")
                 {
-                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                    Transform childGameObject = ABoxes[2].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
+                        Vector3 newPositiona = ABoxes[3].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = ABoxes[i + 1].transform;
-                        ABoxes[i + 1].tag = "busy";
-                        ABoxes[i].tag = "free";
+                        childTransform.transform.parent = ABoxes[3].transform;
+                        ABoxes[3].tag = "busy";
+                        ABoxes[2].tag = "free";
                     }
                 }
             }
 
-            if (BBoxes[i].tag == "busy")
+            if (BBoxes[2].tag == "busy")
             {
-                if (BBoxes[i + 1].tag == "free")
+                if (BBoxes[3].tag == "free")
                 {
-                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = BBoxes[2].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = BBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = BBoxes[3].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = BBoxes[i + 1].transform;
-                        BBoxes[i + 1].tag = "busy";
-                        BBoxes[i].tag = "free";
+                        childTransform.transform.parent = BBoxes[3].transform;
+                        BBoxes[3].tag = "busy";
+                        BBoxes[2].tag = "free";
                     }
                 }
             }
 
-            if (CBoxes[i].tag == "busy")
+            if (CBoxes[2].tag == "busy")
             {
-                if (CBoxes[i + 1].tag == "free")
+                if (CBoxes[3].tag == "free")
                 {
-                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = CBoxes[2].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = CBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = CBoxes[3].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = CBoxes[i + 1].transform;
-                        CBoxes[i + 1].tag = "busy";
-                        CBoxes[i].tag = "free";
+                        childTransform.transform.parent = CBoxes[3].transform;
+                        CBoxes[3].tag = "busy";
+                        CBoxes[2].tag = "free";
                     }
                 }
             }
 
-            if (DBoxes[i].tag == "busy")
+            if (DBoxes[2].tag == "busy")
             {
-                if (DBoxes[i + 1].tag == "free")
+                if (DBoxes[3].tag == "free")
                 {
-                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = DBoxes[2].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = DBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = DBoxes[3].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = DBoxes[i + 1].transform;
-                        DBoxes[i + 1].tag = "busy";
-                        DBoxes[i].tag = "free";
+                        childTransform.transform.parent = DBoxes[3].transform;
+                        DBoxes[3].tag = "busy";
+                        DBoxes[2].tag = "free";
                     }
                 }
             }
-        }
-        for (int i = 0; i >= 0; i--)//player move
-        {
-            if (ABoxes[i].tag == "busy")
+
+        
+            if (ABoxes[1].tag == "busy" && ABoxes[3].tag == "free")
             {
-                if (ABoxes[i + 1].tag == "free")
+                if (ABoxes[2].tag == "free")
                 {
-                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                    Transform childGameObject = ABoxes[1].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
+                        Vector3 newPositiona = ABoxes[2].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = ABoxes[i + 1].transform;
-                        ABoxes[i + 1].tag = "busy";
-                        ABoxes[i].tag = "free";
+                        childTransform.transform.parent = ABoxes[2].transform;
+                        ABoxes[2].tag = "busy";
+                        ABoxes[1].tag = "free";
                     }
                 }
             }
 
-            if (BBoxes[i].tag == "busy")
+            if (BBoxes[1].tag == "busy" && BBoxes[3].tag == "free")
             {
-                if (BBoxes[i + 1].tag == "free")
+                if (BBoxes[2].tag == "free")
                 {
-                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = BBoxes[1].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = BBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = BBoxes[2].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = BBoxes[i + 1].transform;
-                        BBoxes[i + 1].tag = "busy";
-                        BBoxes[i].tag = "free";
+                        childTransform.transform.parent = BBoxes[2].transform;
+                        BBoxes[2].tag = "busy";
+                        BBoxes[1].tag = "free";
                     }
                 }
             }
 
-            if (CBoxes[i].tag == "busy")
+            if (CBoxes[1].tag == "busy" && CBoxes[3].tag == "free")
             {
-                if (CBoxes[i + 1].tag == "free")
+                if (CBoxes[2].tag == "free")
                 {
-                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = CBoxes[1].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = CBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = CBoxes[2].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = CBoxes[i + 1].transform;
-                        CBoxes[i + 1].tag = "busy";
-                        CBoxes[i].tag = "free";
+                        childTransform.transform.parent = CBoxes[2].transform;
+                        CBoxes[2].tag = "busy";
+                        CBoxes[1].tag = "free";
                     }
                 }
             }
 
-            if (DBoxes[i].tag == "busy")
+            if (DBoxes[1].tag == "busy" && DBoxes[3].tag == "free")
             {
-                if (DBoxes[i + 1].tag == "free")
+                if (DBoxes[2].tag == "free")
                 {
-                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                    Transform childGameObject = DBoxes[1].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
 
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        Vector3 newPositiona = DBoxes[i + 1].transform.position;
+                        Vector3 newPositiona = DBoxes[2].transform.position;
                         newPositiona.y += 0.2f;
                         childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = DBoxes[i + 1].transform;
-                        DBoxes[i + 1].tag = "busy";
-                        DBoxes[i].tag = "free";
+                        childTransform.transform.parent = DBoxes[2].transform;
+                        DBoxes[2].tag = "busy";
+                        DBoxes[1].tag = "free";
                     }
                 }
             }
-        }
-        for (int i = 1; i <= 2; i++)//Enemy move
+        
+        
+
+            if (ABoxes[0].tag == "busy")
+            {
+                if (ABoxes[1].tag == "free")
+                {
+                    Transform childGameObject = ABoxes[0].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = ABoxes[1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = ABoxes[1].transform;
+                        ABoxes[1].tag = "busy";
+                        ABoxes[0].tag = "free";
+                        
+                    }
+                }
+            }
+
+            if (BBoxes[0].tag == "busy")
+            {
+                if (BBoxes[1].tag == "free")
+                {
+                    Transform childGameObject = BBoxes[0].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = BBoxes[1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = BBoxes[1].transform;
+                        BBoxes[1].tag = "busy";
+                        BBoxes[0].tag = "free";
+                    
+                }
+                }
+            }
+
+            if (CBoxes[0].tag == "busy")
+            {
+                if (CBoxes[1].tag == "free")
+                {
+                    Transform childGameObject = CBoxes[0].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = CBoxes[1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = CBoxes[1].transform;
+                        CBoxes[1].tag = "busy";
+                        CBoxes[0].tag = "free";
+                        
+                    }
+                }
+            }
+
+            if (DBoxes[0].tag == "busy")
+            {
+                if (DBoxes[1].tag == "free")
+                {
+                    Transform childGameObject = DBoxes[0].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = DBoxes[1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = DBoxes[1].transform;
+                        DBoxes[1].tag = "busy";
+                        DBoxes[0].tag = "free";
+                    
+                }
+                }
+            }
+        
+        for (int i = 1; i < 4; i++)//Enemy move
         {
             if (ABoxes[i].tag == "busy")
             {
@@ -367,6 +447,7 @@ public class GameManagerScr : MonoBehaviour
                         childTransform.transform.parent = ABoxes[i - 1].transform;
                         ABoxes[i - 1].tag = "busy";
                         ABoxes[i].tag = "free";
+                        
                     }
                 }
             }
@@ -425,81 +506,7 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
-        for (int i = 3; i <= 3; i++)//Enemy move
-        {
-            if (ABoxes[i].tag == "busy")
-            {
-                if (ABoxes[i - 1].tag == "free")
-                {
-                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
-                    GameObject childTransform = childGameObject.gameObject;
-
-                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-                    {
-                        Vector3 newPositiona = ABoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
-                        childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = ABoxes[i - 1].transform;
-                        ABoxes[i - 1].tag = "busy";
-                        ABoxes[i].tag = "free";
-                    }
-                }
-            }
-            if (BBoxes[i].tag == "busy")
-            {
-                if (BBoxes[i - 1].tag == "free")
-                {
-                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
-                    GameObject childTransform = childGameObject.gameObject;
-
-                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-                    {
-                        Vector3 newPositiona = BBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
-                        childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = BBoxes[i - 1].transform;
-                        BBoxes[i - 1].tag = "busy";
-                        BBoxes[i].tag = "free";
-                    }
-                }
-            }
-            if (CBoxes[i].tag == "busy")
-            {
-                if (CBoxes[i - 1].tag == "free")
-                {
-                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
-                    GameObject childTransform = childGameObject.gameObject;
-
-                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-                    {
-                        Vector3 newPositiona = CBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
-                        childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = CBoxes[i - 1].transform;
-                        CBoxes[i - 1].tag = "busy";
-                        CBoxes[i].tag = "free";
-                    }
-                }
-            }
-            if (DBoxes[i].tag == "busy")
-            {
-                if (DBoxes[i - 1].tag == "free")
-                {
-                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
-                    GameObject childTransform = childGameObject.gameObject;
-
-                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-                    {
-                        Vector3 newPositiona = DBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
-                        childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = DBoxes[i - 1].transform;
-                        DBoxes[i - 1].tag = "busy";
-                        DBoxes[i].tag = "free";
-                    }
-                }
-            }
-        }
+        
 
     }
 
@@ -703,8 +710,9 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
-                    Destroy(childTransform);
+                    DestroyImmediate(childTransform);
                     ABoxes[i].tag = "free";
+                    
                 }
             }
             if (BBoxes[i].transform.childCount > 0)
@@ -713,8 +721,9 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
-                    Destroy(childTransform);
+                    DestroyImmediate(childTransform);
                     BBoxes[i].tag = "free";
+                    
                 }
             }
             if (CBoxes[i].transform.childCount > 0)
@@ -723,8 +732,9 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
-                    Destroy(childTransform);
+                    DestroyImmediate(childTransform);
                     CBoxes[i].tag = "free";
+                    
                 }
             }
             if (DBoxes[i].transform.childCount > 0)
@@ -733,12 +743,18 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
-                    Destroy(childTransform);
+                    DestroyImmediate(childTransform);
 
                     DBoxes[i].tag = "free";
+                    
                 }
             }
         }
     }
 
+
+    void AttackWall()
+    {
+
+    }
 }

@@ -3,7 +3,7 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
+    public float moveSpeed = 100.0f;
     public float maxTiltAngle = 80.0f;
     public float rotationSpeed = 2.0f;
     public float MaxY = 50.0f;

@@ -37,7 +37,6 @@ public static class CardManagerList
 public class CardManager : MonoBehaviour
 {
 
-
     public void Awake()
     {
         CardManagerList.AllCards.Add(new Card("Warrior", "Sprites/Pominki", 5, 4, 1, 3));
