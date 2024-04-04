@@ -38,7 +38,7 @@ public class Drag : MonoBehaviour
         {
             SelectPart();
         }
-       
+
         if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             StartCoroutine(StepFromAbove());
