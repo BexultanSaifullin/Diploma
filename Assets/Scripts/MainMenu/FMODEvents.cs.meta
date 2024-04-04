@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/MainMenu/FMODEvents.cs.meta
 guid: e9707330e0fab0f409716ef2694f248d
+========
+guid: 96fdc871833f8f048b20c5ba4f003897
+>>>>>>>> parent of 3f1a2ea ([RF] Card Behaviour Refactoring):Assets/Scripts/Cards/CardScr.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
