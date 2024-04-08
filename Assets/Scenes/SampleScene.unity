@@ -260,8 +260,6 @@ MonoBehaviour:
   currentCollider: {fileID: 0}
   currentCollider2: {fileID: 0}
   selectedObject: {fileID: 0}
-  free: free
-  busy: busy
 --- !u!4 &60001710
 Transform:
   m_ObjectHideFlags: 0
@@ -878,7 +876,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 932264126}
         m_TargetAssemblyTypeName: GameManagerScr, Assembly-CSharp
         m_MethodName: ChangeTurn
         m_Mode: 1
@@ -3271,6 +3269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cefba5313991f2429284b7ce3460e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainSpeed: 10
+  camSens: 0.5
+  minBounds: {x: 0, y: 0, z: 0}
+  maxBounds: {x: 0, y: 0, z: 0}
 --- !u!4 &926570582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2290124472458006274, guid: b1b138248fac27c469e8a09c58b0615b, type: 3}
@@ -3285,6 +3287,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 932264125}
+  - component: {fileID: 932264126}
+  - component: {fileID: 932264127}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3307,6 +3311,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &932264126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932264122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a603662cd8eabd4aa581608ad259156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EndTurnBtn: {fileID: 224591952}
+  PlayerWall: {fileID: 475326583}
+  EnemyWall: {fileID: 1157567089}
+  PlayerWarior1: {fileID: 1824637001}
+  PlayerWarior2: {fileID: 311804229}
+  EnemyWarrior1: {fileID: 1231046129}
+  EnemyWarrior2: {fileID: 1228770668}
+  PlayerKhan: {fileID: 0}
+  EnemyKhan: {fileID: 0}
+  ABoxes:
+  - {fileID: 1451055147}
+  - {fileID: 851218510}
+  - {fileID: 963720844}
+  - {fileID: 663370906}
+  BBoxes:
+  - {fileID: 1319256020}
+  - {fileID: 1005340536}
+  - {fileID: 1332325655}
+  - {fileID: 1601678681}
+  CBoxes:
+  - {fileID: 397180382}
+  - {fileID: 1084086793}
+  - {fileID: 756465801}
+  - {fileID: 2055923098}
+  DBoxes:
+  - {fileID: 961521004}
+  - {fileID: 572865470}
+  - {fileID: 10306357}
+  - {fileID: 1152148373}
+  PlayerWallHP: 20
+  EnemyWallHP: 1
+  WallDMG: 1
+  PlayerWarriorHP1: 6
+  EnemyWarriorHP1: 6
+  PlayerWarriorHP2: 6
+  EnemyWarriorHP2: 6
+  PlayerKhanHP: 10
+  EnemyKhanHP: 10
+  PlayerMana: 10
+  EnemyMana: 10
+  PlayerManaTxt: {fileID: 1019170828}
+  EnemyManaTxt: {fileID: 236361267}
+  PlayerWallHPTxt: {fileID: 987522454}
+  EnemyWallHPTxt: {fileID: 1317796542}
+  PlayerWarriorHP1Txt: {fileID: 138474360}
+  PlayerWarriorHP2Txt: {fileID: 1372090385}
+  EnemyWarriorHP1Txt: {fileID: 413066704}
+  EnemyWarriorHP2Txt: {fileID: 1295849850}
+  PlayerKhanHPTxt: {fileID: 0}
+  EnemyKhanHPTxt: {fileID: 0}
+  TurnTimeTxt: {fileID: 1078363074}
+--- !u!114 &932264127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932264122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61a28b3dc777916418a415e2bb2e465f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &941898084
 GameObject:
   m_ObjectHideFlags: 0
@@ -3533,8 +3612,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194229}
   - component: {fileID: 963194232}
-  - component: {fileID: 963194234}
-  - component: {fileID: 963194233}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3655,75 +3732,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &963194233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61a28b3dc777916418a415e2bb2e465f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &963194234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a603662cd8eabd4aa581608ad259156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EndTurnBtn: {fileID: 224591952}
-  PlayerWall: {fileID: 475326583}
-  EnemyWall: {fileID: 1157567089}
-  PlayerWarior1: {fileID: 1824637001}
-  PlayerWarior2: {fileID: 311804229}
-  EnemyWarrior1: {fileID: 1231046129}
-  EnemyWarrior2: {fileID: 1228770668}
-  ABoxes:
-  - {fileID: 1451055147}
-  - {fileID: 851218510}
-  - {fileID: 963720844}
-  - {fileID: 663370906}
-  BBoxes:
-  - {fileID: 1319256020}
-  - {fileID: 1005340536}
-  - {fileID: 1332325655}
-  - {fileID: 1601678681}
-  CBoxes:
-  - {fileID: 397180382}
-  - {fileID: 1084086793}
-  - {fileID: 756465801}
-  - {fileID: 2055923098}
-  DBoxes:
-  - {fileID: 961521004}
-  - {fileID: 572865470}
-  - {fileID: 10306357}
-  - {fileID: 1152148373}
-  PlayerWallHP: 20
-  EnemyWallHP: 1
-  WallDMG: 1
-  PlayerWarriorHP1: 6
-  EnemyWarriorHP1: 6
-  PlayerWarriorHP2: 6
-  EnemyWarriorHP2: 6
-  PlayerMana: 10
-  EnemyMana: 10
-  PlayerManaTxt: {fileID: 1019170828}
-  EnemyManaTxt: {fileID: 236361267}
-  PlayerWallHPTxt: {fileID: 987522454}
-  EnemyWallHPTxt: {fileID: 1317796542}
-  PlayerWarriorHP1Txt: {fileID: 138474360}
-  PlayerWarriorHP2Txt: {fileID: 1372090385}
-  EnemyWarriorHP1Txt: {fileID: 413066704}
-  EnemyWarriorHP2Txt: {fileID: 1295849850}
-  TurnTimeTxt: {fileID: 1078363074}
 --- !u!1 &963720844
 GameObject:
   m_ObjectHideFlags: 0
@@ -6768,6 +6776,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cefba5313991f2429284b7ce3460e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainSpeed: 10
+  camSens: 1
+  minBounds: {x: 0, y: 0, z: 0}
+  maxBounds: {x: 0, y: 0, z: 0}
 --- !u!1 &1601678681
 GameObject:
   m_ObjectHideFlags: 0
