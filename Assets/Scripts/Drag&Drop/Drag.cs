@@ -21,6 +21,7 @@ public class Drag : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
+    public GameObject[] cardModels;
 
 
     private void Start()
@@ -127,7 +128,9 @@ public class Drag : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
-                currentCollider2.transform.position = hit.point;
+                Vector3 selPos = hit.collider.gameObject.transform.position;
+                selPos.y += 0.01f;
+                currentCollider2.transform.position = selPos;
                 selectedObject.layer = LayerMask.NameToLayer("Played");
                 hit.collider.gameObject.tag = busy;
                 selectedObject.transform.parent = hit.collider.gameObject.transform;
@@ -136,6 +139,7 @@ public class Drag : MonoBehaviour
                 {
                     GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                     GameManager.ShowMana();
+                    selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
                     selectedObject = null;
                     currentCollider2 = null;
                 }
