@@ -97,12 +97,6 @@ public class GameManagerScr : MonoBehaviour
                 EnemyTurn(EnemyCard, EnemyPlaces);
             }
         }
-        TurnTime = 5;
-        while (TurnTime-- > 0)
-        {
-            TurnTimeTxt.text = TurnTime.ToString();
-            yield return new WaitForSeconds(1);
-        }
         ChangeTurn();
     }
 
@@ -113,11 +107,18 @@ public class GameManagerScr : MonoBehaviour
         EndTurnBtn.interactable = IsPlayerTurn;
         if (IsPlayerTurn)
         {
+            GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("Card");
+            int PlayerLayerPlayed = LayerMask.NameToLayer("Played");
+            GameObject[] objectsOnLayerPlayed = objectsWithTagCard.Where(card => card.layer == PlayerLayerPlayed).ToArray();
+            foreach (GameObject obj in objectsOnLayerPlayed)
+            {
+                obj.layer = LayerMask.NameToLayer("Playing");
+            }
             AttackCards();
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
             DestroyCards();
-            MoveCards();
+            PlayerMoveCards();
             Spawner.Spawn();
             if (increase < 10)
                 increase += 1;
@@ -129,6 +130,18 @@ public class GameManagerScr : MonoBehaviour
         }
         else if (Turn != 1)
         {
+            GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("EnemyCard");
+            int PlayerLayerPlayed = LayerMask.NameToLayer("EnemyPlayed");
+            GameObject[] objectsOnLayerPlayed = objectsWithTagCard.Where(card => card.layer == PlayerLayerPlayed).ToArray();
+            foreach (GameObject obj in objectsOnLayerPlayed)
+            {
+                obj.layer = LayerMask.NameToLayer("EnemyPlaying");
+            }
+            AttackCards();
+            PlayerAttackWallAndWarrior();
+            EnemyAttackWallAndWarrior();
+            DestroyCards();
+            EnemyMoveCards();
             SpawnerEnemy.SpawnEnemy();
         }
         StartCoroutine(TurnFunc());
@@ -154,7 +167,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard[i].transform.position = newPosition;
                 Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
+                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyCard[i].transform.parent = EnemyPlaces[place].transform;
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -180,7 +193,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard[i].transform.position = newPosition;
                 Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlaying");
+                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                 //CardInfo.ChangeInfo(EnemyCard[i]);
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -191,302 +204,90 @@ public class GameManagerScr : MonoBehaviour
         }
     }
 
-    void MoveCards()
+    void PlayerMoveCards()
     {
-        if (ABoxes[2].tag == "busy" && ABoxes[3].tag == "free")
+        for (int i = 2; i >= 0; i--)//Player move
         {
-
-            Transform childGameObject = ABoxes[2].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            if (ABoxes[i].tag == "busy")
             {
-                Vector3 newPositiona = ABoxes[3].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = ABoxes[3].transform;
-                ABoxes[3].tag = "busy";
-                ABoxes[2].tag = "free";
-            }         
-        }
-
-        if (BBoxes[2].tag == "busy" && BBoxes[3].tag == "free")
-        {
-
-            Transform childGameObject = BBoxes[2].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = BBoxes[3].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = BBoxes[3].transform;
-                BBoxes[3].tag = "busy";
-                BBoxes[2].tag = "free";
-            }
-            
-        }
-
-        if (CBoxes[2].tag == "busy" && CBoxes[3].tag == "free")
-        {
-            
-            Transform childGameObject = CBoxes[2].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = CBoxes[3].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = CBoxes[3].transform;
-                CBoxes[3].tag = "busy";
-                CBoxes[2].tag = "free";
-            }
-            
-        }
-
-        if (DBoxes[2].tag == "busy" && DBoxes[3].tag == "free")
-        {
-
-            Transform childGameObject = DBoxes[2].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = DBoxes[3].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = DBoxes[3].transform;
-                DBoxes[3].tag = "busy";
-                DBoxes[2].tag = "free";
-            }
-
-        }
-
-
-        if (ABoxes[1].tag == "busy" && ABoxes[2].tag == "free" && ABoxes[3].tag == "busy")
-        {
-            Transform proverka = ABoxes[3].transform.GetChild(0);
-            GameObject proverkaObject = proverka.gameObject;
-            if (proverkaObject.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Transform childGameObject = ABoxes[1].transform.GetChild(0);
-                GameObject childTransform = childGameObject.gameObject;
-
-                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                if (ABoxes[i + 1].tag == "free")
                 {
-                    Vector3 newPositiona = ABoxes[2].transform.position;
-                    newPositiona.y += 0.2f;
-                    childTransform.transform.position = newPositiona;
-                    childTransform.transform.parent = ABoxes[2].transform;
-                    ABoxes[2].tag = "busy";
-                    ABoxes[1].tag = "free";
+                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = ABoxes[i + 1].transform;
+                        ABoxes[i + 1].tag = "busy";
+                        ABoxes[i].tag = "free";
+
+                    }
                 }
             }
-        } 
-        else if (ABoxes[1].tag == "busy" && ABoxes[2].tag == "free")
-        {
-            Transform childGameObject = ABoxes[1].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            if (BBoxes[i].tag == "busy")
             {
-                Vector3 newPositiona = ABoxes[2].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = ABoxes[2].transform;
-                ABoxes[2].tag = "busy";
-                ABoxes[1].tag = "free";
-            }
-        }
-
-        if (BBoxes[1].tag == "busy" && BBoxes[2].tag == "free" && BBoxes[3].tag == "busy")
-        {
-            Transform proverka = BBoxes[3].transform.GetChild(0);
-            GameObject proverkaObject = proverka.gameObject;
-            if (proverkaObject.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Transform childGameObject = BBoxes[1].transform.GetChild(0);
-                GameObject childTransform = childGameObject.gameObject;
-
-                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                if (BBoxes[i + 1].tag == "free")
                 {
-                    Vector3 newPositiona = BBoxes[2].transform.position;
-                    newPositiona.y += 0.2f;
-                    childTransform.transform.position = newPositiona;
-                    childTransform.transform.parent = BBoxes[2].transform;
-                    BBoxes[2].tag = "busy";
-                    BBoxes[1].tag = "free";
+                    Transform childGameObject = BBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = BBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = BBoxes[i + 1].transform;
+                        BBoxes[i + 1].tag = "busy";
+                        BBoxes[i].tag = "free";
+
+                    }
+                }
+            }
+            if (CBoxes[i].tag == "busy")
+            {
+                if (CBoxes[i + 1].tag == "free")
+                {
+                    Transform childGameObject = CBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = CBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = CBoxes[i + 1].transform;
+                        CBoxes[i + 1].tag = "busy";
+                        CBoxes[i].tag = "free";
+
+                    }
+                }
+            }
+            if (DBoxes[i].tag == "busy")
+            {
+                if (DBoxes[i + 1].tag == "free")
+                {
+                    Transform childGameObject = DBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+
+                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    {
+                        Vector3 newPositiona = DBoxes[i + 1].transform.position;
+                        newPositiona.y += 0.2f;
+                        childTransform.transform.position = newPositiona;
+                        childTransform.transform.parent = DBoxes[i + 1].transform;
+                        DBoxes[i + 1].tag = "busy";
+                        DBoxes[i].tag = "free";
+
+                    }
                 }
             }
         }
-        else if (BBoxes[1].tag == "busy" && BBoxes[2].tag == "free")
-        {
-            Transform childGameObject = BBoxes[1].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = BBoxes[2].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = BBoxes[2].transform;
-                BBoxes[2].tag = "busy";
-                BBoxes[1].tag = "free";
-            }
-        }
-
-        if (CBoxes[1].tag == "busy" && CBoxes[2].tag == "free" && CBoxes[3].tag == "busy")
-        {
-            Transform proverka = CBoxes[3].transform.GetChild(0);
-            GameObject proverkaObject = proverka.gameObject;
-            if (proverkaObject.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Transform childGameObject = CBoxes[1].transform.GetChild(0);
-                GameObject childTransform = childGameObject.gameObject;
-
-                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-                {
-                    Vector3 newPositiona = CBoxes[2].transform.position;
-                    newPositiona.y += 0.2f;
-                    childTransform.transform.position = newPositiona;
-                    childTransform.transform.parent = CBoxes[2].transform;
-                    CBoxes[2].tag = "busy";
-                    CBoxes[1].tag = "free";
-                }
-            }
-        }
-        else if (CBoxes[1].tag == "busy" && CBoxes[2].tag == "free")
-        {
-            Transform childGameObject = CBoxes[1].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = CBoxes[2].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = CBoxes[2].transform;
-                CBoxes[2].tag = "busy";
-                CBoxes[1].tag = "free";
-            }
-        }
-
-        if (DBoxes[1].tag == "busy" && DBoxes[2].tag == "free" && DBoxes[3].tag == "busy")
-        {
-            Transform proverka = DBoxes[3].transform.GetChild(0);
-            GameObject proverkaObject = proverka.gameObject;
-            if (proverkaObject.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Transform childGameObject = DBoxes[1].transform.GetChild(0);
-                GameObject childTransform = childGameObject.gameObject;
-
-                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-                {
-                    Vector3 newPositiona = DBoxes[2].transform.position;
-                    newPositiona.y += 0.2f;
-                    childTransform.transform.position = newPositiona;
-                    childTransform.transform.parent = DBoxes[2].transform;
-                    DBoxes[2].tag = "busy";
-                    DBoxes[1].tag = "free";
-                }
-            }
-        }
-        else if (DBoxes[1].tag == "busy" && DBoxes[2].tag == "free")
-        {
-            Transform childGameObject = DBoxes[1].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = DBoxes[2].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = DBoxes[2].transform;
-                DBoxes[2].tag = "busy";
-                DBoxes[1].tag = "free";
-            }
-        }
-
-
-
-        if (ABoxes[0].tag == "busy" && ABoxes[1].tag == "free")
-        {
-
-            Transform childGameObject = ABoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = ABoxes[1].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = ABoxes[1].transform;
-                ABoxes[1].tag = "busy";
-                ABoxes[0].tag = "free";
-
-            }
-
-        }
-
-        if (BBoxes[0].tag == "busy" && BBoxes[1].tag == "free")
-        {
-
-            Transform childGameObject = BBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = BBoxes[1].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = BBoxes[1].transform;
-                BBoxes[1].tag = "busy";
-                BBoxes[0].tag = "free";
-
-            }
-
-        }
-
-        if (CBoxes[0].tag == "busy" && CBoxes[1].tag == "free")
-        {
-
-            Transform childGameObject = CBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = CBoxes[1].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = CBoxes[1].transform;
-                CBoxes[1].tag = "busy";
-                CBoxes[0].tag = "free";
-
-            }
-
-        }
-
-        if (DBoxes[0].tag == "busy" && DBoxes[1].tag == "free")
-        {
-
-            Transform childGameObject = DBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                Vector3 newPositiona = DBoxes[1].transform.position;
-                newPositiona.y += 0.2f;
-                childTransform.transform.position = newPositiona;
-                childTransform.transform.parent = DBoxes[1].transform;
-                DBoxes[1].tag = "busy";
-                DBoxes[0].tag = "free";
-
-            }
-
-        }
-        
+    }
+    void EnemyMoveCards()
+    {
         for (int i = 1; i < 4; i++)//Enemy move
         {
             if (ABoxes[i].tag == "busy")
@@ -504,7 +305,7 @@ public class GameManagerScr : MonoBehaviour
                         childTransform.transform.parent = ABoxes[i - 1].transform;
                         ABoxes[i - 1].tag = "busy";
                         ABoxes[i].tag = "free";
-                        
+
                     }
                 }
             }

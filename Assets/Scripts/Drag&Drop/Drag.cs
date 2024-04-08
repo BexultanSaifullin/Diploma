@@ -63,6 +63,7 @@ public class Drag : MonoBehaviour
             currentCollider = hit.collider;
             currentCollider2 = currentCollider;
             selectedObject = hit.collider.gameObject;
+            Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana > GameManager.PlayerMana)
             {
                 selectedObject = null;
@@ -128,11 +129,11 @@ public class Drag : MonoBehaviour
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
             {
                 currentCollider2.transform.position = hit.point;
-                selectedObject.layer = LayerMask.NameToLayer("Playing");
+                selectedObject.layer = LayerMask.NameToLayer("Played");
                 hit.collider.gameObject.tag = busy;
                 selectedObject.transform.parent = hit.collider.gameObject.transform;
                 ArrangeCards();
-                if (selectedObject.layer == LayerMask.NameToLayer("Playing"))
+                if (selectedObject.layer == LayerMask.NameToLayer("Played"))
                 {
                     GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                     GameManager.ShowMana();
