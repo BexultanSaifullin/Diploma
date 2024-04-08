@@ -24,7 +24,7 @@ public class AudioManager : Singleton<AudioManager>
     private EventInstance backgroundMusicEventInstance;
     public static AudioManager instance { get; private set; }
 
-    private void Awake()
+    private new void Awake()
     {
         if (instance != null)
         {

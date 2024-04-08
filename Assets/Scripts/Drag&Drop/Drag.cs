@@ -14,7 +14,6 @@ public class Drag : MonoBehaviour
     private bool inputStart;
     private Vector3 offset;
     private Vector3 newPosition;
-    private bool coroutineCalled = false;
     public string defaultLayerName = "Playing";
     public GameObject selectedObject;
     public string free = "free";
@@ -160,8 +159,6 @@ public class Drag : MonoBehaviour
             currentCollider2.transform.position = newPosition;
             Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
             currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
-
-            coroutineCalled = true;
         }
     }
 

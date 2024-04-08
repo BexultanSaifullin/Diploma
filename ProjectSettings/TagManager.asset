@@ -8,6 +8,7 @@ TagManager:
   - busy
   - free
   - EnemyCard
+  - object
   layers:
   - Default
   - TransparentFX
