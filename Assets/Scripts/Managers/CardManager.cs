@@ -39,10 +39,10 @@ public class CardManager : MonoBehaviour
 
     public void Awake()
     {
-        CardManagerList.AllCards.Add(new Card("Warrior", "Sprites/Pominki", 5, 4, 1, 3));
+        CardManagerList.AllCards.Add(new Card("Warrior", "Sprites/Pominki", 1, 10, 1, 3));
         CardManagerList.AllCards.Add(new Card("Man", "Sprites/Pominki", 1, 1, 1, 1));
-        CardManagerList.AllCards.Add(new Card("Archer", "Sprites/Pominki", 10, 1, 2, 4));
-        CardManagerList.AllCards.Add(new Card("NaN", "Sprites/Pominki", 2, 3, 1, 2));
+        CardManagerList.AllCards.Add(new Card("Archer", "Sprites/Pominki", 1, 10, 2, 4));
+        CardManagerList.AllCards.Add(new Card("NaN", "Sprites/Pominki", 1, 10, 1, 2));
     }
     
    
