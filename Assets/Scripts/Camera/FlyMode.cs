@@ -6,7 +6,7 @@ public class FlyMode : MonoBehaviour
 {
     public float mainSpeed = 10f; // Regular speed
     public float camSens = 0.5f; // Mouse sensitivity
-    private bool flyMode = false;
+    public bool flyMode = false;
     private Vector3 flyStartPosition;
     private Quaternion flyStartRotation;
     private float rotationX = 0f;
@@ -14,9 +14,11 @@ public class FlyMode : MonoBehaviour
     private Vector3 initialCameraPosition; // Начальное положение камеры
     public Vector3 minBounds; // Минимальные границы куба
     public Vector3 maxBounds; // Максимальные границы куба
+    //private CameraChanger cameraChanger;
 
     void Start()
     {
+        //cameraChanger = FindObjectOfType<CameraChanger>();
         flyStartPosition = transform.position; // Store fly start position
         flyStartRotation = transform.rotation; // Store fly start rotation
 
@@ -31,6 +33,7 @@ public class FlyMode : MonoBehaviour
     void Update()
     {
         // Fly mode activation
+        //if (Input.GetKeyDown(KeyCode.Keypad1) && cameraChanger.currentCameraIndex == 0)
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             // transform.rotation = Quaternion.Euler(new Vector3(30.1f, -179f, 0f));

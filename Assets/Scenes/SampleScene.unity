@@ -3342,6 +3342,7 @@ MonoBehaviour:
   - {fileID: 1352083741}
   - {fileID: 1964035381}
   currentCameraIndex: 0
+  flyMode: 0
 --- !u!4 &893766300
 Transform:
   m_ObjectHideFlags: 0
@@ -3375,6 +3376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainSpeed: 10
   camSens: 0.5
+  flyMode: 0
   minBounds: {x: 0, y: 0, z: 0}
   maxBounds: {x: 0, y: 0, z: 0}
 --- !u!4 &926570582 stripped
@@ -7129,6 +7131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainSpeed: 10
   camSens: 1
+  flyMode: 0
   minBounds: {x: 0, y: 0, z: 0}
   maxBounds: {x: 0, y: 0, z: 0}
 --- !u!1 &1601678681

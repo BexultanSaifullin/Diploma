@@ -8,6 +8,7 @@ public class CameraChanger : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] public CinemachineVirtualCamera[] VirtualCameras;
     public int currentCameraIndex;
+    public bool flyMode = false;
     void Start()
     {
 
@@ -16,7 +17,11 @@ public class CameraChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            flyMode = !flyMode;
+        }
+        if (Input.GetButtonDown("Jump") && !flyMode)
         {
             SwitchCamera();
         }
