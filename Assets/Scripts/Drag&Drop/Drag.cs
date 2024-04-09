@@ -14,6 +14,7 @@ public class Drag : MonoBehaviour
     private Vector3 offset;
     private Vector3 newPosition;
     [SerializeField] private GameObject selectedObject;
+    private GameObject instantiatedPrefab;
     string free = "free";
     string busy = "busy";
     GameObject parentObject;
@@ -133,7 +134,11 @@ public class Drag : MonoBehaviour
                 {
                     GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                     GameManager.ShowMana();
+
                     selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+                    CardModelSpawn(selPos, selectedObject);
+                    instantiatedPrefab.transform.parent = selectedObject.transform;
+
                     selectedObject = null;
                     currentCollider2 = null;
                 }
@@ -141,6 +146,13 @@ public class Drag : MonoBehaviour
         }
     }
 
+    public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
+    {
+        selPos.y -= 0.5f;
+        instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        Animator anim = instantiatedPrefab.GetComponent<Animator>();
+        anim.Play("SpawnAnimation");
+    }
 
     public void ArrangeCards()
     {
