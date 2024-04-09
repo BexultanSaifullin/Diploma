@@ -35,7 +35,7 @@ public class CardInfoScr : MonoBehaviour
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 4);
+        int randomNumber = Random.Range(0, 5);
         //if (selectedObject.layer != LayerMask.NameToLayer("Enemy"))
         ShowCardInfo(CardManagerList.AllCards[randomNumber]);
         //else
