@@ -7,7 +7,6 @@ using System.Linq;
 
 public class Drag : MonoBehaviour
 {
-    [SerializeField] private Collider currentCollider;
     public Collider currentCollider2;
     private Camera mainCamera;
     private Plane dragPlane;
@@ -60,16 +59,12 @@ public class Drag : MonoBehaviour
         Ray camRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(camRay, out hit, 2000f, LayerMask.GetMask("Robot")))
         {
-
-            currentCollider = hit.collider;
-            currentCollider2 = currentCollider;
+            currentCollider2 = hit.collider;
             selectedObject = hit.collider.gameObject;
-            Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana > GameManager.PlayerMana)
             {
                 selectedObject = null;
                 currentCollider2 = null;
-                currentCollider = null;
                 return;
             }
             //if (mainCamera.transform.position.y == 5.51f)
@@ -83,12 +78,11 @@ public class Drag : MonoBehaviour
             //    selectedObject.transform.parent = parentObject.transform;
             //    a.gameObject.tag = free;
             //} COD CHTOBI SDELAT POLE NA KOTOROM STOYALA KARTA SVOBODNIM PRI PODNYTII
-            dragPlane = new Plane(mainCamera.transform.forward, currentCollider.transform.position);
+            dragPlane = new Plane(mainCamera.transform.forward, currentCollider2.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
-            offset = currentCollider.transform.position - camRay.GetPoint(planeDist);
+            offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
         }
-        currentCollider = null;
     }
 
     private IEnumerator StepFromAbove()

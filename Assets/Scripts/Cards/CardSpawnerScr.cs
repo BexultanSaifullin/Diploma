@@ -17,6 +17,10 @@ public class CardSpawnerScr : MonoBehaviour
     {
         GameObject spawnedObject = Instantiate(objectToSpawn, new Vector3(10, 10, 10), Quaternion.Euler(45, 0, 0));
         spawnedObject.transform.parent = transform;
+        //if(spawnedObject )
+        //{
+
+        //}
         Arrange.ArrangeCards();
     }
 }

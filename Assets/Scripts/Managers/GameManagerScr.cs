@@ -125,7 +125,7 @@ public class GameManagerScr : MonoBehaviour
             if (PlayerMana < 10)
                 PlayerMana = 10;
             if (EnemyMana < 10)
-                EnemyMana = 0;
+                EnemyMana = EnemyMana;
             ShowMana();
         }
         else if (Turn != 1)
@@ -137,9 +137,10 @@ public class GameManagerScr : MonoBehaviour
             {
                 obj.layer = LayerMask.NameToLayer("EnemyPlaying");
             }
-            AttackCards();
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
+            AttackCards();
+            
             DestroyCards();
             EnemyMoveCards();
             SpawnerEnemy.SpawnEnemy();
@@ -159,17 +160,18 @@ public class GameManagerScr : MonoBehaviour
             {
                 int place = Random.Range(0, EnemyPlaces.Count - 1);
                 Vector3 newPosition = EnemyPlaces[place].transform.position;
-                newPosition.y += 0.2f;
+                newPosition.y += 0.01f;
                 if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
                 {
                     continue;
                 }
                 EnemyCard[i].transform.position = newPosition;
-                Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
+                Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyCard[i].transform.parent = EnemyPlaces[place].transform;
+                EnemyCard[i].transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                 ShowMana();
                 EnemyPlaces.RemoveAt(place);
@@ -189,11 +191,12 @@ public class GameManagerScr : MonoBehaviour
                 }
                 int place = Random.Range(0, EnemyPlaces.Count - 1);
                 Vector3 newPosition = EnemyPlaces[place].transform.position;
-                newPosition.y += 0.2f;
+                newPosition.y += 0.01f;
                 EnemyCard[i].transform.position = newPosition;
-                Vector3 rotationAngles = new Vector3(-90f, 0f, 0f);
+                Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                EnemyCard[i].transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
                 //CardInfo.ChangeInfo(EnemyCard[i]);
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -208,24 +211,24 @@ public class GameManagerScr : MonoBehaviour
     {
         for (int i = 2; i >= 0; i--)//Player move
         {
-            if (ABoxes[i].tag == "busy")
+            if (ABoxes[i].tag == "busy" && ABoxes[i + 1].tag == "free")
             {
-                if (ABoxes[i + 1].tag == "free")
+
+                Transform childGameObject = ABoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+
+                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || EnemyWallHP <= 0 ))
                 {
-                    Transform childGameObject = ABoxes[i].transform.GetChild(0);
-                    GameObject childTransform = childGameObject.gameObject;
+                    
+                    Vector3 newPositiona = ABoxes[i + 1].transform.position;
+                    newPositiona.y += 0.01f;
+                    childTransform.transform.position = newPositiona;
+                    childTransform.transform.parent = ABoxes[i + 1].transform;
+                    ABoxes[i + 1].tag = "busy";
+                    ABoxes[i].tag = "free";
 
-                    if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-                    {
-                        Vector3 newPositiona = ABoxes[i + 1].transform.position;
-                        newPositiona.y += 0.2f;
-                        childTransform.transform.position = newPositiona;
-                        childTransform.transform.parent = ABoxes[i + 1].transform;
-                        ABoxes[i + 1].tag = "busy";
-                        ABoxes[i].tag = "free";
-
-                    }
                 }
+
             }
             if (BBoxes[i].tag == "busy")
             {
@@ -237,7 +240,7 @@ public class GameManagerScr : MonoBehaviour
                     if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         Vector3 newPositiona = BBoxes[i + 1].transform.position;
-                        newPositiona.y += 0.2f;
+                        newPositiona.y += 0.01f;
                         childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = BBoxes[i + 1].transform;
                         BBoxes[i + 1].tag = "busy";
@@ -300,7 +303,7 @@ public class GameManagerScr : MonoBehaviour
                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         Vector3 newPositiona = ABoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
+                        newPositiona.y += 0.01f;
                         childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = ABoxes[i - 1].transform;
                         ABoxes[i - 1].tag = "busy";
@@ -319,7 +322,7 @@ public class GameManagerScr : MonoBehaviour
                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         Vector3 newPositiona = BBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
+                        newPositiona.y += 0.01f;
                         childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = BBoxes[i - 1].transform;
                         BBoxes[i - 1].tag = "busy";
@@ -337,7 +340,7 @@ public class GameManagerScr : MonoBehaviour
                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         Vector3 newPositiona = CBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
+                        newPositiona.y += 0.01f;
                         childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = CBoxes[i - 1].transform;
                         CBoxes[i - 1].tag = "busy";
@@ -355,7 +358,7 @@ public class GameManagerScr : MonoBehaviour
                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         Vector3 newPositiona = DBoxes[i - 1].transform.position;
-                        newPositiona.y += 0.2f;
+                        newPositiona.y += 0.01f;
                         childTransform.transform.position = newPositiona;
                         childTransform.transform.parent = DBoxes[i - 1].transform;
                         DBoxes[i - 1].tag = "busy";
@@ -374,20 +377,30 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i + range < 4)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (ABoxes[i + range].transform.childCount > 0)
+                    if (i + range < 4)
                     {
-                        Transform EnemychildGameObject = ABoxes[i + range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
-                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        if (ABoxes[i + range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = ABoxes[i + range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                        childTransform.layer == LayerMask.NameToLayer("Playing"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
-
+                    } else if(i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn)
+                    {
+                        EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (EnemyWallHP <= 0)
+                        {
+                            DestroyImmediate(PlayerWall);
+                            ShowHPWall();
+                        }
                     }
                 }
             }
@@ -396,20 +409,22 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i + range < 4)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (BBoxes[i + range].transform.childCount > 0)
+                    if (i + range < 4)
                     {
-                        Transform EnemychildGameObject = BBoxes[i + range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
-                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        if (BBoxes[i + range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = BBoxes[i + range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                        childTransform.layer == LayerMask.NameToLayer("Playing"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
-
                     }
                 }
             }
@@ -418,43 +433,46 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i + range < 4)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (CBoxes[i + range].transform.childCount > 0)
+                    if (i + range < 4)
                     {
-                        Transform EnemychildGameObject = CBoxes[i + range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
-                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        if (CBoxes[i + range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = CBoxes[i + range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                        childTransform.layer == LayerMask.NameToLayer("Playing"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
-
                     }
                 }
-
             }
 
             if (DBoxes[i].transform.childCount > 0)
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i + range < 4)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (DBoxes[i + range].transform.childCount > 0)
+                    if (i + range < 4)
                     {
-                        Transform EnemychildGameObject = DBoxes[i + range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
-                                    childTransform.layer == LayerMask.NameToLayer("Playing"))
+                        if (DBoxes[i + range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = DBoxes[i + range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
+                                        childTransform.layer == LayerMask.NameToLayer("Playing"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
-
                     }
                 }
             }
@@ -466,18 +484,21 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i - range >= 0)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (ABoxes[i - range].transform.childCount > 0)
+                    if (i - range >= 0)
                     {
-                        Transform EnemychildGameObject = ABoxes[i - range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
-                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        if (ABoxes[i - range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = ABoxes[i - range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                        childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
                     }
                 }
@@ -489,18 +510,21 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i - range >= 0)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (BBoxes[i - range].transform.childCount > 0)
+                    if (i - range >= 0)
                     {
-                        Transform EnemychildGameObject = BBoxes[i - range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
-                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        if (BBoxes[i - range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = BBoxes[i - range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                        childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
                     }
                 }
@@ -513,18 +537,21 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i - range >= 0)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (CBoxes[i - range].transform.childCount > 0)
+                    if (i - range >= 0)
                     {
-                        Transform EnemychildGameObject = CBoxes[i - range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
-                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        if (CBoxes[i - range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = CBoxes[i - range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                        childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
                     }
                 }
@@ -537,18 +564,21 @@ public class GameManagerScr : MonoBehaviour
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range;
-                if (i - range >= 0)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
                 {
-                    if (DBoxes[i - range].transform.childCount > 0)
+                    if (i - range >= 0)
                     {
-                        Transform EnemychildGameObject = DBoxes[i - range].transform.GetChild(0);
-                        GameObject EnemychildTransform = EnemychildGameObject.gameObject;
-                        if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
-                                    childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                        if (DBoxes[i - range].transform.childCount > 0)
                         {
-                            EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                            EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            Transform EnemychildGameObject = DBoxes[i - range].transform.GetChild(0);
+                            GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                            if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
+                                        childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                            {
+                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                            }
+                            break;
                         }
                     }
                 }
@@ -611,192 +641,210 @@ public class GameManagerScr : MonoBehaviour
 
     void PlayerAttackWallAndWarrior()
     {
-        if (ABoxes[0].tag == "busy" && PlayerWallHP > 0)
+        if (ABoxes[0].tag == "busy")
         {
             Transform childGameObject = ABoxes[0].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+            if (PlayerWallHP > 0)
             {
-                PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    if (PlayerWallHP <= 0)
+                    {
+                        DestroyImmediate(PlayerWall);
+                        ShowHPWall();
+                    }
+                }
+            }
+            else if (PlayerWarriorHP1 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (PlayerWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (PlayerWarriorHP2 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (!IsPlayerTurn)
+            {
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+            }
+        }
+        if (BBoxes[0].tag == "busy")
+        {
+            Transform childGameObject = BBoxes[0].transform.GetChild(0);
+            GameObject childTransform = childGameObject.gameObject;
+            if (PlayerWallHP > 0)
+            {
+                
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
                 if (PlayerWallHP <= 0)
                 {
                     DestroyImmediate(PlayerWall);
                     ShowHPWall();
                 }
             }
-        }
-        else if (ABoxes[0].tag == "busy" && PlayerWarriorHP1 > 0)
-        {
-            Transform childGameObject = ABoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+            else if (PlayerWarriorHP1 > 0)
             {
-                PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (PlayerWarriorHP2 > 0)
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (PlayerWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
-                else
+            }
+            else if (PlayerWarriorHP2 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-        }
-        else if (ABoxes[0].tag == "busy" && PlayerWarriorHP2 > 0)
-        {
-            Transform childGameObject = ABoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+            } 
+            else if (!IsPlayerTurn)
             {
-                PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-        }
-
-        if (BBoxes[0].tag == "busy" && PlayerWallHP > 0)
-        {
-            Transform childGameObject = BBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
-            if (PlayerWallHP <= 0)
-            {
-                DestroyImmediate(PlayerWall);
-                ShowHPWall();
-            }
-        }
-        else if (BBoxes[0].tag == "busy" && PlayerWarriorHP1 > 0)
-        {
-            Transform childGameObject = BBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (PlayerWarriorHP2 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-        }
-        else if (BBoxes[0].tag == "busy" && PlayerWarriorHP2 > 0)
-        {
-            Transform childGameObject = BBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
         }
 
-        if (CBoxes[0].tag == "busy" && PlayerWallHP > 0)
+        if (CBoxes[0].tag == "busy")
         {
             Transform childGameObject = CBoxes[0].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+            if (PlayerWallHP > 0)
             {
-                PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (PlayerWallHP <= 0)
+                {
+                    DestroyImmediate(PlayerWall);
+                    ShowHPWall();
+                }
+            }
+            else if (PlayerWarriorHP2 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (PlayerWarriorHP1 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (PlayerWarriorHP1 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (!IsPlayerTurn)
+            {
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
-            if (PlayerWallHP <= 0)
-            {
-                DestroyImmediate(PlayerWall);
-                ShowHPWall();
-            }
-        }
-        else if (CBoxes[0].tag == "busy" && PlayerWarriorHP2 > 0)
-        {
-            Transform childGameObject = CBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (PlayerWarriorHP1 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-        }
-        else if (CBoxes[0].tag == "busy" && PlayerWarriorHP1 > 0)
-        {
-            Transform childGameObject = CBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
         }
 
-
-        if (DBoxes[0].tag == "busy" && PlayerWallHP > 0)
+        if (DBoxes[0].tag == "busy")
         {
             Transform childGameObject = DBoxes[0].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+            if (PlayerWallHP > 0)
             {
-                PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (PlayerWallHP <= 0)
+                {
+                    DestroyImmediate(PlayerWall);
+                    ShowHPWall();
+                }
+            }
+            else if (PlayerWarriorHP2 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (PlayerWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (PlayerWarriorHP1 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                {
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+            else if (IsPlayerTurn)
+            {
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (PlayerWallHP <= 0)
-            {
-                DestroyImmediate(PlayerWall);
-                ShowHPWall();
-            }
-        }
-        else if (DBoxes[0].tag == "busy" && PlayerWarriorHP2 > 0)
-        {
-
-            Transform childGameObject = DBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (PlayerWarriorHP2 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-        }
-        else if (DBoxes[0].tag == "busy" && PlayerWarriorHP1 > 0)
-        {
-            Transform childGameObject = DBoxes[0].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
-            {
-                PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
         }
@@ -810,238 +858,260 @@ public class GameManagerScr : MonoBehaviour
         }
         ShowHPWarrior();
         ShowHPWall();
+        ShowHPKhan();
     }
     void EnemyAttackWallAndWarrior()
     {
         //ABoxes
-        if (ABoxes[3].tag == "busy" && EnemyWallHP > 0 )
+        if (ABoxes[3].tag == "busy")
         {
             Transform childGameObject = ABoxes[3].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            if (EnemyWallHP > 0)
             {
-                EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    if (EnemyWallHP <= 0)
+                    {
+                        DestroyImmediate(EnemyWall);
+                        ShowHPWall();
+                    }
+                }
+            }
+            else if (EnemyWarriorHP1 > 0)
+            {
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (EnemyWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP1 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior1);
+                }
+            }
+            else if (EnemyWarriorHP2 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP2 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior2);
+                }
+            }
+            else if (IsPlayerTurn)
+            {
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+            }
+        }
+        //BBoxes
+        if (BBoxes[3].tag == "busy")
+        {
+            Transform childGameObject = BBoxes[3].transform.GetChild(0);
+            GameObject childTransform = childGameObject.gameObject;
+            if (EnemyWallHP > 0)
+            {
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
                 if (EnemyWallHP <= 0)
                 {
                     DestroyImmediate(EnemyWall);
                     ShowHPWall();
                 }
             }
-        } 
-        else if(ABoxes[3].tag == "busy" && EnemyWarriorHP1 > 0)
-        {
-            Transform childGameObject = ABoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            else if (EnemyWarriorHP1 > 0)
             {
-                EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (EnemyWarriorHP2 > 0)
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                } else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (EnemyWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
 
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                if (EnemyWarriorHP1 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior1);
+                }
             }
-            if (EnemyWarriorHP1 <= 0)
+            else if (EnemyWarriorHP2 > 0)
             {
-                DestroyImmediate(EnemyWarrior1);
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP2 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior2);
+                }
             }
-        } 
-        else if(ABoxes[3].tag == "busy" && EnemyWarriorHP2 > 0)
-        {
-            Transform childGameObject = ABoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            else if (IsPlayerTurn)
             {
-                EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP2 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior2);
-            }
-        }
-        else if(EnemyKhanHP > 0)
-        {
-
-        }
-        //BBoxes
-
-        if (BBoxes[3].tag == "busy" && EnemyWallHP > 0)
-        {
-            Transform childGameObject = BBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWallHP <= 0)
-            {
-                DestroyImmediate(EnemyWall);
-                ShowHPWall();
-            }
-        }
-        else if(BBoxes[3].tag == "busy" && EnemyWarriorHP1 > 0)
-        {
-            Transform childGameObject = BBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (EnemyWarriorHP2 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP1 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior1);
-            }
-        }
-        else if (BBoxes[3].tag == "busy" && EnemyWarriorHP2 > 0)
-        {
-            Transform childGameObject = BBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP2 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior2);
             }
         }
         //CBoxes
-
-        if (CBoxes[3].tag == "busy" && EnemyWallHP > 0)
+        if (CBoxes[3].tag == "busy") 
         {
             Transform childGameObject = CBoxes[3].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            if (EnemyWallHP > 0)
             {
-                EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWallHP <= 0)
+                {
+                    DestroyImmediate(EnemyWall);
+                    ShowHPWall();
+                }
+            }
+            else if (EnemyWarriorHP2 > 0)
+            {
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (EnemyWarriorHP1 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP2 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior2);
+                }
+            }
+            else if (EnemyWarriorHP1 > 0)
+            {
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP1 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior1);
+                }
+            }
+            else if (IsPlayerTurn)
+            {
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
-            if (EnemyWallHP <= 0)
-            {
-                DestroyImmediate(EnemyWall);
-                ShowHPWall();
-            }
         }
-        else if (CBoxes[3].tag == "busy" && EnemyWarriorHP2 > 0)
-        {
-            Transform childGameObject = CBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (EnemyWarriorHP1 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP2 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior2);
-            }
-        } 
-        else if (CBoxes[3].tag == "busy" && EnemyWarriorHP1 > 0)
-        {
-            Transform childGameObject = CBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP1 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior1);
-            }
-        }
-
         //DBoxes
-
-        if (DBoxes[3].tag == "busy" && EnemyWallHP > 0)
-        {
+        if (DBoxes[3].tag == "busy") {
             Transform childGameObject = DBoxes[3].transform.GetChild(0);
             GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+            if (EnemyWallHP > 0)
             {
-                EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWallHP <= 0)
+                {
+                    DestroyImmediate(EnemyWall);
+                    ShowHPWall();
+                }
+            }
+            else if (EnemyWarriorHP2 > 0)
+            {
+
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    if (EnemyWarriorHP2 > 0)
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                    }
+                    else
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+
+                    }
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP2 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior2);
+                }
+            }
+            else if (EnemyWarriorHP1 > 0)
+            {
+                
+                if (childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+                if (EnemyWarriorHP1 <= 0)
+                {
+                    DestroyImmediate(EnemyWarrior1);
+                }
+            }
+            else if (IsPlayerTurn)
+            {
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
-            if (EnemyWallHP <= 0)
-            {
-                DestroyImmediate(EnemyWall);
-                ShowHPWall();
-            }
-        } 
-        else if (DBoxes[3].tag == "busy" && EnemyWarriorHP2 > 0)
-        {
-            
-            Transform childGameObject = DBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                if (EnemyWarriorHP2 > 0)
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
-                }
-                else
-                {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
-                }
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP2 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior2);
-            }
-        } 
-        else if (DBoxes[3].tag == "busy" && EnemyWarriorHP1 > 0)
-        {
-            Transform childGameObject = DBoxes[3].transform.GetChild(0);
-            GameObject childTransform = childGameObject.gameObject;
-            if (childTransform.layer == LayerMask.NameToLayer("Playing"))
-            {
-                EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
-            }
-            if (EnemyWarriorHP1 <= 0)
-            {
-                DestroyImmediate(EnemyWarrior1);
-            }
         }
-        
+        ShowHPKhan();
         ShowHPWarrior();
         ShowHPWall();
     }
@@ -1065,7 +1135,11 @@ public class GameManagerScr : MonoBehaviour
         EnemyWarriorHP1Txt.text = EnemyWarriorHP1.ToString();
         EnemyWarriorHP2Txt.text = EnemyWarriorHP2.ToString();
     }
-
+    void ShowHPKhan()
+    {
+        PlayerKhanHPTxt.text = PlayerKhanHP.ToString();
+        EnemyKhanHPTxt.text = EnemyKhanHP.ToString();
+    }
 
 
 
