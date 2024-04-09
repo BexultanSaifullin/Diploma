@@ -3,7 +3,22 @@ guid: 9a4dd04bd2363a941923bf1ee5a6e2c0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UrtOutAndFlor
+    second: {fileID: 2100000, guid: 24d77f798ed45b448816c19ccfa7801f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: klem
+    second: {fileID: 2100000, guid: 5d7b9e95aa65a394ca3886e4d8d79c49, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: urtMainWood
+    second: {fileID: 2100000, guid: 3b7d404787978de4a9c03ef5e77cdbdd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

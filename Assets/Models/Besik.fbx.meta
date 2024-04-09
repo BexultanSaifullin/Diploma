@@ -3,7 +3,12 @@ guid: 9cad2500b5991e949aad537e87bb3d1b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: besik
+    second: {fileID: 2100000, guid: 525ad2036ae8a2c4f865fda4298d6044, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

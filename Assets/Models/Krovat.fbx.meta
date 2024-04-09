@@ -3,7 +3,12 @@ guid: a155f1c43f3d6bd4d92e4c8d31c24cc9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Krovat_smo
+    second: {fileID: 2100000, guid: 9e56a7001281e274cab85ad3e7c6853e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

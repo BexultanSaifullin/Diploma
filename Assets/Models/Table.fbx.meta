@@ -3,7 +3,12 @@ guid: c2538125905224846a3f667c1eeea509
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zaima
+    second: {fileID: 2100000, guid: 50540e2e6a6ac284ba4385d61dc25ff0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

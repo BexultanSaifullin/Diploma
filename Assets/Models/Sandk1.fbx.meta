@@ -3,7 +3,12 @@ guid: 36e79769b89d4d14ba6aa7fc82b5898e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sandik1
+    second: {fileID: 2100000, guid: e34623587850dad488c64ac02982c2e3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

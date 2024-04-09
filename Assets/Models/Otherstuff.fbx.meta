@@ -3,7 +3,17 @@ guid: 5852592fa85234d4aa7a677d21bb62cd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: knife
+    second: {fileID: 2100000, guid: 0ee94e177f5f2f54998cb41dd4152321, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: korpeshk
+    second: {fileID: 2100000, guid: 0d146e9fd12404f4ea0fd9fbc5b692f0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
