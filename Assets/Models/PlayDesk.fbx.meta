@@ -12,8 +12,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: playdesk
+    second: {fileID: 2100000, guid: a928c5b5a8bb60241a8de2e503aaa55f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: standardSurface4
     second: {fileID: 2100000, guid: a928c5b5a8bb60241a8de2e503aaa55f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree
+    second: {fileID: 2100000, guid: fd89c4ca16568c7478bdff39edd9a87a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
