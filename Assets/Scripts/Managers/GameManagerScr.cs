@@ -18,7 +18,7 @@ public class GameManagerScr : MonoBehaviour
            PlayerWarior1, PlayerWarior2, EnemyWarrior1, EnemyWarrior2,
                 PlayerKhan, EnemyKhan;
 
-    public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes;
+    public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
 
     public int PlayerWallHP = 20, EnemyWallHP = 20, WallDMG = 1;
 
@@ -81,6 +81,7 @@ public class GameManagerScr : MonoBehaviour
 
             EnemyPlaces = objectsOnLayer.ToList();
             List<GameObject> EnemyCard;
+            
 
             GameObject[] objectsWithTagE = GameObject.FindGameObjectsWithTag("EnemyCard");
 
@@ -90,7 +91,18 @@ public class GameManagerScr : MonoBehaviour
 
 
             EnemyCard = objectsOnLayerE.ToList();
-            //List<GameObject> EnemyCard = GameObject.FindGameObjectsWithTag("EnemyCard").ToList();
+
+            //List<GameObject> EnemyCardBuildings = new List<GameObject>();
+
+            //for(int i = EnemyCard.Count - 1; i >= 0; i--)
+            //{ 
+            //    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+            //    {
+            //        EnemyCardBuildings.Add(EnemyCard[i]); // Добавляем элемент непосредственно в список зданий
+            //        EnemyCard.RemoveAt(i); // Безопасно удаляем элемент из первоначального списка
+            //    }
+            //}
+
 
             if (EnemyCard.Count > 0 && EnemyPlaces.Count > 0)
             {
@@ -150,12 +162,12 @@ public class GameManagerScr : MonoBehaviour
 
     void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces)
     {
-        if (EnemyPlaces.Count > EnemyCard.Count)
+
+        if (EnemyPlaces.Count >= EnemyCard.Count)
         {
             int count = Random.Range(-1, EnemyCard.Count);
             if (count == -1)
                 return;
-
             for (int i = count; i >= 0; i--)
             {
                 int place = Random.Range(0, EnemyPlaces.Count - 1);
@@ -174,6 +186,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard[i].transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                 ShowMana();
+
                 EnemyPlaces.RemoveAt(place);
                 EnemyCard.RemoveAt(i);
             }
@@ -283,6 +296,17 @@ public class GameManagerScr : MonoBehaviour
 
             }
         }
+        //for(int i = 0; i < 4; i++)
+        //{
+        //    if (PlayerBuildingsBoxes[i].tag == "busy")
+        //    {
+
+        //        Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
+        //        GameObject childTransform = childGameObject.gameObject;
+        //        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+        //        childTransform.GetComponent<CardInfoScr>().RefreshData();
+        //    }
+        //}
     }
     void EnemyMoveCards()
     {
@@ -355,6 +379,17 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    if (EnemyBuildingsBoxes[i].tag == "busy")
+        //    {
+
+        //        Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
+        //        GameObject childTransform = childGameObject.gameObject;
+        //        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+        //        childTransform.GetComponent<CardInfoScr>().RefreshData();
+        //    }
+        //}
     }
 
     void AttackCards()

@@ -118,30 +118,47 @@ public class Drag : MonoBehaviour
 
 
 
-        if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free)
+        if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free && hit.collider.gameObject.layer == LayerMask.NameToLayer("Default") && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
         {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Default"))
-            {
-                Vector3 selPos = hit.collider.gameObject.transform.position;
-                selPos.y += 0.01f;
-                currentCollider2.transform.position = selPos;
-                selectedObject.layer = LayerMask.NameToLayer("Played");
-                hit.collider.gameObject.tag = busy;
-                selectedObject.transform.parent = hit.collider.gameObject.transform;
-                ArrangeCards();
-                if (selectedObject.layer == LayerMask.NameToLayer("Played"))
-                {
-                    GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-                    GameManager.ShowMana();
 
-                    selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
-                    CardModelSpawn(selPos, selectedObject);
-                    instantiatedPrefab.transform.parent = selectedObject.transform;
+            Vector3 selPos = hit.collider.gameObject.transform.position;
+            selPos.y += 0.01f;
+            currentCollider2.transform.position = selPos;
+            selectedObject.layer = LayerMask.NameToLayer("Played");
+            hit.collider.gameObject.tag = busy;
+            selectedObject.transform.parent = hit.collider.gameObject.transform;
+            ArrangeCards();
+            GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+            GameManager.ShowMana();
 
-                    selectedObject = null;
-                    currentCollider2 = null;
-                }
-            }
+            selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+            CardModelSpawn(selPos, selectedObject);
+            instantiatedPrefab.transform.parent = selectedObject.transform;
+
+            selectedObject = null;
+            currentCollider2 = null;
+
+
+        }
+        else if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free && hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerBuildings") && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+        {
+            Vector3 selPos = hit.collider.gameObject.transform.position;
+            selPos.y += 0.01f;
+            currentCollider2.transform.position = selPos;
+            hit.collider.gameObject.tag = busy;
+            selectedObject.transform.parent = hit.collider.gameObject.transform;
+            ArrangeCards();
+
+            GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+            GameManager.ShowMana();
+
+            selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+            CardModelSpawn(selPos, selectedObject);
+            instantiatedPrefab.transform.parent = selectedObject.transform;
+
+            selectedObject = null;
+            currentCollider2 = null;
+
         }
     }
 
