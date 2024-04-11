@@ -9,15 +9,11 @@ public class CameraChanger : MonoBehaviour
     [SerializeField] public CinemachineVirtualCamera[] VirtualCameras;
     public int currentCameraIndex;
     public bool flyMode = false;
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1) && currentCameraIndex == 0)
         {
             flyMode = !flyMode;
         }

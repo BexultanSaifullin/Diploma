@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FlyMode : MonoBehaviour
 {
@@ -15,9 +16,15 @@ public class FlyMode : MonoBehaviour
     public Vector3 minBounds; // Минимальные границы куба
     public Vector3 maxBounds; // Максимальные границы куба
     //private CameraChanger cameraChanger;
+    private GameEntryMenu gameEntryMenu;
+    private CameraChanger cameraChanger;
+    private Scene currentScene;
 
     void Start()
     {
+        currentScene = SceneManager.GetActiveScene();
+        gameEntryMenu = FindObjectOfType<GameEntryMenu>();
+        cameraChanger = FindObjectOfType<CameraChanger>();
         //cameraChanger = FindObjectOfType<CameraChanger>();
         flyStartPosition = transform.position; // Store fly start position
         flyStartRotation = transform.rotation; // Store fly start rotation
@@ -31,6 +38,23 @@ public class FlyMode : MonoBehaviour
     }
 
     void Update()
+    {
+        if (currentScene.name == "The Edotyan Scene")
+        {
+            if (gameEntryMenu.isNewGameClicked)
+            {
+                FlyModeOn();
+            }
+        }
+        else
+        {
+            if (cameraChanger.currentCameraIndex == 0)
+                FlyModeOn();
+        }
+
+    }
+
+    private void FlyModeOn()
     {
         // Fly mode activation
         //if (Input.GetKeyDown(KeyCode.Keypad1) && cameraChanger.currentCameraIndex == 0)
@@ -81,10 +105,11 @@ public class FlyMode : MonoBehaviour
         else // Reset position and rotation when not in fly mode
         {
             GoBackToInitialPos();
+            rotationX = 0f;
+            rotationY = 0f;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-
     }
     private void GoBackToInitialPos()
     {
