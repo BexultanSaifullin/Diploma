@@ -137,7 +137,7 @@ public class GameManagerScr : MonoBehaviour
             if (PlayerMana < 10)
                 PlayerMana = 10;
             if (EnemyMana < 10)
-                EnemyMana = 0;
+                EnemyMana = 100;
             ShowMana();
         }
         else if (Turn != 1)
@@ -183,7 +183,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyCard[i].transform.parent = EnemyPlaces[place].transform;
-                EnemyCard[i].transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+                EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                 ShowMana();
 
@@ -209,7 +209,7 @@ public class GameManagerScr : MonoBehaviour
                 Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
                 EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                 EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                EnemyCard[i].transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+                EnemyCard[i].transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
                 //CardInfo.ChangeInfo(EnemyCard[i]);
                 EnemyPlaces[place].gameObject.tag = "busy";
                 EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
