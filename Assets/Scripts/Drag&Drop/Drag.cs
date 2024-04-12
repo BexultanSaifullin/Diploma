@@ -38,7 +38,7 @@ public class Drag : MonoBehaviour
         {
             SelectPart();
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 2f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 12f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             StartCoroutine(StepFromAbove());
         }
@@ -90,16 +90,15 @@ public class Drag : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
-        if (mainCamera.transform.position.y == 19.79f)
+        if (mainCamera.transform.position.y == 37.88f)
         {
             initialPosition = currentCollider2.transform.position;
             initialRotation = currentCollider2.transform.rotation;
 
-            newPosition = mainCamera.transform.position +
-                                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.4f;
+            newPosition = new Vector3(0.669f, 36.898f, 15.649f);
 
             currentCollider2.transform.position = newPosition;
-            Vector3 rotationAngles = new Vector3(90f, 0f, 0f);
+            Vector3 rotationAngles = new Vector3(90f, 180f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
             currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
         }
     }
