@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,8 @@ public class GameEntryMenu : MonoBehaviour
     public GameObject paper;
     public GameObject playDesk;
     public bool isNewGameClicked = false;
+    public List<CinemachineVirtualCamera> introCameras;
+    public GameObject gameStart;
 
     void Update()
     {
@@ -48,8 +51,14 @@ public class GameEntryMenu : MonoBehaviour
                     spawnPlayDeskBtn.SetActive(false);
                     book.SetActive(false);
                     paper.SetActive(false);
+                    gameStart.SetActive(true);
                     playDesk.GetComponent<Animator>().Play("PlayDeskSpawn");
+                    gameStart.GetComponent<Animator>().Play("PanelSpawn");
                     isNewGameClicked = true;
+                    foreach (var camera in introCameras)
+                    {
+                        camera.gameObject.SetActive(false);
+                    }
                 }
             }
         }

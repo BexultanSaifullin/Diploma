@@ -6,6 +6,7 @@ public class CardSpawnerEnemyScr : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject objectToSpawnEnemy;
+    public Vector3 positionToSpawn;
     Drag Arrange;
     void Start()
     {
@@ -13,7 +14,7 @@ public class CardSpawnerEnemyScr : MonoBehaviour
     }
     public void SpawnEnemy()
     {
-        GameObject spawnedObject = Instantiate(objectToSpawnEnemy, new Vector3(10, 10, 10), Quaternion.Euler(-45, 0, 0));
+        GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(45, 0, 0));
         spawnedObject.transform.parent = transform;
         Arrange.ArrangeCardsToEnemy();
     }

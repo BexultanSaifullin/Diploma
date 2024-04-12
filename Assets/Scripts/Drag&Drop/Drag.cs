@@ -42,11 +42,11 @@ public class Drag : MonoBehaviour
         {
             StartCoroutine(StepFromAbove());
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 5.51f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 19.79f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             BackFromAbove();
         }
-        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 5.51f)
+        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 19.79f)
         {
             Teleportation();
         }
@@ -67,7 +67,7 @@ public class Drag : MonoBehaviour
                 currentCollider2 = null;
                 return;
             }
-            //if (mainCamera.transform.position.y == 5.51f)
+            //if (mainCamera.transform.position.y == 19.79f)
             //{
             //    newPosition = mainCamera.transform.position +
             //                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
@@ -88,9 +88,9 @@ public class Drag : MonoBehaviour
     private IEnumerator StepFromAbove()
     {
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
-        if (mainCamera.transform.position.y == 5.51f)
+        if (mainCamera.transform.position.y == 19.79f)
         {
             initialPosition = currentCollider2.transform.position;
             initialRotation = currentCollider2.transform.rotation;
@@ -186,7 +186,7 @@ public class Drag : MonoBehaviour
         }
 
         float totalWidth = (cards.Length - 1) * distanceBetweenCards;
-        Vector3 centerPosition = new Vector3(0, 0.54f, -0.36f);
+        Vector3 centerPosition = new Vector3(0.58f, 11.10323f, 25.27884f);
 
         float startX = centerPosition.x - totalWidth / 2;
 
@@ -212,7 +212,7 @@ public class Drag : MonoBehaviour
         }
 
         float totalWidth = (cards.Length - 1) * distanceBetweenCards;
-        Vector3 centerPosition = new Vector3(0, 0.54f, 9.429f);
+        Vector3 centerPosition = new Vector3(0.513f, 10.132f, 9.884f);
 
         float startX = centerPosition.x - totalWidth / 2;
 
