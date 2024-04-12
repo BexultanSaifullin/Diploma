@@ -42,11 +42,11 @@ public class Drag : MonoBehaviour
         {
             StartCoroutine(StepFromAbove());
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 19.79f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             BackFromAbove();
         }
-        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 19.79f)
+        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 37.88f)
         {
             Teleportation();
         }
@@ -67,7 +67,7 @@ public class Drag : MonoBehaviour
                 currentCollider2 = null;
                 return;
             }
-            //if (mainCamera.transform.position.y == 19.79f)
+            //if (mainCamera.transform.position.y == 37.88f)
             //{
             //    newPosition = mainCamera.transform.position +
             //                     mainCamera.transform.forward * 0.35f - mainCamera.transform.right * 0.5f;
@@ -88,7 +88,7 @@ public class Drag : MonoBehaviour
     private IEnumerator StepFromAbove()
     {
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.2f);
 
         if (mainCamera.transform.position.y == 37.88f)
         {
@@ -130,7 +130,7 @@ public class Drag : MonoBehaviour
             GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
-            selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+            selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
 
