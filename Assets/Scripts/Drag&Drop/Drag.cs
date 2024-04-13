@@ -88,7 +88,7 @@ public class Drag : MonoBehaviour
     private IEnumerator StepFromAbove()
     {
 
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(1.2f);
 
         if (mainCamera.transform.position.y == 37.88f)
         {

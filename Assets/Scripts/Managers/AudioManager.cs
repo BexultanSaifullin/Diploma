@@ -8,12 +8,13 @@ using UnityEngine.SceneManagement;
 public class AudioManager : Singleton<AudioManager>
 {
     [Header("Volume")]
-    [Range(0, 1)]
+    [Range(0, 0.5f)]
     public float masterVolume = 1;
-    [Range(0, 1)]
+    [Range(0, 0.5f)]
     public float menuMusicVolume = 1;
-    [Range(0, 1)]
+    [Range(0, 0.5f)]
     public float gameMusicVolume = 1;
+    // private GameEntryMenu gameEntryMenu;
 
     private Bus masterBus;
     private Bus menuMusicBus;
@@ -24,7 +25,7 @@ public class AudioManager : Singleton<AudioManager>
     private EventInstance backgroundMusicEventInstance;
     public static AudioManager instance { get; private set; }
 
-    private new void Awake()
+    public new void Awake()
     {
         if (instance != null)
         {
@@ -39,25 +40,27 @@ public class AudioManager : Singleton<AudioManager>
         gameMusicBus = RuntimeManager.GetBus("bus:/GameMusic");
     }
 
-    private void Update()
+    public void Update()
     {
         masterBus.setVolume(masterVolume);
         menuMusicBus.setVolume(menuMusicVolume);
         gameMusicBus.setVolume(gameMusicVolume);
     }
-    private void Start()
+    public void Start()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-            InitializeMenuMusic(FMODEvents.instance.MenuMusic);
-        else
-            InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
+        // gameEntryMenu = FindObjectOfType<GameEntryMenu>();
+        // if (!gameEntryMenu.isNewGameClicked)
+        //     InitializeMenuMusic(FMODEvents.instance.MenuMusic);
+        // else
+        //     InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
+        InitializeMenuMusic(FMODEvents.instance.MenuMusic);
     }
-    private void InitializeMenuMusic(EventReference menuMusicEventReference)
+    public void InitializeMenuMusic(EventReference menuMusicEventReference)
     {
         menuMusicEventInstance = CreateInstance(menuMusicEventReference);
         menuMusicEventInstance.start();
     }
-    private void InitializeBackgroundMusic(EventReference backgroundMusicEventReference)
+    public void InitializeBackgroundMusic(EventReference backgroundMusicEventReference)
     {
         backgroundMusicEventInstance = CreateInstance(backgroundMusicEventReference);
         backgroundMusicEventInstance.start();
@@ -69,7 +72,7 @@ public class AudioManager : Singleton<AudioManager>
         return eventInstance;
     }
 
-    private void CleanUp()
+    public void CleanUp()
     {
         // stop and release any created instances
         foreach (EventInstance eventInstance in eventInstances)
@@ -79,7 +82,7 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
         CleanUp();
     }

@@ -39,17 +39,9 @@ public class FlyMode : MonoBehaviour
 
     void Update()
     {
-        if (currentScene.name == "The Edotyan Scene")
+        if (gameEntryMenu.isNewGameClicked)
         {
-            if (gameEntryMenu.isNewGameClicked)
-            {
-                FlyModeOn();
-            }
-        }
-        else
-        {
-            if (cameraChanger.currentCameraIndex == 0)
-                FlyModeOn();
+            FlyModeOn();
         }
 
     }

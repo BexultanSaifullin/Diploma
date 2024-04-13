@@ -4,15 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using Cinemachine;
 
 public class PauseMenu : MonoBehaviour
 {
     public bool PauseGame;
     public GameObject pauseGameMenu;
-    public AudioMixerGroup Mixer;
+    private GameEntryMenu gameEntryMenu;
+    public bool IsPlaneDestroyed = false;
 
     void Start()
     {
+        gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         // pauseGameMenu.GetComponentInChildren<Toggle>().isOn = PlayerPrefs.GetInt("MusicEnabled", 1) == 1;
         // pauseGameMenu.GetComponentInChildren<Slider>().value = PlayerPrefs.GetFloat("MasterVolume", 1);
     }
@@ -49,7 +52,9 @@ public class PauseMenu : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        IsPlaneDestroyed = true;
+        gameEntryMenu.DeletePlane();
+        // SceneManager.LoadScene("MainMenu");
     }
     // public void ToggleMusic(bool enabled)
     // {
