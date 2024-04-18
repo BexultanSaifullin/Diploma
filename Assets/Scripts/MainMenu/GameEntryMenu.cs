@@ -18,6 +18,8 @@ public class GameEntryMenu : MonoBehaviour
     private AudioManager audioManager;
     public GameObject objectToSpawn;
     public bool IsPlaneDestroyed = false;
+    public GameObject cutsene;
+    public GameObject buttons3D;
     public List<CinemachineVirtualCamera> introCameras;
     public List<CinemachineVirtualCamera> gameCameras;
 
@@ -25,6 +27,7 @@ public class GameEntryMenu : MonoBehaviour
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        StartCoroutine(WaitCutscene());
     }
 
     void Update()
@@ -72,6 +75,7 @@ public class GameEntryMenu : MonoBehaviour
                     isNewGameClicked = true;
                     audioManager.CleanUp();
                     audioManager.InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
+                    Destroy(cutsene);
                     foreach (var camera in introCameras)
                     {
                         camera.gameObject.SetActive(false);
@@ -106,9 +110,11 @@ public class GameEntryMenu : MonoBehaviour
         // book.GetComponent<Animator>().Play("Book");
         // paper.GetComponent<Animator>().Play("Paper");
 
-        playBtn.SetActive(true);
-        myCollectionBtn.SetActive(true);
-        exitBtn.SetActive(true);
+        book.SetActive(true);
+        paper.SetActive(true);
+        book.GetComponent<Animator>().Play("Reverse Book");
+        paper.GetComponent<Animator>().Play("Reverse Paper");
+        StartCoroutine(Wait5Sec());
         audioManager.CleanUp();
         audioManager.InitializeMenuMusic(FMODEvents.instance.MenuMusic);
     }
@@ -117,5 +123,17 @@ public class GameEntryMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(3.5f);
         spawnPlayDeskBtn.SetActive(true);
+    }
+    IEnumerator Wait5Sec()
+    {
+        yield return new WaitForSeconds(5.5f);
+        playBtn.SetActive(true);
+        myCollectionBtn.SetActive(true);
+        exitBtn.SetActive(true);
+    }
+    IEnumerator WaitCutscene()
+    {
+        yield return new WaitForSeconds(21f);
+        buttons3D.SetActive(true);
     }
 }
