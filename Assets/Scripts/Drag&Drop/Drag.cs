@@ -143,15 +143,17 @@ public class Drag : MonoBehaviour
         {
             Vector3 selPos = hit.collider.gameObject.transform.position;
             selPos.y += 0.01f;
+            selectedObject.transform.parent = hit.collider.gameObject.transform;
+            selectedObject.layer = LayerMask.NameToLayer("Played");
             currentCollider2.transform.position = selPos;
             hit.collider.gameObject.tag = busy;
-            selectedObject.transform.parent = hit.collider.gameObject.transform;
+            
             ArrangeCards();
 
             GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
-            selectedObject.transform.localScale = new Vector3(9.47f, 8.95f, 3.73f);
+            selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
 

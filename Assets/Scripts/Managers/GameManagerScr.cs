@@ -14,6 +14,8 @@ public class GameManagerScr : MonoBehaviour
     public Button EndTurnBtn;
     CardSpawnerScr Spawner; CardSpawnerEnemyScr SpawnerEnemy;
 
+    public Transform EnemyHand, PlayerHand;
+
     public GameObject PlayerWall, EnemyWall,
            PlayerWarior1, PlayerWarior2, EnemyWarrior1, EnemyWarrior2,
                 PlayerKhan, EnemyKhan;
@@ -70,44 +72,66 @@ public class GameManagerScr : MonoBehaviour
                 yield return new WaitForSeconds(1);
             }
 
-            List<GameObject> EnemyPlaces;
+            List<GameObject> EnemyPlaces = new List<GameObject>(); ;
 
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("free");
 
 
             int EnemyLayer = LayerMask.NameToLayer("EnemyPlace");
-            GameObject[] objectsOnLayer = objectsWithTag.Where(card => card.layer == EnemyLayer).ToArray();
-
-
-            EnemyPlaces = objectsOnLayer.ToList();
-            List<GameObject> EnemyCard;
             
 
-            GameObject[] objectsWithTagE = GameObject.FindGameObjectsWithTag("EnemyCard");
+
+            
+            for(int i = 0; i < 4; i++)
+            {
+                if (ABoxes[i].layer == LayerMask.NameToLayer("EnemyPlace") && ABoxes[i].tag == "free")
+                {
+                    EnemyPlaces.Add(ABoxes[i]);
+                }
+                if (BBoxes[i].layer == EnemyLayer && BBoxes[i].tag == "free")
+                {
+                    EnemyPlaces.Add(BBoxes[i]);
+                }
+                if (CBoxes[i].layer == EnemyLayer && CBoxes[i].tag == "free")
+                {
+                    EnemyPlaces.Add(CBoxes[i]);
+                }
+                if (DBoxes[i].layer == EnemyLayer && DBoxes[i].tag == "free")
+                {
+                    EnemyPlaces.Add(DBoxes[i]);
+                }
+            }
+
+            List<GameObject> EnemyCard = new List<GameObject>(); ;
 
 
-            int EnemyLayerE = LayerMask.NameToLayer("Enemy");
-            GameObject[] objectsOnLayerE = objectsWithTagE.Where(card => card.layer == EnemyLayerE).ToArray();
+            foreach (Transform child in EnemyHand)
+            {
+                EnemyCard.Add(child.gameObject);
+            }
 
 
-            EnemyCard = objectsOnLayerE.ToList();
 
-            //List<GameObject> EnemyCardBuildings = new List<GameObject>();
 
-            //for(int i = EnemyCard.Count - 1; i >= 0; i--)
-            //{ 
-            //    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
-            //    {
-            //        EnemyCardBuildings.Add(EnemyCard[i]); // Добавляем элемент непосредственно в список зданий
-            //        EnemyCard.RemoveAt(i); // Безопасно удаляем элемент из первоначального списка
-            //    }
-            //}
+            List<GameObject> EnemyCardBuildings = new List<GameObject>();
+            for (int i = 0; i < 4; i++)
+            {
+                if (EnemyBuildingsBoxes[i].tag == "free")
+                {
+                    EnemyCardBuildings.Add(EnemyBuildingsBoxes[i]);
+                }
+            }
+
 
 
             if (EnemyCard.Count > 0 && EnemyPlaces.Count > 0)
             {
-                EnemyTurn(EnemyCard, EnemyPlaces);
+                EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings);
             }
+            else if(EnemyCard.Count > 0 && EnemyCardBuildings.Count > 0)
+            {
+
+            }
+            
         }
         ChangeTurn();
     }
@@ -131,13 +155,14 @@ public class GameManagerScr : MonoBehaviour
             EnemyAttackWallAndWarrior();
             DestroyCards();
             PlayerMoveCards();
+            
             Spawner.Spawn();
             if (increase < 10)
                 increase += 1;
             if (PlayerMana < 10)
-                PlayerMana = 10;
+                PlayerMana = increase;
             if (EnemyMana < 10)
-                EnemyMana = 100;
+                EnemyMana = increase;
             ShowMana();
         }
         else if (Turn != 1)
@@ -160,8 +185,19 @@ public class GameManagerScr : MonoBehaviour
         StartCoroutine(TurnFunc());
     }
 
-    void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces)
+    void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces, List<GameObject> EnemyCardBuildings)
     {
+        System.Random rng = new System.Random();
+        // Инстанцируем генератор случайных чисел
+        int n = EnemyPlaces.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            var value = EnemyPlaces[k];
+            EnemyPlaces[k] = EnemyPlaces[n];
+            EnemyPlaces[n] = value;
+        }
 
         if (EnemyPlaces.Count >= EnemyCard.Count)
         {
@@ -170,25 +206,48 @@ public class GameManagerScr : MonoBehaviour
                 return;
             for (int i = count; i >= 0; i--)
             {
-                int place = Random.Range(0, EnemyPlaces.Count - 1);
-                Vector3 newPosition = EnemyPlaces[place].transform.position;
-                newPosition.y += 0.01f;
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
                 {
-                    continue;
-                }
-                EnemyCard[i].transform.position = newPosition;
-                Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
-                EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                EnemyPlaces[place].gameObject.tag = "busy";
-                EnemyCard[i].transform.parent = EnemyPlaces[place].transform;
-                EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
-                EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                ShowMana();
+                    if (EnemyCardBuildings.Count == 0)
+                    {
+                        continue;
+                    }
+                    Vector3 newPosition = EnemyCardBuildings[i].transform.position;
+                    newPosition.y += 0.01f;
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                        continue;
+                    }
+                    EnemyCard[i].transform.position = newPosition;
+                    Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
+                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                    EnemyCardBuildings[i].gameObject.tag = "busy";
+                    EnemyCard[i].transform.parent = EnemyCardBuildings[i].transform;
+                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                    ShowMana();
 
-                EnemyPlaces.RemoveAt(place);
-                EnemyCard.RemoveAt(i);
+
+                }
+                else
+                {
+                    Vector3 newPosition = EnemyPlaces[i].transform.position;
+                    newPosition.y += 0.01f;
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                        continue;
+                    }
+                    EnemyCard[i].transform.position = newPosition;
+                    Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
+                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                    EnemyPlaces[i].gameObject.tag = "busy";
+                    EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
+                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                    ShowMana();
+                }
             }
         }
         else
@@ -198,24 +257,50 @@ public class GameManagerScr : MonoBehaviour
                 return;
             for (int i = count; i >= 0; i--)
             {
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
                 {
-                    continue;
+                    if (EnemyCardBuildings.Count == 0)
+                    {
+                        continue;
+                    }
+                    Vector3 newPosition = EnemyCardBuildings[i].transform.position;
+                    newPosition.y += 0.01f;
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                       
+                        continue;
+                        
+                    }
+                    EnemyCard[i].transform.position = newPosition;
+                    Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
+                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                    EnemyCardBuildings[i].gameObject.tag = "busy";
+                    EnemyCard[i].transform.parent = EnemyCardBuildings[i].transform;
+                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                    ShowMana();
+
                 }
-                int place = Random.Range(0, EnemyPlaces.Count - 1);
-                Vector3 newPosition = EnemyPlaces[place].transform.position;
-                newPosition.y += 0.01f;
-                EnemyCard[i].transform.position = newPosition;
-                Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
-                EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                EnemyCard[i].transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
-                //CardInfo.ChangeInfo(EnemyCard[i]);
-                EnemyPlaces[place].gameObject.tag = "busy";
-                EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                ShowMana();
-                EnemyPlaces.RemoveAt(place);
-                EnemyCard.RemoveAt(i);
+                else
+                {
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                        continue;
+                    }
+                    Vector3 newPosition = EnemyPlaces[i].transform.position;
+                    newPosition.y += 0.01f;
+                    EnemyCard[i].transform.position = newPosition;
+                    Vector3 rotationAngles = new Vector3(90f, 0f, 180f);
+                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                    EnemyCard[i].transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
+                    //CardInfo.ChangeInfo(EnemyCard[i]);
+                    EnemyPlaces[i].gameObject.tag = "busy";
+                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                    ShowMana();
+
+                }
             }
         }
     }
@@ -296,17 +381,17 @@ public class GameManagerScr : MonoBehaviour
 
             }
         }
-        //for(int i = 0; i < 4; i++)
-        //{
-        //    if (PlayerBuildingsBoxes[i].tag == "busy")
-        //    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (PlayerBuildingsBoxes[i].tag == "busy")
+            {
 
-        //        Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
-        //        GameObject childTransform = childGameObject.gameObject;
-        //        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-        //        childTransform.GetComponent<CardInfoScr>().RefreshData();
-        //    }
-        //}
+                Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoScr>().RefreshData();
+            }
+        }
     }
     void EnemyMoveCards()
     {
@@ -379,17 +464,17 @@ public class GameManagerScr : MonoBehaviour
                 }
             }
         }
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    if (EnemyBuildingsBoxes[i].tag == "busy")
-        //    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (EnemyBuildingsBoxes[i].tag == "busy")
+            {
 
-        //        Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
-        //        GameObject childTransform = childGameObject.gameObject;
-        //        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-        //        childTransform.GetComponent<CardInfoScr>().RefreshData();
-        //    }
-        //}
+                Transform childGameObject = EnemyBuildingsBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoScr>().RefreshData();
+            }
+        }
     }
 
     void AttackCards()
@@ -413,8 +498,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
                     }
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn)
@@ -446,8 +532,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
 
                     }
@@ -480,8 +567,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
 
                     }
@@ -514,8 +602,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                           
                         }
 
                     }
@@ -551,8 +640,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
 
                     }
@@ -587,8 +677,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
 
                     }
@@ -624,8 +715,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
                     }
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn)
@@ -660,8 +752,9 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                break;
                             }
-                            break;
+                            
                         }
                     }
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn)
