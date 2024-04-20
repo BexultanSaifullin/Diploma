@@ -153,6 +153,10 @@ public class Drag : MonoBehaviour
             GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
+            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+            {
+                GameManager.PlayerCardsCount++;
+            }
             selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
