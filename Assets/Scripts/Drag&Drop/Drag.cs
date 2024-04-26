@@ -21,6 +21,8 @@ public class Drag : MonoBehaviour
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
+    CardSpawnerScr Spawner;
+
 
 
     private void Start()
@@ -28,6 +30,8 @@ public class Drag : MonoBehaviour
         mainCamera = Camera.main;
         ArrangeCards();
         GameManager = FindObjectOfType<GameManagerScr>();
+        Spawner = FindObjectOfType<CardSpawnerScr>();
+       
     }
 
 
@@ -82,6 +86,8 @@ public class Drag : MonoBehaviour
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
+            Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
+            
         }
     }
 
@@ -156,7 +162,14 @@ public class Drag : MonoBehaviour
             if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
             {
                 GameManager.PlayerCardsCount++;
+                Spawner.Spawn();
+            } else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+            {
+                GameManager.BaffWarrior();
+                GameManager.WarriorBaff += 1;
+                Debug.Log(GameManager.WarriorBaff);
             }
+            
             selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;

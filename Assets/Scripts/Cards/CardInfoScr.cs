@@ -9,6 +9,7 @@ public class CardInfoScr : MonoBehaviour
     public Card SelfCard;
     public Image Logo;
     public TextMeshProUGUI Name, Attack, Defense, Mana;
+    Drag Arrange;
     public GameObject selectedObject;
 
     public void HideCardInfo(Card card)
@@ -41,5 +42,4 @@ public class CardInfoScr : MonoBehaviour
         //else
         //    HideCardInfo(CardManagerList.AllCards[randomNumber]);
     }
-
 }

@@ -21,6 +21,7 @@ public class GameManagerScr : MonoBehaviour
                 PlayerKhan, EnemyKhan;
 
     public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
+    public GameObject[] AllBoxes;
 
     public int PlayerWallHP = 20, EnemyWallHP = 20, WallDMG = 1;
 
@@ -34,6 +35,7 @@ public class GameManagerScr : MonoBehaviour
             PlayerWarriorHP1Txt, PlayerWarriorHP2Txt, EnemyWarriorHP1Txt, EnemyWarriorHP2Txt,
                 PlayerKhanHPTxt, EnemyKhanHPTxt,
                     TurnTimeTxt;
+    public int WarriorBaff = 0;
 
 
     public bool IsPlayerTurn
@@ -159,6 +161,19 @@ public class GameManagerScr : MonoBehaviour
             if (PlayerHand.childCount < PlayerCardsCount)
             {
                 Spawner.Spawn();
+                if (PlayerHand.childCount > 0)
+                {
+                    for (int i = 0; i < PlayerHand.childCount; i++)
+                    {
+                        Transform childGameObject = PlayerHand.transform.GetChild(i);
+                        GameObject childTransform = childGameObject.gameObject;
+                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
+                        {
+                            childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(WarriorBaff);
+                            childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        }
+                    }
+                }
             }
             if (increase < 10)
                 increase += 1;
@@ -168,7 +183,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyMana = increase;
             ShowMana();
         }
-        else if (Turn != 1)
+        else if (!IsPlayerTurn)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("EnemyCard");
             int PlayerLayerPlayed = LayerMask.NameToLayer("EnemyPlayed");
@@ -236,6 +251,7 @@ public class GameManagerScr : MonoBehaviour
                     ShowMana();
                     if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
+                        SpawnerEnemy.SpawnEnemy();
                         EnemyCardsCount++;
                     }
 
@@ -290,6 +306,11 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCardBuildings[place].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyCardBuildings[place].transform;
                     EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                    {
+                        SpawnerEnemy.SpawnEnemy();
+                        EnemyCardsCount++;
+                    }
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
 
@@ -841,6 +862,37 @@ public class GameManagerScr : MonoBehaviour
                     if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
                         PlayerCardsCount--;
+                    } else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                    {
+                        WarriorBaff--;
+                        if (PlayerHand.childCount > 0)
+                        {
+                            for (int j = 0; j < PlayerHand.childCount; j++)
+                            {
+                                Transform a = PlayerHand.transform.GetChild(j);
+                                GameObject b = a.gameObject;
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 16; j++)
+                        {
+
+                            if (AllBoxes[j].tag == "busy")
+                            {
+                                Transform a = AllBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.tag == "Playing" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                            }
+
+                        }
                     }
                     DestroyImmediate(childTransform);
 
@@ -1373,6 +1425,34 @@ public class GameManagerScr : MonoBehaviour
         EnemyKhanHPTxt.text = EnemyKhanHP.ToString();
     }
 
-
+    public void BaffWarrior()
+    {
+        for(int i = 0; i < 16; i++)
+        {
+            if (AllBoxes[i].tag == "busy")
+            {
+                Transform childGameObject = AllBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.tag == "Playing" && childTransform.tag == "Played")
+                {
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+        }
+        if (PlayerHand.childCount > 0)
+        {
+            for (int i = 0; i < PlayerHand.childCount; i++)
+            {
+                Transform childGameObject = PlayerHand.transform.GetChild(i);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                {
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                }
+            }
+        }
+    }
 
 }

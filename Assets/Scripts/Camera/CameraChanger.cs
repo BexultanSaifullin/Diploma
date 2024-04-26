@@ -17,6 +17,10 @@ public class CameraChanger : MonoBehaviour
         {
             flyMode = !flyMode;
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            flyMode = false;
+        }
         if (Input.GetButtonDown("Jump") && !flyMode)
         {
             SwitchCamera();
