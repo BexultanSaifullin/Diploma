@@ -20,7 +20,6 @@ public class GameEntryMenu : MonoBehaviour
     public bool IsPlaneDestroyed = false;
     public GameObject cutsene;
     public GameObject buttons3D;
-    public List<CinemachineVirtualCamera> introCameras;
     public List<CinemachineVirtualCamera> gameCameras;
 
 
@@ -49,9 +48,7 @@ public class GameEntryMenu : MonoBehaviour
                     }
                     book.GetComponent<Animator>().Play("Book");
                     paper.GetComponent<Animator>().Play("Paper");
-                    playBtn.SetActive(false);
-                    myCollectionBtn.SetActive(false);
-                    exitBtn.SetActive(false);
+                    buttons3D.SetActive(false);
                     StartCoroutine(SpawnPlayDesk());
                 }
                 else if (hitInfo.collider.gameObject == myCollectionBtn)
@@ -76,11 +73,11 @@ public class GameEntryMenu : MonoBehaviour
                     audioManager.CleanUp();
                     audioManager.InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
                     Destroy(cutsene);
-                    foreach (var camera in introCameras)
-                    {
-                        camera.gameObject.SetActive(false);
-                    }
-                    introCameras[5].Priority = 1;
+                    // foreach (var camera in introCameras)
+                    // {
+                    //     camera.gameObject.SetActive(false);
+                    // }
+                    gameCameras[4].Priority = 1;
                     foreach (var camera in gameCameras)
                     {
                         camera.Priority = 0;
@@ -100,8 +97,8 @@ public class GameEntryMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        introCameras[5].gameObject.SetActive(true);
-        introCameras[5].Priority = 10;
+        gameCameras[4].gameObject.SetActive(true);
+        gameCameras[4].Priority = 10;
 
         playDesk.SetActive(false);
 
@@ -127,9 +124,7 @@ public class GameEntryMenu : MonoBehaviour
     IEnumerator Wait5Sec()
     {
         yield return new WaitForSeconds(5.5f);
-        playBtn.SetActive(true);
-        myCollectionBtn.SetActive(true);
-        exitBtn.SetActive(true);
+        buttons3D.SetActive(true);
     }
     IEnumerator WaitCutscene()
     {

@@ -33,7 +33,7 @@ public class FlyMode : MonoBehaviour
         initialCameraPosition = transform.position;
 
         // Расчет минимальных и максимальных границ куба
-        minBounds = initialCameraPosition - new Vector3(25f, 9f, 45f);
+        minBounds = initialCameraPosition - new Vector3(16f, 2.9f, 34f);
         maxBounds = initialCameraPosition + new Vector3(20f, 20f, 20f);
     }
 
@@ -49,10 +49,11 @@ public class FlyMode : MonoBehaviour
     private void FlyModeOn()
     {
         // Fly mode activation
-        //if (Input.GetKeyDown(KeyCode.Keypad1) && cameraChanger.currentCameraIndex == 0)
-        if (Input.GetKeyDown(KeyCode.Keypad1))
+        if (Input.GetKeyDown(KeyCode.Keypad1) && cameraChanger.currentCameraIndex == 0)
+        //if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             // transform.rotation = Quaternion.Euler(new Vector3(30.1f, -179f, 0f));
+            transform.rotation = flyStartRotation;
             flyMode = !flyMode;
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -62,6 +63,8 @@ public class FlyMode : MonoBehaviour
         }
         if (flyMode)
         {
+            rotationX = transform.eulerAngles.y;
+            //rotationY = -transform.eulerAngles.x;
             rotationX += Input.GetAxis("Mouse X") * camSens;
             rotationY += Input.GetAxis("Mouse Y") * camSens;
             rotationY = Mathf.Clamp(rotationY, -90f, 90f); // Clamp rotationY to prevent camera flipping
