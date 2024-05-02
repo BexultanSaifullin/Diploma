@@ -87,7 +87,6 @@ public class Drag : MonoBehaviour
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
             Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
-            
         }
     }
 
@@ -153,23 +152,22 @@ public class Drag : MonoBehaviour
             selectedObject.layer = LayerMask.NameToLayer("Played");
             currentCollider2.transform.position = selPos;
             hit.collider.gameObject.tag = busy;
-            
+
             ArrangeCards();
 
             GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
-            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
             {
                 GameManager.PlayerCardsCount++;
                 Spawner.Spawn();
-            } else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+            } else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
             {
-                GameManager.BaffWarrior();
-                GameManager.WarriorBaff += 1;
-                Debug.Log(GameManager.WarriorBaff);
+                GameManager.BaffUnits(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
+
             }
-            
+
             selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
@@ -177,6 +175,36 @@ public class Drag : MonoBehaviour
             selectedObject = null;
             currentCollider2 = null;
 
+        }
+        else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("EnemyPlaying") || hit.collider.gameObject.layer == LayerMask.NameToLayer("EnemyPlayed")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+        { 
+
+            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut" && hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+            {
+                hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
+                hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
+                DestroyImmediate(selectedObject);
+                if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Transform parentTransform = hit.collider.gameObject.transform.parent;
+                    GameObject childTransform = parentTransform.gameObject;
+                    childTransform.tag = "free";
+                    DestroyImmediate(hit.collider.gameObject);
+                }
+            } 
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+            {
+                hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
+                hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
+                DestroyImmediate(selectedObject);
+                if(hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Transform parentTransform = hit.collider.gameObject.transform.parent;
+                    GameObject childTransform = parentTransform.gameObject;
+                    childTransform.tag = "free";
+                    DestroyImmediate(hit.collider.gameObject);
+                }
+            }
         }
     }
 

@@ -12,14 +12,6 @@ public class CardInfoScr : MonoBehaviour
     Drag Arrange;
     public GameObject selectedObject;
 
-    public void HideCardInfo(Card card)
-    {
-        SelfCard = card;
-        Logo.sprite = null;
-        Name.text = "";
-        Attack.text = "?";
-        Defense.text = "?";
-    }
     public void ShowCardInfo(Card card)
     {
         SelfCard = card;
@@ -32,14 +24,16 @@ public class CardInfoScr : MonoBehaviour
     public void RefreshData()
     {
         Attack.text = SelfCard.Attack.ToString();
-        Defense.text = SelfCard.Defense.ToString();
+        if(SelfCard.Type != "Spell")
+        {
+            Defense.text = SelfCard.Defense.ToString();
+        }
+       
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 5);
-        //if (selectedObject.layer != LayerMask.NameToLayer("Enemy"))
+        int randomNumber = Random.Range(0, 8);
+       
         ShowCardInfo(CardManagerList.AllCards[randomNumber]);
-        //else
-        //    HideCardInfo(CardManagerList.AllCards[randomNumber]);
     }
 }
