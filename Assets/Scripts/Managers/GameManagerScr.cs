@@ -37,6 +37,9 @@ public class GameManagerScr : MonoBehaviour
                     TurnTimeTxt;
     public int WarriorBaff = 0, EnemyWarriorBaff = 0, ArcheryBaff = 0, EnemyArcheryBaff = 0;
 
+    private WonLostMenu wonLostMenu;
+    private GameObject instantiatedPrefab;
+
 
     public bool IsPlayerTurn
     {
@@ -53,6 +56,7 @@ public class GameManagerScr : MonoBehaviour
         StartCoroutine(TurnFunc());
         Spawner = FindObjectOfType<CardSpawnerScr>();
         SpawnerEnemy = FindObjectOfType<CardSpawnerEnemyScr>();
+        wonLostMenu = FindObjectOfType<WonLostMenu>();
     }
 
     IEnumerator TurnFunc()
@@ -79,7 +83,7 @@ public class GameManagerScr : MonoBehaviour
             List<GameObject> EnemyCard = new List<GameObject>();
             List<GameObject> EnemyCardBuildings = new List<GameObject>();
             int EnemyLayer = LayerMask.NameToLayer("EnemyPlace");
-            for(int i = 0; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (ABoxes[i].layer == EnemyLayer && ABoxes[i].tag == "free")
                 {
@@ -103,7 +107,7 @@ public class GameManagerScr : MonoBehaviour
             {
                 EnemyCard.Add(child.gameObject);
             }
-            
+
             for (int i = 0; i < 4; i++)
             {
                 if (EnemyBuildingsBoxes[i].tag == "free")
@@ -118,7 +122,7 @@ public class GameManagerScr : MonoBehaviour
             {
                 EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings);
             }
-            
+
         }
         ChangeTurn();
     }
@@ -157,7 +161,7 @@ public class GameManagerScr : MonoBehaviour
                         Debug.Log(WarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(WarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
-                    } 
+                    }
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(ArcheryBaff);
@@ -173,7 +177,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyMana = increase;
             ShowMana();
         }
-        else if (!IsPlayerTurn && Turn!=1)
+        else if (!IsPlayerTurn && Turn != 1)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("EnemyCard");
             int PlayerLayerPlayed = LayerMask.NameToLayer("EnemyPlayed");
@@ -188,7 +192,7 @@ public class GameManagerScr : MonoBehaviour
 
             DestroyCards();
             EnemyMoveCards();
-            if(EnemyHand.childCount < EnemyCardsCount)
+            if (EnemyHand.childCount < EnemyCardsCount)
             {
                 SpawnerEnemy.SpawnEnemy();
             }
@@ -202,7 +206,7 @@ public class GameManagerScr : MonoBehaviour
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyWarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
-                    } 
+                    }
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyArcheryBaff);
@@ -217,7 +221,7 @@ public class GameManagerScr : MonoBehaviour
     void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces, List<GameObject> EnemyCardBuildings)
     {
         System.Random rng = new System.Random();
-        int EnemyPlacesCount = EnemyPlaces.Count-1;
+        int EnemyPlacesCount = EnemyPlaces.Count - 1;
         int EnemyCardBuildingsCount = EnemyCardBuildings.Count;
         int EnemyCardCount = EnemyCard.Count - 1;
         EnemyCard = EnemyCard.OrderBy(x => Random.value).ToList();
@@ -240,10 +244,10 @@ public class GameManagerScr : MonoBehaviour
                         continue;
                     }
                     int random = Random.Range(0, EnemyCardBuildingsCount);
-                    
+
                     Vector3 newPosition = EnemyCardBuildings[random].transform.position;
                     newPosition.y += 0.01f;
-                    
+
                     EnemyCard[i].transform.position = newPosition;
                     Vector3 rotationAngles = new Vector3(90f, -180f, 180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
@@ -251,14 +255,16 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCardBuildings[random].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
                     EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
-                    if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
                         SpawnerEnemy.SpawnEnemy();
                         EnemyCardsCount++;
-                    } 
-                    else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
                     {
                         EnemyWarriorBaff++;
                         for (int j = 0; j < 16; j++)
@@ -287,8 +293,8 @@ public class GameManagerScr : MonoBehaviour
                                 }
                             }
                         }
-                    } 
-                    else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
                     {
                         EnemyArcheryBaff++;
                         for (int j = 0; j < 16; j++)
@@ -348,7 +354,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
-                    else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
                     {
                         List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
                         shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -385,6 +391,8 @@ public class GameManagerScr : MonoBehaviour
                     EnemyPlaces[i].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
                     EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
                 }
@@ -407,7 +415,7 @@ public class GameManagerScr : MonoBehaviour
                     int random = Random.Range(0, EnemyCardBuildingsCount);
                     Vector3 newPosition = EnemyCardBuildings[random].transform.position;
                     newPosition.y += 0.01f;
-                    
+
                     EnemyCard[i].transform.position = newPosition;
                     Vector3 rotationAngles = new Vector3(90f, 180f, 180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
@@ -415,6 +423,8 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCardBuildings[random].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
                     EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
                         SpawnerEnemy.SpawnEnemy();
@@ -485,7 +495,7 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCardBuildings.RemoveAt(random);
                     EnemyCardBuildingsCount--;
                 }
-                else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
+                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
                 {
                     Vector3 newPosition = EnemyPlaces[i].transform.position;
                     newPosition.y += 0.01f;
@@ -495,10 +505,14 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                     EnemyCard[i].transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
+                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
+                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyPlaces[i].gameObject.tag = "busy";
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
-                } else
+                }
+                else
                 {
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
                     {
@@ -526,7 +540,8 @@ public class GameManagerScr : MonoBehaviour
                                 }
                             }
                         }
-                    } else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
                     {
                         List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
                         shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -753,7 +768,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
                     }
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
@@ -787,7 +802,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
 
                     }
@@ -822,7 +837,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
 
                     }
@@ -857,7 +872,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                           
+
                         }
 
                     }
@@ -895,7 +910,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
 
                     }
@@ -932,7 +947,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
 
                     }
@@ -970,7 +985,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
                     }
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
@@ -1007,7 +1022,7 @@ public class GameManagerScr : MonoBehaviour
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 break;
                             }
-                            
+
                         }
                     }
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
@@ -1078,10 +1093,11 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 1)
                 {
-                    if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
                         PlayerCardsCount--;
-                    } else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                    }
+                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
                     {
                         WarriorBaff--;
                         if (PlayerHand.childCount > 0)
@@ -1112,7 +1128,7 @@ public class GameManagerScr : MonoBehaviour
                             }
 
                         }
-                    } 
+                    }
                     else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
                     {
                         ArcheryBaff--;
@@ -1229,8 +1245,8 @@ public class GameManagerScr : MonoBehaviour
 
                     EnemyBuildingsBoxes[i].tag = "free";
 
-                } 
-            } 
+                }
+            }
         }
 
     }
@@ -1285,6 +1301,10 @@ public class GameManagerScr : MonoBehaviour
             else if (!IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (PlayerKhanHP <= 0)
+                {
+                    wonLostMenu.LostMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1337,6 +1357,10 @@ public class GameManagerScr : MonoBehaviour
             else if (!IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (PlayerKhanHP <= 0)
+                {
+                    wonLostMenu.LostMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1389,6 +1413,10 @@ public class GameManagerScr : MonoBehaviour
             else if (!IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (PlayerKhanHP <= 0)
+                {
+                    wonLostMenu.LostMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1441,17 +1469,21 @@ public class GameManagerScr : MonoBehaviour
             else if (IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (PlayerKhanHP <= 0)
+                {
+                    wonLostMenu.LostMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
         }
         if (PlayerWarriorHP1 <= 0)
         {
-            DestroyImmediate(EnemyWarrior1);
+            DestroyImmediate(PlayerWarior1);
         }
         if (PlayerWarriorHP2 <= 0)
         {
-            DestroyImmediate(EnemyWarrior2);
+            DestroyImmediate(PlayerWarior2);
         }
         ShowHPWarrior();
         ShowHPWall();
@@ -1516,6 +1548,10 @@ public class GameManagerScr : MonoBehaviour
             else if (IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (EnemyKhanHP <= 0)
+                {
+                    wonLostMenu.WonMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1579,6 +1615,10 @@ public class GameManagerScr : MonoBehaviour
             else if (IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (EnemyKhanHP <= 0)
+                {
+                    wonLostMenu.WonMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1640,6 +1680,10 @@ public class GameManagerScr : MonoBehaviour
             else if (IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (EnemyKhanHP <= 0)
+                {
+                    wonLostMenu.WonMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1704,6 +1748,10 @@ public class GameManagerScr : MonoBehaviour
             else if (IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                if (EnemyKhanHP <= 0)
+                {
+                    wonLostMenu.WonMenu();
+                }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
@@ -1715,6 +1763,13 @@ public class GameManagerScr : MonoBehaviour
 
 
 
+    public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
+    {
+        selPos.y -= 0.5f;
+        instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        Animator anim = instantiatedPrefab.GetComponent<Animator>();
+        anim.Play("SpawnAnimation");
+    }
     public void ShowMana()
     {
         PlayerManaTxt.text = PlayerMana.ToString();
@@ -1740,7 +1795,7 @@ public class GameManagerScr : MonoBehaviour
 
     public void BaffUnits(string unit)
     {
-        if(unit == "Barak")
+        if (unit == "Barak")
         {
             WarriorBaff++;
             for (int i = 0; i < 16; i++)
