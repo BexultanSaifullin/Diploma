@@ -323,25 +323,53 @@ public class GameManagerScr : MonoBehaviour
                 }
                 else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
                 {
-                    List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
-                    shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                    for (int j = 0; j < 16; j++)
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
                     {
-                        if (shallowCopy[j].tag == "busy")
+                        List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
+                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                        for (int j = 0; j < 16; j++)
                         {
-                            Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                            GameObject childTransform = childGameObject.gameObject;
-                            if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                            if (shallowCopy[j].tag == "busy")
                             {
-                                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                DestroyImmediate(EnemyCard[i]);
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                GameObject childTransform = childGameObject.gameObject;
+                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                 {
-                                    shallowCopy[j].tag = "free";
-                                    DestroyImmediate(childTransform);
+                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    DestroyImmediate(EnemyCard[i]);
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                    {
+                                        shallowCopy[j].tag = "free";
+                                        DestroyImmediate(childTransform);
+                                    }
+                                    break;
                                 }
-                                break;
+                            }
+                        }
+                    }
+                    else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                    {
+                        List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
+                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (shallowCopy[j].tag == "busy")
+                            {
+                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                GameObject childTransform = childGameObject.gameObject;
+                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                {
+                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    DestroyImmediate(EnemyCard[i]);
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                    {
+                                        shallowCopy[j].tag = "free";
+                                        DestroyImmediate(childTransform);
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }
@@ -472,27 +500,56 @@ public class GameManagerScr : MonoBehaviour
                     ShowMana();
                 } else
                 {
-                    List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
-                    shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                    for (int j = 0; j < 16; j++)
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
                     {
-                        if (shallowCopy[j].tag == "busy")
+                        List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
+                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                        for (int j = 0; j < 16; j++)
                         {
-                            Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                            GameObject childTransform = childGameObject.gameObject;
-                            if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                            if (shallowCopy[j].tag == "busy")
                             {
-                                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                DestroyImmediate(EnemyCard[i]);
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                GameObject childTransform = childGameObject.gameObject;
+                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                 {
-                                    shallowCopy[j].tag = "free";
-                                    DestroyImmediate(childTransform);
+                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    DestroyImmediate(EnemyCard[i]);
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                    {
+                                        shallowCopy[j].tag = "free";
+                                        DestroyImmediate(childTransform);
+                                    }
+                                    EnemyCard.RemoveAt(i);
+                                    i--;
+                                    break;
                                 }
-                                EnemyCard.RemoveAt(i);
-                                i--;
-                                break;
+                            }
+                        }
+                    } else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                    {
+                        List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
+                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (shallowCopy[j].tag == "busy")
+                            {
+                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                GameObject childTransform = childGameObject.gameObject;
+                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                {
+                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    DestroyImmediate(EnemyCard[i]);
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                    {
+                                        shallowCopy[j].tag = "free";
+                                        DestroyImmediate(childTransform);
+                                    }
+                                    EnemyCard.RemoveAt(i);
+                                    i--;
+                                    break;
+                                }
                             }
                         }
                     }
