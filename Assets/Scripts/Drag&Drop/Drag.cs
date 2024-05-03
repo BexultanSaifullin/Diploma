@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
+using Cinemachine;
 
 public class Drag : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Drag : MonoBehaviour
     private Quaternion initialRotation;
     GameManagerScr GameManager;
     CardSpawnerScr Spawner;
+    public CinemachineVirtualCamera CameraWoman;
+    CameraChanger CameraMan;
 
 
 
@@ -31,7 +34,7 @@ public class Drag : MonoBehaviour
         ArrangeCards();
         GameManager = FindObjectOfType<GameManagerScr>();
         Spawner = FindObjectOfType<CardSpawnerScr>();
-       
+        CameraMan = FindObjectOfType<CameraChanger>();
     }
 
 
@@ -42,9 +45,9 @@ public class Drag : MonoBehaviour
         {
             SelectPart();
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y < 12f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 11.950000762939454f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
-            StartCoroutine(StepFromAbove());
+            StepFromAbove();
         }
         if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
@@ -55,6 +58,7 @@ public class Drag : MonoBehaviour
             Teleportation();
         }
 
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.5799999833106995,"y":11.950000762939454,"z":26.05999755859375},"rotation":{ "x":0.00031384939211420715,"y":0.9330788254737854,"z":-0.3596709370613098,"w":0.0008142059668898582},"scale":{ "x":1.0,"y":1.0,"z":1.0} }
 
     }
     private void SelectPart()
@@ -90,22 +94,21 @@ public class Drag : MonoBehaviour
         }
     }
 
-    private IEnumerator StepFromAbove()
+    private void StepFromAbove()
     {
 
-        yield return new WaitForSeconds(1.2f);
 
-        if (mainCamera.transform.position.y == 37.88f)
-        {
+        
             initialPosition = currentCollider2.transform.position;
             initialRotation = currentCollider2.transform.rotation;
 
             newPosition = new Vector3(0.669f, 36.898f, 15.649f);
 
             currentCollider2.transform.position = newPosition;
+            //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
             Vector3 rotationAngles = new Vector3(90f, 180f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
             currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
-        }
+        
     }
 
     private void BackFromAbove()
