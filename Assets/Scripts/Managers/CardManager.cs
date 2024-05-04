@@ -56,13 +56,16 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Warrior", "Sprites/Pominki", 1, 10, 1, 3, "Unit", false, cardModels[0]));
         CardManagerList.AllCards.Add(new Card("Man", "Sprites/Pominki", 1, 1, 1, 1, "Unit", false, cardModels[1]));
         CardManagerList.AllCards.Add(new Card("Archer", "Sprites/Pominki", 1, 10, 2, 4, "Unit", false, cardModels[2]));
+        CardManagerList.AllCards.Add(new Card("Ensign", "Sprites/Pominki", 1, 10, 1, 4, "Unit", true, cardModels[2]));
+        CardManagerList.AllCards.Add(new Card("Mystan", "Sprites/Pominki", 1, 1, 1, 4, "Unit", true, cardModels[2]));
         CardManagerList.AllCards.Add(new Card("Arrows", "Sprites/Pominki", 1, 10, 1, 2, "Spell", false, cardModels[3]));
-        CardManagerList.AllCards.Add(new Card("Jut", "Sprites/Pominki", 2, 10, 1, 2, "Spell", false, cardModels[3]));
+        CardManagerList.AllCards.Add(new Card("Jut", "Sprites/Pominki", 2, 10, 0, 2, "Spell", false, cardModels[3]));
         CardManagerList.AllCards.Add(new Card("Yurt", "Sprites/Pominki", 0, 10, 0, 2, "Building", false, cardModels[4]));
         CardManagerList.AllCards.Add(new Card("Barak", "Sprites/Pominki", 0, 10, 0, 2, "Building", false, cardModels[4]));
         CardManagerList.AllCards.Add(new Card("Bowrange", "Sprites/Pominki", 0, 10, 0, 2, "Building", false, cardModels[4]));
-        
-        
+
+
+
     }
 
 

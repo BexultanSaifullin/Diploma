@@ -32,7 +32,7 @@ public class CardInfoScr : MonoBehaviour
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 8);
+        int randomNumber = Random.Range(0, 10);
        
         ShowCardInfo(CardManagerList.AllCards[randomNumber]);
     }

@@ -158,7 +158,6 @@ public class GameManagerScr : MonoBehaviour
                     GameObject childTransform = childGameObject.gameObject;
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
                     {
-                        Debug.Log(WarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(WarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
                     }
@@ -1049,6 +1048,35 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
+                    if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    {
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        {
+                            if (ABoxes[i + 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = ABoxes[i + 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    ABoxes[i + 1].tag = "free";
+                                }
+                            }
+                        }
+                        else if ((childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")) && i != 0)
+                        {
+                            if (ABoxes[i - 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = ABoxes[i - 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") || EnemychildTransform.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    ABoxes[i - 1].tag = "free";
+                                }
+                            }
+                        }
+                    }
                     DestroyImmediate(childTransform);
                     ABoxes[i].tag = "free";
                 }
@@ -1059,6 +1087,35 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    {
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        {
+                            if (BBoxes[i + 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = BBoxes[i + 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    BBoxes[i + 1].tag = "free";
+                                }
+                            }
+                        }
+                        else if ((childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")) && i != 0)
+                        {
+                            if (BBoxes[i - 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = BBoxes[i - 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") || EnemychildTransform.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    BBoxes[i - 1].tag = "free";
+                                }
+                            }
+                        }
+                    }
                     DestroyImmediate(childTransform);
                     BBoxes[i].tag = "free";
 
@@ -1070,6 +1127,35 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    {
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        {
+                            if (CBoxes[i + 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = CBoxes[i + 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    CBoxes[i + 1].tag = "free";
+                                }
+                            }
+                        }
+                        else if ((childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")) && i != 0)
+                        {
+                            if (CBoxes[i - 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = CBoxes[i - 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") || EnemychildTransform.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    CBoxes[i - 1].tag = "free";
+                                }
+                            }
+                        }
+                    }
                     DestroyImmediate(childTransform);
                     CBoxes[i].tag = "free";
 
@@ -1081,6 +1167,35 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    {
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        {
+                            if (DBoxes[i + 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = DBoxes[i + 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    DBoxes[i + 1].tag = "free";
+                                }
+                            }
+                        }
+                        else if ((childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")) && i != 0)
+                        {
+                            if (DBoxes[i - 1].tag == "busy")
+                            {
+                                Transform EnemychildGameObject = DBoxes[i - 1].transform.GetChild(0);
+                                GameObject EnemychildTransform = EnemychildGameObject.gameObject;
+                                if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") || EnemychildTransform.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    DestroyImmediate(EnemychildTransform);
+                                    DBoxes[i - 1].tag = "free";
+                                }
+                            }
+                        }
+                    }
                     DestroyImmediate(childTransform);
 
                     DBoxes[i].tag = "free";
@@ -1120,7 +1235,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.tag == "Playing" || b.tag == "Played") && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1152,7 +1267,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.tag == "Playing" || b.tag == "Played") && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1202,7 +1317,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.tag == "EnemyPlaying" || b.tag == "EnemyPlayed") && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1233,7 +1348,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.tag == "EnemyPlaying" || b.tag == "EnemyPlayed") && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1841,20 +1956,28 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
-            if (PlayerHand.childCount > 0)
+        }
+    }
+    
+    public void BaffAbillity()
+    {
+        for(int i = 0; i <16; i++)
+        {
+            if (AllBoxes[i].tag == "busy")
             {
-                for (int i = 0; i < PlayerHand.childCount; i++)
+                Transform childGameObject = AllBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ensign")
                 {
-                    Transform childGameObject = PlayerHand.transform.GetChild(i);
-                    GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
-                    {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
-                    }
+                    continue;
+                }
+                else if(childTransform.layer == LayerMask.NameToLayer("Played") || childTransform.layer == LayerMask.NameToLayer("Playing"))
+                {
+                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+
                 }
             }
         }
     }
-
 }
