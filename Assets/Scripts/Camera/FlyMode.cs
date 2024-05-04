@@ -49,7 +49,7 @@ public class FlyMode : MonoBehaviour
     private void FlyModeOn()
     {
         // Fly mode activation
-        if (Input.GetKeyDown(KeyCode.Keypad1) && cameraChanger.currentCameraIndex == 0)
+        if (Input.GetKeyDown(KeyCode.E) && cameraChanger.currentCameraIndex == 0)
         //if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             // transform.rotation = Quaternion.Euler(new Vector3(30.1f, -179f, 0f));

@@ -25,6 +25,7 @@ public class Drag : MonoBehaviour
     CardSpawnerScr Spawner;
     public CinemachineVirtualCamera CameraWoman;
     CameraChanger CameraMan;
+    Quaternion newRotation;
 
 
 
@@ -96,19 +97,16 @@ public class Drag : MonoBehaviour
 
     private void StepFromAbove()
     {
+        initialPosition = currentCollider2.transform.position;
+        initialRotation = currentCollider2.transform.rotation;
 
+        newPosition = new Vector3(0.669f, 36.898f, 15.649f);
 
-        
-            initialPosition = currentCollider2.transform.position;
-            initialRotation = currentCollider2.transform.rotation;
+        currentCollider2.transform.position = newPosition;
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
+        Vector3 rotationAngles = new Vector3(90f, 180f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
+        currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
 
-            newPosition = new Vector3(0.669f, 36.898f, 15.649f);
-
-            currentCollider2.transform.position = newPosition;
-            //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
-            Vector3 rotationAngles = new Vector3(90f, 180f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
-            currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
-        
     }
 
     private void BackFromAbove()
@@ -165,7 +163,8 @@ public class Drag : MonoBehaviour
             {
                 GameManager.PlayerCardsCount++;
                 Spawner.Spawn();
-            } else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+            }
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
             {
                 GameManager.BaffUnits(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
 
@@ -180,9 +179,9 @@ public class Drag : MonoBehaviour
 
         }
         else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("EnemyPlaying") || hit.collider.gameObject.layer == LayerMask.NameToLayer("EnemyPlayed")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
-        { 
+        {
 
-            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut" && hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut" && hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
@@ -194,13 +193,13 @@ public class Drag : MonoBehaviour
                     childTransform.tag = "free";
                     DestroyImmediate(hit.collider.gameObject);
                 }
-            } 
+            }
             else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 DestroyImmediate(selectedObject);
-                if(hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
                     Transform parentTransform = hit.collider.gameObject.transform.parent;
                     GameObject childTransform = parentTransform.gameObject;
@@ -215,6 +214,8 @@ public class Drag : MonoBehaviour
     {
         selPos.y -= 0.5f;
         instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
+        instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimation");
     }
