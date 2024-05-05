@@ -9,6 +9,11 @@ TagManager:
   - free
   - EnemyCard
   - object
+  - CardColl
+  - BackBtnColl
+  - BackFromDescrioptionBtn
+  - NextBtn
+  - PrevBtn
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,7 @@ public class Test3DButtons : MonoBehaviour
     private GameObject button;
     private Vector3 initialPos;
     private Vector3 endPos;
-    private float duration = 1f; // Adjust the duration as needed
+    private float duration = 1f;
     private float startTime;
     private bool isHovering = false;
 
@@ -16,7 +16,7 @@ public class Test3DButtons : MonoBehaviour
     {
         button = this.gameObject;
         initialPos = button.transform.position;
-        endPos = new Vector3(initialPos.x, initialPos.y - 0.4f, initialPos.z - 0.3f); // Move button slightly back on hover
+        endPos = new Vector3(initialPos.x, initialPos.y - 0.2f, initialPos.z - 0.15f);
     }
 
     void OnMouseEnter()
@@ -28,7 +28,7 @@ public class Test3DButtons : MonoBehaviour
     void OnMouseExit()
     {
         isHovering = false;
-        startTime = Time.time; // Reset start time to start easing from current position
+        startTime = Time.time;
     }
 
     void Update()

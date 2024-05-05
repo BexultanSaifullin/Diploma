@@ -10,16 +10,20 @@ public class GameEntryMenu : MonoBehaviour
     public GameObject myCollectionBtn;
     public GameObject exitBtn;
     public GameObject spawnPlayDeskBtn;
+    public GameObject backMenuBtn;
     public GameObject book;
     public GameObject paper;
     public GameObject playDesk;
     public bool isNewGameClicked = false;
-    public GameObject gameStart;
+    private GameObject gameStart;
     private AudioManager audioManager;
     public GameObject objectToSpawn;
     public bool IsPlaneDestroyed = false;
     public GameObject cutsene;
     public GameObject buttons3D;
+    public GameObject backBtn;
+    public GameObject cameraChangerObj;
+    public GameObject[] myCollectionObjects;
     public List<CinemachineVirtualCamera> gameCameras;
 
 
@@ -54,6 +58,11 @@ public class GameEntryMenu : MonoBehaviour
                 else if (hitInfo.collider.gameObject == myCollectionBtn)
                 {
                     Debug.Log("My Collection opened!");
+                    myCollectionObjects[0].SetActive(true);
+                    myCollectionObjects[1].SetActive(true);
+                    myCollectionObjects[3].SetActive(true);
+                    myCollectionObjects[5].SetActive(true);
+                    buttons3D.SetActive(false);
                 }
                 else if (hitInfo.collider.gameObject == exitBtn)
                 {
@@ -61,8 +70,10 @@ public class GameEntryMenu : MonoBehaviour
                 }
                 else if (hitInfo.collider.gameObject == spawnPlayDeskBtn)
                 {
+                    cameraChangerObj.SetActive(true);
                     playDesk.SetActive(true);
                     spawnPlayDeskBtn.SetActive(false);
+                    backMenuBtn.SetActive(false);
                     book.SetActive(false);
                     paper.SetActive(false);
                     gameStart = Instantiate(objectToSpawn);
@@ -84,6 +95,20 @@ public class GameEntryMenu : MonoBehaviour
                     }
                     gameCameras[0].Priority = 1;
                 }
+                else if (hitInfo.collider.gameObject == backBtn)
+                {
+                    foreach (var obj in myCollectionObjects)
+                    {
+                        obj.SetActive(false);
+                    }
+                    buttons3D.SetActive(true);
+                }
+                else if (hitInfo.collider.gameObject == backMenuBtn)
+                {
+                    spawnPlayDeskBtn.SetActive(false);
+                    backMenuBtn.SetActive(false);
+                    RestartGame();
+                }
             }
         }
     }
@@ -100,26 +125,32 @@ public class GameEntryMenu : MonoBehaviour
         gameCameras[4].gameObject.SetActive(true);
         gameCameras[4].Priority = 10;
 
-        playDesk.SetActive(false);
-
+        if (playDesk.activeSelf)
+        {
+            playDesk.SetActive(false);
+        }
         // book.SetActive(true);
         // paper.SetActive(true);
         // book.GetComponent<Animator>().Play("Book");
         // paper.GetComponent<Animator>().Play("Paper");
 
-        book.SetActive(true);
-        paper.SetActive(true);
+        if (book.activeSelf == false && paper.activeSelf == false)
+        {
+            book.SetActive(true);
+            paper.SetActive(true);
+            audioManager.CleanUp();
+            audioManager.InitializeMenuMusic(FMODEvents.instance.MenuMusic);
+        }
         book.GetComponent<Animator>().Play("Reverse Book");
         paper.GetComponent<Animator>().Play("Reverse Paper");
         StartCoroutine(Wait5Sec());
-        audioManager.CleanUp();
-        audioManager.InitializeMenuMusic(FMODEvents.instance.MenuMusic);
     }
 
     IEnumerator SpawnPlayDesk()
     {
         yield return new WaitForSeconds(3.5f);
         spawnPlayDeskBtn.SetActive(true);
+        backMenuBtn.SetActive(true);
     }
     IEnumerator Wait5Sec()
     {
