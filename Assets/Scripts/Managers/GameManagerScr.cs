@@ -1050,7 +1050,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
                     {
-                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
                             if (ABoxes[i + 1].tag == "busy")
                             {
@@ -1089,7 +1089,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
                     {
-                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
                             if (BBoxes[i + 1].tag == "busy")
                             {
@@ -1129,7 +1129,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
                     {
-                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
                             if (CBoxes[i + 1].tag == "busy")
                             {
@@ -1169,7 +1169,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
                     {
-                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 4)
+                        if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
                             if (DBoxes[i + 1].tag == "busy")
                             {
