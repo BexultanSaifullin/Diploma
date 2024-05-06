@@ -24,16 +24,16 @@ public class CardInfoScr : MonoBehaviour
     public void RefreshData()
     {
         Attack.text = SelfCard.Attack.ToString();
-        if(SelfCard.Type != "Spell")
+        if (SelfCard.Type != "Spell")
         {
             Defense.text = SelfCard.Defense.ToString();
         }
-       
+
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 10);
-       
+        int randomNumber = Random.Range(0, 2);
+
         ShowCardInfo(CardManagerList.AllCards[randomNumber]);
     }
 }

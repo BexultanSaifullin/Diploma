@@ -23,6 +23,8 @@ public class Drag : MonoBehaviour
     private Quaternion initialRotation;
     GameManagerScr GameManager;
     CardSpawnerScr Spawner;
+    private Animator jutSpellAnimation;
+    private GameEntryMenu gameEntryMenu;
     public CinemachineVirtualCamera CameraWoman;
     CameraChanger CameraMan;
     Quaternion newRotation;
@@ -36,6 +38,8 @@ public class Drag : MonoBehaviour
         GameManager = FindObjectOfType<GameManagerScr>();
         Spawner = FindObjectOfType<CardSpawnerScr>();
         CameraMan = FindObjectOfType<CameraChanger>();
+        gameEntryMenu = FindObjectOfType<GameEntryMenu>();
+        jutSpellAnimation = gameEntryMenu.jutSpellPlayer.GetComponent<Animator>();
     }
 
 
@@ -124,9 +128,9 @@ public class Drag : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free && hit.collider.gameObject.layer == LayerMask.NameToLayer("Default") && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
         {
-            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Abyllity == true)
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Abyllity == true)
             {
-                if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Ensign")
+                if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Ensign")
                 {
                     GameManager.BaffAbillity();
                 }
@@ -190,6 +194,9 @@ public class Drag : MonoBehaviour
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
+                SpellSpawn(hit.collider.transform.parent.gameObject);
+                GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
@@ -203,6 +210,8 @@ public class Drag : MonoBehaviour
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
+                GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
@@ -223,6 +232,20 @@ public class Drag : MonoBehaviour
         instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimation");
+    }
+    public void SpellSpawn(GameObject posToSpell)
+    {
+        Debug.Log(posToSpell.name);
+        // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
+        // jutSpellAnimation.Play(posToSpell.name);
+        if (posToSpell.name == "A")
+            jutSpellAnimation.Play("D");
+        if (posToSpell.name == "B")
+            jutSpellAnimation.Play("C");
+        if (posToSpell.name == "C")
+            jutSpellAnimation.Play("B");
+        if (posToSpell.name == "D")
+            jutSpellAnimation.Play("A");
     }
 
 

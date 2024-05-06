@@ -39,6 +39,8 @@ public class GameManagerScr : MonoBehaviour
 
     private WonLostMenu wonLostMenu;
     private GameObject instantiatedPrefab;
+    private GameEntryMenu gameEntryMenu;
+    private Animator jutSpellAnimation;
 
 
     public bool IsPlayerTurn
@@ -57,6 +59,8 @@ public class GameManagerScr : MonoBehaviour
         Spawner = FindObjectOfType<CardSpawnerScr>();
         SpawnerEnemy = FindObjectOfType<CardSpawnerEnemyScr>();
         wonLostMenu = FindObjectOfType<WonLostMenu>();
+        gameEntryMenu = FindObjectOfType<GameEntryMenu>();
+        jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
     }
 
     IEnumerator TurnFunc()
@@ -367,6 +371,7 @@ public class GameManagerScr : MonoBehaviour
                                 {
                                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
                                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    EnemySpellSpawn(childTransform.transform.parent.gameObject);
                                     DestroyImmediate(EnemyCard[i]);
                                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                                     {
@@ -1048,7 +1053,7 @@ public class GameManagerScr : MonoBehaviour
                 GameObject childTransform = childGameObject.gameObject;
                 if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
-                    if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
                     {
                         if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
@@ -1878,6 +1883,18 @@ public class GameManagerScr : MonoBehaviour
 
 
 
+    public void EnemySpellSpawn(GameObject posToSpell)
+    {
+        Debug.Log(posToSpell.name);
+        if (posToSpell.name == "A")
+            jutSpellAnimation.Play("D");
+        if (posToSpell.name == "B")
+            jutSpellAnimation.Play("C");
+        if (posToSpell.name == "C")
+            jutSpellAnimation.Play("B");
+        if (posToSpell.name == "D")
+            jutSpellAnimation.Play("A");
+    }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
         selPos.y -= 0.5f;
@@ -1958,10 +1975,10 @@ public class GameManagerScr : MonoBehaviour
             }
         }
     }
-    
+
     public void BaffAbillity()
     {
-        for(int i = 0; i <16; i++)
+        for (int i = 0; i < 16; i++)
         {
             if (AllBoxes[i].tag == "busy")
             {
@@ -1971,7 +1988,7 @@ public class GameManagerScr : MonoBehaviour
                 {
                     continue;
                 }
-                else if(childTransform.layer == LayerMask.NameToLayer("Played") || childTransform.layer == LayerMask.NameToLayer("Playing"))
+                else if (childTransform.layer == LayerMask.NameToLayer("Played") || childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
                     childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();

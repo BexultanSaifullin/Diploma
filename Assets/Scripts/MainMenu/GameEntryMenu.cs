@@ -23,6 +23,10 @@ public class GameEntryMenu : MonoBehaviour
     public GameObject buttons3D;
     public GameObject backBtn;
     public GameObject cameraChangerObj;
+    private CameraChanger cameraChanger;
+    public GameObject jutSpellPlayer;
+    public GameObject jutSpellEnemy;
+    //public GameObject arrowsSpell;
     public GameObject[] myCollectionObjects;
     public List<CinemachineVirtualCamera> gameCameras;
 
@@ -30,6 +34,7 @@ public class GameEntryMenu : MonoBehaviour
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
+        cameraChanger = FindObjectOfType<CameraChanger>();
         StartCoroutine(WaitCutscene());
     }
 
@@ -118,6 +123,11 @@ public class GameEntryMenu : MonoBehaviour
         IsPlaneDestroyed = true;
         Destroy(gameStart);
         RestartGame();
+        // foreach (var cam in cameraChanger.VirtualCameras)
+        // {
+        //     cam.Priority = 0;
+        // }
+        // cameraChanger.VirtualCameras[0].Priority = 1;
     }
 
     public void RestartGame()
