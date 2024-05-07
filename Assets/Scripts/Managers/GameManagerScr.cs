@@ -1900,7 +1900,41 @@ public class GameManagerScr : MonoBehaviour
     public void EnemyArrowsSpawn(GameObject posToSpell)
     {
         Debug.Log(posToSpell.name);
-        arrowsSpellAnimation.Play(posToSpell.name);
+        if (posToSpell.name == "A1")
+            arrowsSpellAnimation.Play("A4");
+        if (posToSpell.name == "A2")
+            arrowsSpellAnimation.Play("A3");
+        if (posToSpell.name == "A3")
+            arrowsSpellAnimation.Play("A2");
+        if (posToSpell.name == "A4")
+            arrowsSpellAnimation.Play("A1");
+
+        if (posToSpell.name == "B1")
+            arrowsSpellAnimation.Play("B4");
+        if (posToSpell.name == "B2")
+            arrowsSpellAnimation.Play("B3");
+        if (posToSpell.name == "B3")
+            arrowsSpellAnimation.Play("B2");
+        if (posToSpell.name == "B4")
+            arrowsSpellAnimation.Play("B1");
+
+        if (posToSpell.name == "C1")
+            arrowsSpellAnimation.Play("C4");
+        if (posToSpell.name == "C2")
+            arrowsSpellAnimation.Play("C3");
+        if (posToSpell.name == "C3")
+            arrowsSpellAnimation.Play("C2");
+        if (posToSpell.name == "C4")
+            arrowsSpellAnimation.Play("C1");
+
+        if (posToSpell.name == "D1")
+            arrowsSpellAnimation.Play("D4");
+        if (posToSpell.name == "D2")
+            arrowsSpellAnimation.Play("D3");
+        if (posToSpell.name == "D3")
+            arrowsSpellAnimation.Play("D2");
+        if (posToSpell.name == "D4")
+            arrowsSpellAnimation.Play("D1");
     }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
