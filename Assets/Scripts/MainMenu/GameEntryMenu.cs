@@ -123,11 +123,10 @@ public class GameEntryMenu : MonoBehaviour
         IsPlaneDestroyed = true;
         Destroy(gameStart);
         RestartGame();
-        // foreach (var cam in cameraChanger.VirtualCameras)
-        // {
-        //     cam.Priority = 0;
-        // }
-        // cameraChanger.VirtualCameras[0].Priority = 1;
+        foreach (var cam in cameraChanger.VirtualCameras)
+        {
+            cam.Priority = 0;
+        }
     }
 
     public void RestartGame()
