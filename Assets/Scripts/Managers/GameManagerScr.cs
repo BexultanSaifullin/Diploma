@@ -76,15 +76,15 @@ public class GameManagerScr : MonoBehaviour
                 TurnTimeTxt.text = TurnTime.ToString();
                 yield return new WaitForSeconds(1);
             }
+            ChangeTurn();
         }
         else
         {
-            while (TurnTime-- > 27)
-            {
-                TurnTimeTxt.text = TurnTime.ToString();
-                yield return new WaitForSeconds(1);
-            }
-
+            //while (TurnTime-- > 27)
+            //{
+            //    TurnTimeTxt.text = TurnTime.ToString();
+            //    yield return new WaitForSeconds(1);
+            //}
             List<GameObject> EnemyPlaces = new List<GameObject>();
             List<GameObject> EnemyCard = new List<GameObject>();
             List<GameObject> EnemyCardBuildings = new List<GameObject>();
@@ -126,11 +126,12 @@ public class GameManagerScr : MonoBehaviour
 
             if (EnemyCard.Count > 0)
             {
-                EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings);
+                StartCoroutine(EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings));
             }
+            
 
         }
-        ChangeTurn();
+        
     }
 
     public void ChangeTurn()
@@ -223,7 +224,7 @@ public class GameManagerScr : MonoBehaviour
         StartCoroutine(TurnFunc());
     }
 
-    void EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces, List<GameObject> EnemyCardBuildings)
+    IEnumerator EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces, List<GameObject> EnemyCardBuildings)
     {
         System.Random rng = new System.Random();
         int EnemyPlacesCount = EnemyPlaces.Count - 1;
@@ -403,6 +404,7 @@ public class GameManagerScr : MonoBehaviour
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
                 }
+                yield return new WaitForSeconds(3);
             }
         }
         else
@@ -575,8 +577,10 @@ public class GameManagerScr : MonoBehaviour
                         }
                     }
                 }
+                yield return new WaitForSeconds(3);
             }
         }
+        ChangeTurn();
     }
 
     void PlayerMoveCards()
@@ -1938,6 +1942,10 @@ public class GameManagerScr : MonoBehaviour
     }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
+        if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab == null)
+        {
+            return;
+        }
         instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
         newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
         instantiatedPrefab.transform.rotation = newRotation;

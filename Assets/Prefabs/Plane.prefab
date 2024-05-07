@@ -3651,7 +3651,7 @@ MonoBehaviour:
   PlayerKhanHP: 10
   EnemyKhanHP: 10
   PlayerMana: 1
-  EnemyMana: 1
+  EnemyMana: 10
   PlayerCardsCount: 10
   EnemyCardsCount: 10
   PlayerManaTxt: {fileID: 1381425707515112212}
