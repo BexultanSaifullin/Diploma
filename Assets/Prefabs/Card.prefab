@@ -111,6 +111,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   Name: {fileID: 5766767675425012368}
   Attack: {fileID: 8905548088836650908}
   Defense: {fileID: 9143489246848846994}

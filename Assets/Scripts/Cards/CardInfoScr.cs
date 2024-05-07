@@ -24,10 +24,25 @@ public class CardInfoScr : MonoBehaviour
     }
     public void RefreshData()
     {
-        Renderer defense = Defense.GetComponent<Renderer>();
-        defense.material = NewDefense[SelfCard.Defense];
-        Renderer attack = Attack.GetComponent<Renderer>();
-        attack.material = NewAttack[SelfCard.Attack];
+        if (SelfCard.Defense > 0)
+        {
+            Renderer defense = Defense.GetComponent<Renderer>();
+            defense.material = NewDefense[SelfCard.Defense];
+        }
+        else
+        {
+            Renderer defense = Defense.GetComponent<Renderer>();
+            defense.material = NewDefense[0];
+        }
+        if (SelfCard.Attack > 0)
+        {
+            Renderer attack = Attack.GetComponent<Renderer>();
+            attack.material = NewAttack[SelfCard.Attack];
+        } else
+        {
+            Renderer attack = Attack.GetComponent<Renderer>();
+            attack.material = NewAttack[0];
+        }
 
     }
     private void Start()
