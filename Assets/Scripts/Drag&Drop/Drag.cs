@@ -108,7 +108,7 @@ public class Drag : MonoBehaviour
 
         currentCollider2.transform.position = newPosition;
         //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
-        Vector3 rotationAngles = new Vector3(90f, 180f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
+        Vector3 rotationAngles = new Vector3(0f, 0f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
     }
 
@@ -145,7 +145,7 @@ public class Drag : MonoBehaviour
             GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
-            selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
+            selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
 
@@ -179,7 +179,7 @@ public class Drag : MonoBehaviour
 
             }
 
-            selectedObject.transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
+            selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
 

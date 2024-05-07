@@ -252,12 +252,12 @@ public class GameManagerScr : MonoBehaviour
                     newPosition.y += 0.01f;
 
                     EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(90f, -180f, 180f);
+                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                     EnemyCardBuildings[random].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -389,12 +389,12 @@ public class GameManagerScr : MonoBehaviour
                     Vector3 newPosition = EnemyPlaces[i].transform.position;
                     newPosition.y += 0.01f;
                     EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(90f, 180f, 180f);
+                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                     EnemyPlaces[i].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -421,12 +421,12 @@ public class GameManagerScr : MonoBehaviour
                     newPosition.y += 0.01f;
 
                     EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(90f, 180f, 180f);
+                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                     EnemyCardBuildings[random].gameObject.tag = "busy";
                     EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(1.36000001f, 1.64999998f, 0.925607145f);
+                    EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
@@ -504,11 +504,11 @@ public class GameManagerScr : MonoBehaviour
                     Vector3 newPosition = EnemyPlaces[i].transform.position;
                     newPosition.y += 0.01f;
                     EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(90f, 180f, 180f);
+                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
                     EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
                     EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                    EnemyCard[i].transform.localScale = new Vector3(1.36f, 1.65f, 0.925f);
+                    EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;

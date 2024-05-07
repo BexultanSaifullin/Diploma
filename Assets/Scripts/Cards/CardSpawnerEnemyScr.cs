@@ -14,7 +14,7 @@ public class CardSpawnerEnemyScr : MonoBehaviour
     }
     public void SpawnEnemy()
     {
-        GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(45, 0, 0));
+        GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(135, 0, -180));
         spawnedObject.transform.parent = transform;
         Arrange.ArrangeCardsToEnemy();
     }

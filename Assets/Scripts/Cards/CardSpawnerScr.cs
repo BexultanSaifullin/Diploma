@@ -20,7 +20,7 @@ public class CardSpawnerScr : MonoBehaviour
     // Update is called once per frame
     public void Spawn()
     {
-        GameObject spawnedObject = Instantiate(objectToSpawn, positionToSpawn, Quaternion.Euler(45, 180, 0));
+        GameObject spawnedObject = Instantiate(objectToSpawn, positionToSpawn, Quaternion.Euler(45, 0, 0));
 
         spawnedObject.transform.parent = transform;
         Arrange.ArrangeCards();

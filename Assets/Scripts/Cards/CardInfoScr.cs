@@ -6,34 +6,34 @@ using TMPro;
 
 public class CardInfoScr : MonoBehaviour
 {
+    public Material[] NewDefense, NewMana, NewAttack, NewLogo;
     public Card SelfCard;
-    public Image Logo;
-    public TextMeshProUGUI Name, Attack, Defense, Mana;
+    public GameObject Name, Attack, Defense, Mana, Logo;
     Drag Arrange;
-    public GameObject selectedObject;
 
-    public void ShowCardInfo(Card card)
+    public void ShowCardInfo(Card card, int i)
     {
         SelfCard = card;
-        Logo.sprite = card.Logo;
-        Logo.preserveAspect = true;
-        Name.text = card.Name;
-        Mana.text = SelfCard.Mana.ToString();
+        Renderer mana = Mana.GetComponent<Renderer>();
+        mana.material = NewMana[card.Mana];
+        Renderer logo = Logo.GetComponent<Renderer>();
+        logo.material = NewLogo[i];
+        Renderer name = Name.GetComponent<Renderer>();
+        name.material = NewLogo[i];
         RefreshData();
     }
     public void RefreshData()
     {
-        Attack.text = SelfCard.Attack.ToString();
-        if (SelfCard.Type != "Spell")
-        {
-            Defense.text = SelfCard.Defense.ToString();
-        }
+        Renderer defense = Defense.GetComponent<Renderer>();
+        defense.material = NewDefense[SelfCard.Defense];
+        Renderer attack = Attack.GetComponent<Renderer>();
+        attack.material = NewAttack[SelfCard.Attack];
 
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 2);
+        int randomNumber = Random.Range(0, 10);
 
-        ShowCardInfo(CardManagerList.AllCards[randomNumber]);
+        ShowCardInfo(CardManagerList.AllCards[randomNumber], randomNumber);
     }
 }
