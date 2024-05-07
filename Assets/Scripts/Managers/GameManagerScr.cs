@@ -389,7 +389,7 @@ public class GameManagerScr : MonoBehaviour
                         }
                     }
                 }
-                else
+                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
                 {
                     Vector3 newPosition = EnemyPlaces[i].transform.position;
                     newPosition.y += 0.01f;
@@ -521,7 +521,7 @@ public class GameManagerScr : MonoBehaviour
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
                     ShowMana();
                 }
-                else
+                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
                 {
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
                     {
@@ -1089,6 +1089,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     ABoxes[i].tag = "free";
                 }
@@ -1128,6 +1129,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     BBoxes[i].tag = "free";
 
@@ -1168,6 +1170,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     CBoxes[i].tag = "free";
 
@@ -1208,6 +1211,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
 
                     DBoxes[i].tag = "free";
@@ -1288,6 +1292,7 @@ public class GameManagerScr : MonoBehaviour
 
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
 
                     PlayerBuildingsBoxes[i].tag = "free";
@@ -1368,6 +1373,7 @@ public class GameManagerScr : MonoBehaviour
                             }
                         }
                     }
+                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
 
                     EnemyBuildingsBoxes[i].tag = "free";
