@@ -43,7 +43,6 @@ public class CardInfoScr : MonoBehaviour
             Renderer attack = Attack.GetComponent<Renderer>();
             attack.material = NewAttack[0];
         }
-
     }
     private void Start()
     {

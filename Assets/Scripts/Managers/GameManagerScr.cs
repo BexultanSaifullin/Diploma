@@ -1973,6 +1973,19 @@ public class GameManagerScr : MonoBehaviour
                     }
                 }
             }
+            if (PlayerHand.childCount > 0)
+            {
+                for (int i = 0; i < PlayerHand.childCount; i++)
+                {
+                    Transform childGameObject = PlayerHand.transform.GetChild(i);
+                    GameObject childTransform = childGameObject.gameObject;
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                    {
+                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    }
+                }
+            }
         }
     }
 
