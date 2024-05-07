@@ -11,6 +11,7 @@ using System.Linq;
 public class GameManagerScr : MonoBehaviour
 {
     int Turn, TurnTime = 30, increase = 1;
+    public GameObject[] Models;
     public Button EndTurnBtn;
     CardSpawnerScr Spawner; CardSpawnerEnemyScr SpawnerEnemy;
 
@@ -1942,11 +1943,13 @@ public class GameManagerScr : MonoBehaviour
     }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab == null)
-        {
-            return;
-        }
-        instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        GameObject prefab = Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
+        //if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab == null)
+        //{
+        //    Debug.Log("Error");
+        //    return;
+        //}
+        instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
         newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
         instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();

@@ -227,7 +227,8 @@ public class Drag : MonoBehaviour
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        GameObject prefab = GameManager.Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
+        instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }
