@@ -23,11 +23,10 @@ public class Drag : MonoBehaviour
     private Quaternion initialRotation;
     GameManagerScr GameManager;
     CardSpawnerScr Spawner;
-    private Animator jutSpellAnimation;
+    private Animator jutSpellAnimation, arrowsSpellAnimation;
     private GameEntryMenu gameEntryMenu;
     public CinemachineVirtualCamera CameraWoman;
     CameraChanger CameraMan;
-    Quaternion newRotation;
 
 
 
@@ -40,6 +39,7 @@ public class Drag : MonoBehaviour
         CameraMan = FindObjectOfType<CameraChanger>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellPlayer.GetComponent<Animator>();
+        arrowsSpellAnimation = gameEntryMenu.arrowsSpellPlayer.GetComponent<Animator>();
     }
 
 
@@ -194,7 +194,7 @@ public class Drag : MonoBehaviour
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
-                SpellSpawn(hit.collider.transform.parent.gameObject);
+                JutSpellSpawn(hit.collider.transform.parent.gameObject);
                 GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                 GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
@@ -210,6 +210,7 @@ public class Drag : MonoBehaviour
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
+                ArrowsSpellSpawn(hit.collider.transform.parent.gameObject);
                 GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                 GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
@@ -226,14 +227,11 @@ public class Drag : MonoBehaviour
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        selPos.y -= 0.5f;
         instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
-        newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
-        instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
-        anim.Play("SpawnAnimation");
+        anim.Play("SpawnAnimationTest");
     }
-    public void SpellSpawn(GameObject posToSpell)
+    public void JutSpellSpawn(GameObject posToSpell)
     {
         Debug.Log(posToSpell.name);
         // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
@@ -246,6 +244,13 @@ public class Drag : MonoBehaviour
             jutSpellAnimation.Play("B");
         if (posToSpell.name == "D")
             jutSpellAnimation.Play("A");
+        ArrangeCards();
+    }
+    public void ArrowsSpellSpawn(GameObject posToSpell)
+    {
+        Debug.Log(posToSpell.name);
+        arrowsSpellAnimation.Play(posToSpell.name);
+        ArrangeCards();
     }
 
 

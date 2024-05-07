@@ -38,7 +38,8 @@ public class CardInfoScr : MonoBehaviour
         {
             Renderer attack = Attack.GetComponent<Renderer>();
             attack.material = NewAttack[SelfCard.Attack];
-        } else
+        }
+        else
         {
             Renderer attack = Attack.GetComponent<Renderer>();
             attack.material = NewAttack[0];
@@ -46,7 +47,7 @@ public class CardInfoScr : MonoBehaviour
     }
     private void Start()
     {
-        int randomNumber = Random.Range(0, 10);
+        int randomNumber = Random.Range(0, 2);
 
         ShowCardInfo(CardManagerList.AllCards[randomNumber], randomNumber);
     }

@@ -26,7 +26,8 @@ public class GameEntryMenu : MonoBehaviour
     private CameraChanger cameraChanger;
     public GameObject jutSpellPlayer;
     public GameObject jutSpellEnemy;
-    //public GameObject arrowsSpell;
+    public GameObject arrowsSpellPlayer;
+    public GameObject arrowsSpellEnemy;
     public GameObject[] myCollectionObjects;
     public List<CinemachineVirtualCamera> gameCameras;
 

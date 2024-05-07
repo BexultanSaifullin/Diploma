@@ -40,7 +40,8 @@ public class GameManagerScr : MonoBehaviour
     private WonLostMenu wonLostMenu;
     private GameObject instantiatedPrefab;
     private GameEntryMenu gameEntryMenu;
-    private Animator jutSpellAnimation;
+    private Animator jutSpellAnimation, arrowsSpellAnimation;
+    private Quaternion newRotation;
 
 
     public bool IsPlayerTurn
@@ -61,6 +62,7 @@ public class GameManagerScr : MonoBehaviour
         wonLostMenu = FindObjectOfType<WonLostMenu>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
+        arrowsSpellAnimation = gameEntryMenu.arrowsSpellEnemy.GetComponent<Animator>();
     }
 
     IEnumerator TurnFunc()
@@ -346,6 +348,7 @@ public class GameManagerScr : MonoBehaviour
                                 {
                                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
                                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    EnemyArrowsSpawn(childTransform.transform.parent.gameObject);
                                     DestroyImmediate(EnemyCard[i]);
                                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                                     {
@@ -371,7 +374,7 @@ public class GameManagerScr : MonoBehaviour
                                 {
                                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
                                     childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                    EnemySpellSpawn(childTransform.transform.parent.gameObject);
+                                    EnemyJutSpawn(childTransform.transform.parent.gameObject);
                                     DestroyImmediate(EnemyCard[i]);
                                     if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                                     {
@@ -510,7 +513,6 @@ public class GameManagerScr : MonoBehaviour
                     EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
                     EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
-                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyPlaces[i].gameObject.tag = "busy";
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
@@ -1883,7 +1885,7 @@ public class GameManagerScr : MonoBehaviour
 
 
 
-    public void EnemySpellSpawn(GameObject posToSpell)
+    public void EnemyJutSpawn(GameObject posToSpell)
     {
         Debug.Log(posToSpell.name);
         if (posToSpell.name == "A")
@@ -1895,12 +1897,18 @@ public class GameManagerScr : MonoBehaviour
         if (posToSpell.name == "D")
             jutSpellAnimation.Play("A");
     }
+    public void EnemyArrowsSpawn(GameObject posToSpell)
+    {
+        Debug.Log(posToSpell.name);
+        arrowsSpellAnimation.Play(posToSpell.name);
+    }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        selPos.y -= 0.5f;
         instantiatedPrefab = Instantiate(selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab, selPos, Quaternion.identity);
+        newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
+        instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
-        anim.Play("SpawnAnimation");
+        anim.Play("SpawnAnimationTest");
     }
     public void ShowMana()
     {

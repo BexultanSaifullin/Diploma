@@ -52,15 +52,15 @@ public class CardManager : MonoBehaviour
     public void Awake()
     {
         CardManagerList.AllCards.Add(new Card("Warrior", 1, 10, 1, 3, "Unit", false, cardModels[0]));
-        CardManagerList.AllCards.Add(new Card("Yurt", 0, 10, 0, 2, "Building", false, cardModels[4]));
-        CardManagerList.AllCards.Add(new Card("Barak", 0, 10, 0, 2, "Building", false, cardModels[4]));
-        CardManagerList.AllCards.Add(new Card("Bowrange", 0, 10, 0, 2, "Building", false, cardModels[4]));
-        CardManagerList.AllCards.Add(new Card("Man", 1, 1, 1, 1, "Unit", false, cardModels[1]));
-        CardManagerList.AllCards.Add(new Card("Archer", 1, 10, 2, 4, "Unit", false, cardModels[2]));
-        CardManagerList.AllCards.Add(new Card("Ensign", 1, 10, 1, 4, "Unit", true, cardModels[2]));
-        CardManagerList.AllCards.Add(new Card("Mystan", 1, 1, 1, 4, "Unit", true, cardModels[2]));
-        CardManagerList.AllCards.Add(new Card("Arrows", 1, 0, 1, 2, "Spell", false, cardModels[3]));
-        CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 1, "Spell", false, cardModels[3]));
+        // CardManagerList.AllCards.Add(new Card("Yurt", 0, 10, 0, 2, "Building", false, cardModels[5]));
+        // CardManagerList.AllCards.Add(new Card("Barak", 0, 10, 0, 2, "Building", false, cardModels[4]));
+        // CardManagerList.AllCards.Add(new Card("Bowrange", 0, 10, 0, 2, "Building", false, cardModels[3]));
+        // CardManagerList.AllCards.Add(new Card("Man", 1, 1, 1, 1, "Unit", false, cardModels[1]));
+        // CardManagerList.AllCards.Add(new Card("Archer", 1, 10, 2, 4, "Unit", false, cardModels[2]));
+        // CardManagerList.AllCards.Add(new Card("Ensign", 1, 10, 1, 4, "Unit", true, cardModels[1]));
+        // CardManagerList.AllCards.Add(new Card("Mystan", 1, 1, 1, 4, "Unit", true, cardModels[1]));
+        CardManagerList.AllCards.Add(new Card("Arrows", 1, 0, 1, 2, "Spell", false, cardModels[1]));
+        // CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 1, "Spell", false, cardModels[1]));
 
 
 

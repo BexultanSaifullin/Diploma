@@ -43,6 +43,7 @@ public class MyCollection : MonoBehaviour
                     initialPos = clickedObject.transform.position;
                     cardName = clickedObject.name;
                     clickedObject.name = "Current_Card";
+                    clickedObject.tag = "Untagged";
 
                     Vector3 newPosition = mainCamera.transform.position + mainCamera.transform.forward * 4f + mainCamera.transform.right * -1.1f;
                     clickedObject.transform.position = newPosition;
@@ -69,6 +70,7 @@ public class MyCollection : MonoBehaviour
                 {
                     currentCard.transform.position = initialPos;
                     currentCard.name = cardName;
+                    currentCard.tag = "CardColl";
                     foreach (var obj in objectsToActivate)
                     {
                         obj.SetActive(false);
