@@ -115,6 +115,7 @@ public class Drag : MonoBehaviour
     private void BackFromAbove()
     {
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
+        ArrangeCards();
         currentCollider2 = null;
     }
 
@@ -229,6 +230,10 @@ public class Drag : MonoBehaviour
     {
         GameObject prefab = GameManager.Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
         instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
+        if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
+        {
+            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
+        }
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }
@@ -237,6 +242,7 @@ public class Drag : MonoBehaviour
         Debug.Log(posToSpell.name);
         // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
         // jutSpellAnimation.Play(posToSpell.name);
+        ArrangeCards();
         if (posToSpell.name == "A")
             jutSpellAnimation.Play("D");
         if (posToSpell.name == "B")
@@ -245,13 +251,12 @@ public class Drag : MonoBehaviour
             jutSpellAnimation.Play("B");
         if (posToSpell.name == "D")
             jutSpellAnimation.Play("A");
-        ArrangeCards();
     }
     public void ArrowsSpellSpawn(GameObject posToSpell)
     {
+        ArrangeCards();
         Debug.Log(posToSpell.name);
         arrowsSpellAnimation.Play(posToSpell.name);
-        ArrangeCards();
     }
 
 

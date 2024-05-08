@@ -3586,7 +3586,7 @@ MonoBehaviour:
   Models:
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
   - {fileID: 4405893337171409271, guid: 2f7f11c6068ebf849a92d6a806c7ac8f, type: 3}
-  - {fileID: 1027881754885193804, guid: abfc861ebc6671742b8740432468e544, type: 3}
+  - {fileID: 7917590963247739512, guid: 5d3a72b0122f7ab41b0093c1a378164b, type: 3}
   - {fileID: 2680411554067529641, guid: 38ab75d1dc3265e43af952f84ab9d6ad, type: 3}
   - {fileID: 8116464331989813178, guid: b2470e873b1c13f4dbc38acab03ecd20, type: 3}
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
@@ -3664,7 +3664,7 @@ MonoBehaviour:
   PlayerKhanHP: 10
   EnemyKhanHP: 10
   PlayerMana: 1
-  EnemyMana: 10
+  EnemyMana: 1
   PlayerCardsCount: 10
   EnemyCardsCount: 10
   PlayerManaTxt: {fileID: 1381425707515112212}

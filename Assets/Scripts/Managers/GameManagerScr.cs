@@ -129,10 +129,10 @@ public class GameManagerScr : MonoBehaviour
             {
                 StartCoroutine(EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings));
             }
-            
+
 
         }
-        
+
     }
 
     public void ChangeTurn()
@@ -1956,6 +1956,10 @@ public class GameManagerScr : MonoBehaviour
         //    return;
         //}
         instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
+        if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
+        {
+            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
+        }
         newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
         instantiatedPrefab.transform.rotation = newRotation;
         Animator anim = instantiatedPrefab.GetComponent<Animator>();

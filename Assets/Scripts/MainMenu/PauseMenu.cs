@@ -53,6 +53,11 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         IsPlaneDestroyed = true;
+        foreach (CinemachineVirtualCamera v in gameEntryMenu.gameCameras)
+        {
+            v.Priority = 0;
+        }
+        gameEntryMenu.gameCameras[4].Priority = 1;
         gameEntryMenu.DeletePlane();
         // SceneManager.LoadScene("MainMenu");
     }
