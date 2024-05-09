@@ -20,7 +20,7 @@ public class GameEntryMenu : MonoBehaviour
     public GameObject objectToSpawn;
     public GameObject cutsene;
     public GameObject buttons3D;
-    public GameObject backBtn;
+    //public GameObject backBtn;
     public GameObject cameraChangerObj;
     public GameObject jutSpellPlayer;
     public GameObject jutSpellEnemy;
@@ -100,7 +100,7 @@ public class GameEntryMenu : MonoBehaviour
                     }
                     gameCameras[0].Priority = 1;
                 }
-                else if (hitInfo.collider.gameObject == backBtn)
+                else if (hitInfo.collider.gameObject == myCollectionObjects[5])
                 {
                     foreach (var obj in myCollectionObjects)
                     {
