@@ -9,21 +9,18 @@ public class CardSpawnerScr : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject objectToSpawn;
-    public Vector3 positionToSpawn;
+    public Transform PlayerHand;
+    public GameObject[] qwd;
+    Vector3[] positions;
     Drag Arrange;
     
-    void Start()
-    {
-        Arrange = FindObjectOfType<Drag>();
-    }
-
-    // Update is called once per frame
     public void Spawn()
     {
-        GameObject spawnedObject = Instantiate(objectToSpawn, positionToSpawn, Quaternion.Euler(45, 0, 0));
-
+        int a = PlayerHand.childCount;
+        GameObject spawnedObject = Instantiate(objectToSpawn, qwd[a].transform.position, qwd[a].transform.rotation);
+        
         spawnedObject.transform.parent = transform;
-        Arrange.ArrangeCards();
+        spawnedObject.transform.localScale = new Vector3(8f, 8f, 8f);
     }
     
 }

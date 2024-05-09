@@ -27,13 +27,15 @@ public class Drag : MonoBehaviour
     private GameEntryMenu gameEntryMenu;
     public CinemachineVirtualCamera CameraWoman;
     CameraChanger CameraMan;
+    public Transform PlayerHand;
+    public Transform[] predefinedObjects;
 
 
 
     private void Start()
     {
         mainCamera = Camera.main;
-        ArrangeCards();
+        //ArrangeCards();
         GameManager = FindObjectOfType<GameManagerScr>();
         Spawner = FindObjectOfType<CardSpawnerScr>();
         CameraMan = FindObjectOfType<CameraChanger>();
@@ -104,8 +106,8 @@ public class Drag : MonoBehaviour
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
 
-        newPosition = new Vector3(0.669f, 36.898f, 15.649f);
-
+        newPosition = new Vector3(1.588f, 34.428f, 15.976f);
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":1.5879707336425782,"y":34.42770004272461,"z":15.976553916931153},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.11999999731779099,"y":0.11999999731779099,"z":0.11999999731779099} }
         currentCollider2.transform.position = newPosition;
         //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
         Vector3 rotationAngles = new Vector3(0f, 0f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
@@ -115,7 +117,7 @@ public class Drag : MonoBehaviour
     private void BackFromAbove()
     {
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
-        ArrangeCards();
+        //ArrangeCards();
         currentCollider2 = null;
     }
 
@@ -223,6 +225,7 @@ public class Drag : MonoBehaviour
                     DestroyImmediate(hit.collider.gameObject);
                 }
             }
+            ArrangeCards();
         }
     }
 
@@ -242,7 +245,7 @@ public class Drag : MonoBehaviour
         Debug.Log(posToSpell.name);
         // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
         // jutSpellAnimation.Play(posToSpell.name);
-        ArrangeCards();
+        //ArrangeCards();
         if (posToSpell.name == "A")
             jutSpellAnimation.Play("D");
         if (posToSpell.name == "B")
@@ -254,7 +257,7 @@ public class Drag : MonoBehaviour
     }
     public void ArrowsSpellSpawn(GameObject posToSpell)
     {
-        ArrangeCards();
+        //ArrangeCards();
         Debug.Log(posToSpell.name);
         arrowsSpellAnimation.Play(posToSpell.name);
     }
@@ -262,28 +265,26 @@ public class Drag : MonoBehaviour
 
     public void ArrangeCards()
     {
-        float distanceBetweenCards = 0.2f;
-        int robotLayer = LayerMask.NameToLayer("Robot");
-
-        GameObject[] origin = GameObject.FindGameObjectsWithTag("Card");
-
-        GameObject[] cards = origin.Where(card => card.layer == robotLayer).ToArray();
-
-        if (cards.Length == 0)
+        Debug.Log("Запустился");
+        int numChildren = PlayerHand.childCount;  // Количество дочерних объектов
+        int numPredefined = predefinedObjects.Length;  // Количество предопределенных объектов
+        if (numPredefined == 0)
         {
+            Debug.LogError("No predefined objects set.");
             return;
         }
 
-        float totalWidth = (cards.Length - 1) * distanceBetweenCards;
-        Vector3 centerPosition = new Vector3(0.58f, 11.10323f, 25.27884f);
-
-        float startX = centerPosition.x - totalWidth / 2;
-
-        foreach (var card in cards)
+        for (int i = 0; i < numChildren; i++)
         {
-            float xPos = startX + Array.IndexOf(cards, card) * distanceBetweenCards;
-            Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
-            card.transform.position = cardPosition;
+            Transform child = PlayerHand.GetChild(i);
+
+            // Получаем объект из списка предопределенных объектов по модулю,
+            // чтобы избежать выхода за границы массива
+            Transform predefined = predefinedObjects[i % numPredefined];
+
+            // Присваиваем позицию и поворот из предопределенного объекта
+            child.position = predefined.position;
+            child.rotation = predefined.rotation;
         }
     }
     public void ArrangeCardsToEnemy()
