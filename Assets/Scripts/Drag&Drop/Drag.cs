@@ -230,7 +230,6 @@ public class Drag : MonoBehaviour
             }
             ArrangeCards();
         }
-        ArrangeCards();
     }
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
