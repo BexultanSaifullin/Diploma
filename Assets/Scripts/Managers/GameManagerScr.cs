@@ -17,7 +17,7 @@ public class GameManagerScr : MonoBehaviour
 
     public Transform EnemyHand, PlayerHand;
 
-    public GameObject PlayerWall, EnemyWall,
+   public GameObject PlayerWall, EnemyWall, PlayerWall2st, EnemyWall2st, PlayerWall3st, EnemyWall3st,
            PlayerWarior1, PlayerWarior2, EnemyWarrior1, EnemyWarrior2,
                 PlayerKhan, EnemyKhan;
 
@@ -785,11 +785,23 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (EnemyWallHP < 13)
+                        {
+                            EnemyWall.SetActive(false);
+                            EnemyWall2st.SetActive(true);
+
+                        }
+                        if (EnemyWallHP < 7)
+                        {
+                            EnemyWall2st.SetActive(false);
+                            EnemyWall3st.SetActive(true);
+                        }
+
                         if (EnemyWallHP <= 0)
                         {
-                            DestroyImmediate(EnemyWall);
-                            ShowHPWall();
+                            EnemyWall3st.SetActive(false);
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -820,11 +832,24 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        
+                        if (EnemyWallHP < 13)
+                        {
+                            EnemyWall.SetActive(false);
+                            EnemyWall2st.SetActive(true);
+
+                        }
+                        if (EnemyWallHP < 7)
+                        {
+                            EnemyWall2st.SetActive(false);
+                            EnemyWall3st.SetActive(true);
+                        }
+
                         if (EnemyWallHP <= 0)
                         {
-                            DestroyImmediate(EnemyWall);
-                            ShowHPWall();
+                            EnemyWall3st.SetActive(false);
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -855,11 +880,23 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (EnemyWallHP < 13)
+                        {
+                            EnemyWall.SetActive(false);
+                            EnemyWall2st.SetActive(true);
+
+                        }
+                        if (EnemyWallHP < 7)
+                        {
+                            EnemyWall2st.SetActive(false);
+                            EnemyWall3st.SetActive(true);
+                        }
+
                         if (EnemyWallHP <= 0)
                         {
-                            DestroyImmediate(EnemyWall);
-                            ShowHPWall();
+                            EnemyWall3st.SetActive(false);
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -890,11 +927,23 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (EnemyWallHP < 13)
+                        {
+                            EnemyWall.SetActive(false);
+                            EnemyWall2st.SetActive(true);
+
+                        }
+                        if (EnemyWallHP < 7)
+                        {
+                            EnemyWall2st.SetActive(false);
+                            EnemyWall3st.SetActive(true);
+                        }
+
                         if (EnemyWallHP <= 0)
                         {
-                            DestroyImmediate(EnemyWall);
-                            ShowHPWall();
+                            EnemyWall3st.SetActive(false);
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -928,11 +977,24 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (PlayerWallHP < 13)
+                        {
+                            PlayerWall.SetActive(false);
+                            PlayerWall2st.SetActive(true);
+
+                        }
+                        if(PlayerWallHP < 7)
+                        {
+                            PlayerWall2st.SetActive(false);
+                            PlayerWall3st.SetActive(true);
+                        }
+                           
                         if (PlayerWallHP <= 0)
                         {
-                            DestroyImmediate(PlayerWall);
-                            ShowHPWall();
+                            PlayerWall3st.SetActive(false);
+                            
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -965,11 +1027,24 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (PlayerWallHP < 13)
+                        {
+                            PlayerWall.SetActive(false);
+                            PlayerWall2st.SetActive(true);
+
+                        }
+                        if (PlayerWallHP < 7)
+                        {
+                            PlayerWall2st.SetActive(false);
+                            PlayerWall3st.SetActive(true);
+                        }
+
                         if (PlayerWallHP <= 0)
                         {
-                            DestroyImmediate(PlayerWall);
-                            ShowHPWall();
+                            PlayerWall3st.SetActive(false);
+
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -1002,11 +1077,24 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (PlayerWallHP < 13)
+                        {
+                            PlayerWall.SetActive(false);
+                            PlayerWall2st.SetActive(true);
+
+                        }
+                        if (PlayerWallHP < 7)
+                        {
+                            PlayerWall2st.SetActive(false);
+                            PlayerWall3st.SetActive(true);
+                        }
+
                         if (PlayerWallHP <= 0)
                         {
-                            DestroyImmediate(PlayerWall);
-                            ShowHPWall();
+                            PlayerWall3st.SetActive(false);
+
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -1039,11 +1127,24 @@ public class GameManagerScr : MonoBehaviour
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        if (PlayerWallHP < 13)
+                        {
+                            PlayerWall.SetActive(false);
+                            PlayerWall2st.SetActive(true);
+
+                        }
+                        if (PlayerWallHP < 7)
+                        {
+                            PlayerWall2st.SetActive(false);
+                            PlayerWall3st.SetActive(true);
+                        }
+
                         if (PlayerWallHP <= 0)
                         {
-                            DestroyImmediate(PlayerWall);
-                            ShowHPWall();
+                            PlayerWall3st.SetActive(false);
+
                         }
+                        ShowHPWall();
                     }
                 }
             }
@@ -1398,11 +1499,24 @@ public class GameManagerScr : MonoBehaviour
                     PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    if (PlayerWallHP < 13)
+                    {
+                        PlayerWall.SetActive(false);
+                        PlayerWall2st.SetActive(true);
+
+                    }
+                    if (PlayerWallHP < 7)
+                    {
+                        PlayerWall2st.SetActive(false);
+                        PlayerWall3st.SetActive(true);
+                    }
+
                     if (PlayerWallHP <= 0)
                     {
-                        DestroyImmediate(PlayerWall);
-                        ShowHPWall();
+                        PlayerWall3st.SetActive(false);
+
                     }
+                    ShowHPWall();
                 }
             }
             else if (PlayerWarriorHP1 > 0)
@@ -1455,11 +1569,24 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (PlayerWallHP < 13)
+                {
+                    PlayerWall.SetActive(false);
+                    PlayerWall2st.SetActive(true);
+
+                }
+                if (PlayerWallHP < 7)
+                {
+                    PlayerWall2st.SetActive(false);
+                    PlayerWall3st.SetActive(true);
+                }
+
                 if (PlayerWallHP <= 0)
                 {
-                    DestroyImmediate(PlayerWall);
-                    ShowHPWall();
+                    PlayerWall3st.SetActive(false);
+
                 }
+                ShowHPWall();
             }
             else if (PlayerWarriorHP1 > 0)
             {
@@ -1511,11 +1638,24 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (PlayerWallHP < 13)
+                {
+                    PlayerWall.SetActive(false);
+                    PlayerWall2st.SetActive(true);
+
+                }
+                if (PlayerWallHP < 7)
+                {
+                    PlayerWall2st.SetActive(false);
+                    PlayerWall3st.SetActive(true);
+                }
+
                 if (PlayerWallHP <= 0)
                 {
-                    DestroyImmediate(PlayerWall);
-                    ShowHPWall();
+                    PlayerWall3st.SetActive(false);
+
                 }
+                ShowHPWall();
             }
             else if (PlayerWarriorHP2 > 0)
             {
@@ -1567,11 +1707,24 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (PlayerWallHP < 13)
+                {
+                    PlayerWall.SetActive(false);
+                    PlayerWall2st.SetActive(true);
+
+                }
+                if (PlayerWallHP < 7)
+                {
+                    PlayerWall2st.SetActive(false);
+                    PlayerWall3st.SetActive(true);
+                }
+
                 if (PlayerWallHP <= 0)
                 {
-                    DestroyImmediate(PlayerWall);
-                    ShowHPWall();
+                    PlayerWall3st.SetActive(false);
+
                 }
+                ShowHPWall();
             }
             else if (PlayerWarriorHP2 > 0)
             {
@@ -1636,11 +1789,23 @@ public class GameManagerScr : MonoBehaviour
                     EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    if (EnemyWallHP < 13)
+                    {
+                        EnemyWall.SetActive(false);
+                        EnemyWall2st.SetActive(true);
+
+                    }
+                    if (EnemyWallHP < 7)
+                    {
+                        EnemyWall2st.SetActive(false);
+                        EnemyWall3st.SetActive(true);
+                    }
+
                     if (EnemyWallHP <= 0)
                     {
-                        DestroyImmediate(EnemyWall);
-                        ShowHPWall();
+                        EnemyWall3st.SetActive(false);
                     }
+                    ShowHPWall();
                 }
             }
             else if (EnemyWarriorHP1 > 0)
@@ -1703,11 +1868,23 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (EnemyWallHP < 13)
+                {
+                    EnemyWall.SetActive(false);
+                    EnemyWall2st.SetActive(true);
+
+                }
+                if (EnemyWallHP < 7)
+                {
+                    EnemyWall2st.SetActive(false);
+                    EnemyWall3st.SetActive(true);
+                }
+
                 if (EnemyWallHP <= 0)
                 {
-                    DestroyImmediate(EnemyWall);
-                    ShowHPWall();
+                    EnemyWall3st.SetActive(false);
                 }
+                ShowHPWall();
             }
             else if (EnemyWarriorHP1 > 0)
             {
@@ -1769,11 +1946,23 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (EnemyWallHP < 13)
+                {
+                    EnemyWall.SetActive(false);
+                    EnemyWall2st.SetActive(true);
+
+                }
+                if (EnemyWallHP < 7)
+                {
+                    EnemyWall2st.SetActive(false);
+                    EnemyWall3st.SetActive(true);
+                }
+
                 if (EnemyWallHP <= 0)
                 {
-                    DestroyImmediate(EnemyWall);
-                    ShowHPWall();
+                    EnemyWall3st.SetActive(false);
                 }
+                ShowHPWall();
             }
             else if (EnemyWarriorHP2 > 0)
             {
@@ -1835,11 +2024,23 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
+                if (EnemyWallHP < 13)
+                {
+                    EnemyWall.SetActive(false);
+                    EnemyWall2st.SetActive(true);
+
+                }
+                if (EnemyWallHP < 7)
+                {
+                    EnemyWall2st.SetActive(false);
+                    EnemyWall3st.SetActive(true);
+                }
+
                 if (EnemyWallHP <= 0)
                 {
-                    DestroyImmediate(EnemyWall);
-                    ShowHPWall();
+                    EnemyWall3st.SetActive(false);
                 }
+                ShowHPWall();
             }
             else if (EnemyWarriorHP2 > 0)
             {
