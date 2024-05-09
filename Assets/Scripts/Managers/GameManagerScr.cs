@@ -2091,20 +2091,76 @@ public class GameManagerScr : MonoBehaviour
     }
     void ShowHPWall()
     {
-        PlayerWallHPTxt.text = PlayerWallHP.ToString();
-        EnemyWallHPTxt.text = EnemyWallHP.ToString();
+        if (PlayerWallHP <= 0)
+        {
+            PlayerWallHPTxt.text = "0";
+        }
+        else
+        {
+            PlayerWallHPTxt.text = PlayerWallHP.ToString();
+        }
+        if (EnemyWallHP <= 0)
+        {
+            EnemyWallHPTxt.text = "0";
+        }
+        else
+        {
+            EnemyWallHPTxt.text = EnemyWallHP.ToString();
+        }
     }
     void ShowHPWarrior()
     {
-        PlayerWarriorHP1Txt.text = PlayerWarriorHP1.ToString();
-        PlayerWarriorHP2Txt.text = PlayerWarriorHP2.ToString();
-        EnemyWarriorHP1Txt.text = EnemyWarriorHP1.ToString();
-        EnemyWarriorHP2Txt.text = EnemyWarriorHP2.ToString();
+        if (PlayerWarriorHP1 <= 0)
+        {
+            PlayerWarriorHP1Txt.text = "0";
+        }
+        else
+        {
+            PlayerWarriorHP1Txt.text = PlayerWarriorHP1.ToString();
+        }
+        if (PlayerWarriorHP2 <= 0)
+        {
+            PlayerWarriorHP2Txt.text = "0";
+        }
+        else
+        {
+            PlayerWarriorHP2Txt.text = PlayerWarriorHP2.ToString();
+        }
+        if (EnemyWarriorHP1 <= 0)
+        {
+            EnemyWarriorHP1Txt.text = "0";
+        }
+        else
+        {
+            EnemyWarriorHP1Txt.text = EnemyWarriorHP1.ToString();
+        }
+        if (EnemyWarriorHP2 <= 0)
+        {
+            EnemyWarriorHP2Txt.text = "0";
+        }
+        else
+        {
+            EnemyWarriorHP2Txt.text = EnemyWarriorHP2.ToString();
+        }
     }
     void ShowHPKhan()
     {
-        PlayerKhanHPTxt.text = PlayerKhanHP.ToString();
-        EnemyKhanHPTxt.text = EnemyKhanHP.ToString();
+        if (PlayerKhanHP <= 0)
+        {
+            PlayerKhanHPTxt.text = "0";
+        }
+        else
+        {
+            PlayerKhanHPTxt.text = PlayerKhanHP.ToString();
+        }
+        if (EnemyKhanHP <= 0)
+        {
+            EnemyKhanHPTxt.text = "0";
+        }
+        else
+        {
+            EnemyKhanHPTxt.text = EnemyKhanHP.ToString();
+        }
     }
 
     public void BaffUnits(string unit)
