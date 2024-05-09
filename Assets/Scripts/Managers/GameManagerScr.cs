@@ -164,12 +164,12 @@ public class GameManagerScr : MonoBehaviour
                 {
                     Transform childGameObject = PlayerHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 4)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(WarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
                     }
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 2)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(ArcheryBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -209,12 +209,12 @@ public class GameManagerScr : MonoBehaviour
                 {
                     Transform childGameObject = EnemyHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 4)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyWarriorBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
                     }
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 10)
+                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 2)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyArcheryBaff);
                         childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -1338,7 +1338,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = PlayerHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1352,7 +1352,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1370,7 +1370,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = PlayerHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1384,7 +1384,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1421,7 +1421,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = EnemyHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1435,7 +1435,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1452,7 +1452,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = EnemyHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 2)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();
@@ -1466,7 +1466,7 @@ public class GameManagerScr : MonoBehaviour
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 10)
+                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 2)
                                 {
                                     b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
                                     b.GetComponent<CardInfoScr>().RefreshData();

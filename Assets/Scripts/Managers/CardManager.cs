@@ -58,10 +58,10 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Man", 1, 1, 1, 1, "Unit", false, 5));
         CardManagerList.AllCards.Add(new Card("Archer", 3, 2, 2, 3, "Unit", false, 6));
         CardManagerList.AllCards.Add(new Card("Ensign", 1, 5, 1, 4, "Unit", true, 7));
-        CardManagerList.AllCards.Add(new Card("Mystan", 1, 1, 1, 4, "Unit", true, 8));
+        CardManagerList.AllCards.Add(new Card("Mystan", 2, 2, 1, 4, "Unit", true, 8));
         CardManagerList.AllCards.Add(new Card("Arrows", 1, 0, 1, 1, "Spell", false, 9));
         CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 2, "Spell", false, 10));
-
+        CardManagerList.AllCards.Add(new Card("Batyr", 5, 7, 1, 6, "Unit", false, 11));
 
 
     }
