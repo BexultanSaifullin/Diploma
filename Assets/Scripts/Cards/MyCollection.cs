@@ -24,7 +24,8 @@ public class MyCollection : MonoBehaviour
         {"Arrow Storm", "Description: \nUnleash the ancient wrath of the skies with Arrowstorm, a spell of formidable power that calls down a relentless barrage of enchanted arrows. Crafted and perfected through centuries, this spell is designed to target and decimate enemy ranks with lethal precision."},
         {"Yurt", "Description: \nRising from the vast, windswept steppes of Kazakhstan, the Urt is a revered structure. This grand Urt serves not just as a dwelling but as a sanctuary for nomadic wisdom and hospitality, its circular form embracing all who seek shelter and knowledge under its expansive roof."},
         {"Barrack", "Description: \nRising from the vast expanses of the steppes, the Barrack stand as a testament to the enduring spirit of the Kazakh warriors. Constructed using traditional methods and adorned with symbols of the eagle and horse, these barracks serve as a rallying point for the nomadic warriors of the plains."},
-        {"Arrow Forge", "Description: \nRising from the heart of the battlefield, the Arrow Forge is no ordinary structure. Crafted by ancient master smiths and blessed by the wind spirits, this forge empowers every arrow fired in its presence. As the battle rages, the forge's magic intensifies, honing the skills of the archers and sharpening their resolve."}
+        {"Arrow Forge", "Description: \nRising from the heart of the battlefield, the Arrow Forge is no ordinary structure. Crafted by ancient master smiths and blessed by the wind spirits, this forge empowers every arrow fired in its presence. As the battle rages, the forge's magic intensifies, honing the skills of the archers and sharpening their resolve."},
+        {"Batyr", "Description: \nBatyr is a warrior of unparalleled valor, forged in the fires of countless battles. Known for his thunderous charge and indomitable spirit, Batyr leads from the front, striking fear into the hearts of his enemies with his fearsome close-range combat skills."}
     };
 
     void Update()
@@ -78,8 +79,10 @@ public class MyCollection : MonoBehaviour
                     objectsToHide[0].SetActive(true);
                     objectsToHide[1].SetActive(true);
                     objectsToHide[2].SetActive(true);
-                    objectsToHide[13].SetActive(false);
-                    objectsToHide[14].SetActive(false);
+                    for (int i = 13; i < 16; i++)
+                    {
+                        objectsToHide[i].SetActive(false);
+                    }
                     for (int i = 5; i < 13; i++)
                     {
                         objectsToHide[i].SetActive(true);
@@ -89,8 +92,10 @@ public class MyCollection : MonoBehaviour
                 {
                     Debug.Log("Next btn clicked!");
                     objectsToHide[13].transform.parent.gameObject.SetActive(true);
-                    objectsToHide[13].SetActive(true);
-                    objectsToHide[14].SetActive(true);
+                    for (int i = 13; i < 16; i++)
+                    {
+                        objectsToHide[i].SetActive(true);
+                    }
                     objectsToHide[3].SetActive(true);
                     objectsToHide[2].SetActive(false);
                     for (int i = 5; i < 13; i++)
@@ -103,8 +108,10 @@ public class MyCollection : MonoBehaviour
                     Debug.Log("Prev btn clicked!");
                     objectsToHide[2].SetActive(true);
                     objectsToHide[3].SetActive(false);
-                    objectsToHide[13].SetActive(false);
-                    objectsToHide[14].SetActive(false);
+                    for (int i = 13; i < 16; i++)
+                    {
+                        objectsToHide[i].SetActive(false);
+                    }
                     for (int i = 5; i < 13; i++)
                     {
                         objectsToHide[i].SetActive(true);

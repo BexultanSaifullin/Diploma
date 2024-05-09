@@ -237,6 +237,10 @@ public class Drag : MonoBehaviour
         {
             instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
         }
+        else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
+        {
+            instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        }
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }

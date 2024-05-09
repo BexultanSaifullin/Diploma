@@ -17,9 +17,9 @@ public class GameManagerScr : MonoBehaviour
 
     public Transform EnemyHand, PlayerHand;
 
-   public GameObject PlayerWall, EnemyWall, PlayerWall2st, EnemyWall2st, PlayerWall3st, EnemyWall3st,
-           PlayerWarior1, PlayerWarior2, EnemyWarrior1, EnemyWarrior2,
-                PlayerKhan, EnemyKhan;
+    public GameObject PlayerWall, EnemyWall, PlayerWall2st, EnemyWall2st, PlayerWall3st, EnemyWall3st,
+            PlayerWarior1, PlayerWarior2, EnemyWarrior1, EnemyWarrior2,
+                 PlayerKhan, EnemyKhan;
 
     public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
     public GameObject[] AllBoxes;
@@ -1734,7 +1734,7 @@ public class GameManagerScr : MonoBehaviour
                         EnemyWall3st.SetActive(true);
                     }
                     ShowHPWall();
-                   
+
                 }
             }
             else if (EnemyWarriorHP1 > 0)
@@ -2074,6 +2074,10 @@ public class GameManagerScr : MonoBehaviour
         if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
         {
             instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
+        }
+        else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
+        {
+            instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         newRotation = Quaternion.Euler(instantiatedPrefab.transform.eulerAngles.x, instantiatedPrefab.transform.eulerAngles.y + 180f, instantiatedPrefab.transform.eulerAngles.z);
         instantiatedPrefab.transform.rotation = newRotation;
