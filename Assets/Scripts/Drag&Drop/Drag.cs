@@ -103,6 +103,8 @@ public class Drag : MonoBehaviour
 
     private void StepFromAbove()
     {
+        selectedObject.GetComponent<CardOnHover>().enabled = false;
+        Debug.Log("cn'g");
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
 
@@ -116,6 +118,7 @@ public class Drag : MonoBehaviour
 
     private void BackFromAbove()
     {
+        selectedObject.GetComponent<CardOnHover>().enabled = true;
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
         //ArrangeCards();
         currentCollider2 = null;
@@ -227,6 +230,7 @@ public class Drag : MonoBehaviour
             }
             ArrangeCards();
         }
+        ArrangeCards();
     }
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
