@@ -20,13 +20,6 @@ public struct Card
         Abyllity = abyllity;
         Id = id;
     }
-    public bool IsAlive
-    {
-        get
-        {
-            return Defense > 0;
-        }
-    }
     public void GetDamage(int dmg)
     {
         Defense -= dmg;
@@ -62,9 +55,5 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Arrows", 1, 0, 1, 1, "Spell", false, 9));
         CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 2, "Spell", false, 10));
         CardManagerList.AllCards.Add(new Card("Batyr", 5, 7, 1, 6, "Unit", false, 11));
-
-
     }
-
-
 }

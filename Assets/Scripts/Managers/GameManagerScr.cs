@@ -55,6 +55,7 @@ public class GameManagerScr : MonoBehaviour
 
     void Start()
     {
+        
         ShowMana();
         Turn = 0;
         StartCoroutine(TurnFunc());
@@ -64,6 +65,24 @@ public class GameManagerScr : MonoBehaviour
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
         arrowsSpellAnimation = gameEntryMenu.arrowsSpellEnemy.GetComponent<Animator>();
+        if (PlayerHand.childCount > 0)
+        {
+            for (int i = 0; i < PlayerHand.childCount; i++)
+            {
+                Transform childGameObject = PlayerHand.transform.GetChild(i);
+                GameObject childTransform = childGameObject.gameObject;
+                childTransform.GetComponent<CardInfoScr>().RandomMethod();
+            }
+        }
+        if (EnemyHand.childCount > 0)
+        {
+            for (int i = 0; i < EnemyHand.childCount; i++)
+            {
+                Transform childGameObject = EnemyHand.transform.GetChild(i);
+                GameObject childTransform = childGameObject.gameObject;
+                childTransform.GetComponent<CardInfoScr>().RandomMethod();
+            }
+        }
     }
 
     IEnumerator TurnFunc()
@@ -268,7 +287,7 @@ public class GameManagerScr : MonoBehaviour
                     ShowMana();
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
-                        SpawnerEnemy.SpawnEnemy();
+                        SpawnerEnemy.NotRandomSpawnEnemy();
                         EnemyCardsCount++;
                     }
                     else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
@@ -437,7 +456,7 @@ public class GameManagerScr : MonoBehaviour
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
-                        SpawnerEnemy.SpawnEnemy();
+                        SpawnerEnemy.NotRandomSpawnEnemy();
                         EnemyCardsCount++;
                     }
                     else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")

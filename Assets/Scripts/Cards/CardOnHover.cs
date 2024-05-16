@@ -26,7 +26,7 @@ public class CardOnHover : MonoBehaviour
     {
         initialPos = card.transform.position;
         if (initialPos.x < 1.7728264331817628)
-            endPos = new Vector3(initialPos.x, 10.57f, 25.4f);
+            endPos = new Vector3(initialPos.x, 10.56f, 25.4f);
         else
             endPos = new Vector3(1.86f, 10.65f, 25.4f);
 
@@ -59,6 +59,13 @@ public class CardOnHover : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            card.transform.position = initialPos;
+            card.transform.rotation = initialRot;
+            isHovering = false;
+            startTime = Time.time;
+        }
         if (mainCamera.transform.position.y > 12)
         {
             wasAbove12 = true;
@@ -80,6 +87,9 @@ public class CardOnHover : MonoBehaviour
 
         card.transform.position = Vector3.Lerp(card.transform.position, targetPos, easedT);
         card.transform.rotation = Quaternion.Slerp(card.transform.rotation, targetRot, easedT);
+
+        // Проверка на нажатие пробела и возврат к начальным позициям
+        
     }
 
     float EaseInOut(float t)

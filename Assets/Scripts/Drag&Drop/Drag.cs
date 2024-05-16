@@ -177,7 +177,8 @@ public class Drag : MonoBehaviour
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
             {
                 GameManager.PlayerCardsCount++;
-                Spawner.Spawn();
+                Spawner.NotRandomSpawn();
+
             }
             else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
             {
@@ -247,12 +248,13 @@ public class Drag : MonoBehaviour
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }
+
     public void JutSpellSpawn(GameObject posToSpell)
     {
         Debug.Log(posToSpell.name);
         // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
         // jutSpellAnimation.Play(posToSpell.name);
-        //ArrangeCards();
+        
         if (posToSpell.name == "A")
             jutSpellAnimation.Play("D");
         if (posToSpell.name == "B")
@@ -262,13 +264,13 @@ public class Drag : MonoBehaviour
         if (posToSpell.name == "D")
             jutSpellAnimation.Play("A");
     }
+
     public void ArrowsSpellSpawn(GameObject posToSpell)
     {
-        //ArrangeCards();
+        
         Debug.Log(posToSpell.name);
         arrowsSpellAnimation.Play(posToSpell.name);
     }
-
 
     public void ArrangeCards()
     {

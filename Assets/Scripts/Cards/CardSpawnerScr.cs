@@ -18,9 +18,17 @@ public class CardSpawnerScr : MonoBehaviour
     {
         int a = PlayerHand.childCount;
         GameObject spawnedObject = Instantiate(objectToSpawn, qwd[a].transform.position, qwd[a].transform.rotation);
-        
+        spawnedObject.GetComponent<CardInfoScr>().RandomMethod();
         spawnedObject.transform.parent = transform;
         spawnedObject.transform.localScale = new Vector3(8f, 8f, 8f);
     }
-    
+
+    public void NotRandomSpawn()
+    {
+        int a = PlayerHand.childCount;
+        GameObject spawnedObject = Instantiate(objectToSpawn, qwd[a].transform.position, qwd[a].transform.rotation);
+        spawnedObject.GetComponent<CardInfoScr>().NotRandom(4);
+        spawnedObject.transform.parent = transform;
+        spawnedObject.transform.localScale = new Vector3(8f, 8f, 8f);
+    }
 }

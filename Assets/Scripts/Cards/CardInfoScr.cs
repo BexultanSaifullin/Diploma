@@ -45,10 +45,15 @@ public class CardInfoScr : MonoBehaviour
             attack.material = NewAttack[0];
         }
     }
-    private void Start()
+    public void RandomMethod()
     {
         int randomNumber = Random.Range(0, 11);
 
+        ShowCardInfo(CardManagerList.AllCards[1], 1);
+    }
+
+    public void NotRandom(int randomNumber)
+    {
         ShowCardInfo(CardManagerList.AllCards[randomNumber], randomNumber);
     }
 }
