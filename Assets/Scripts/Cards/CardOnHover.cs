@@ -59,13 +59,7 @@ public class CardOnHover : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            card.transform.position = initialPos;
-            card.transform.rotation = initialRot;
-            isHovering = false;
-            startTime = Time.time;
-        }
+        
         if (mainCamera.transform.position.y > 12)
         {
             wasAbove12 = true;
@@ -89,7 +83,13 @@ public class CardOnHover : MonoBehaviour
         card.transform.rotation = Quaternion.Slerp(card.transform.rotation, targetRot, easedT);
 
         // Проверка на нажатие пробела и возврат к начальным позициям
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            card.transform.position = initialPos;
+            card.transform.rotation = initialRot;
+            isHovering = false;
+            startTime = Time.time;
+        }
     }
 
     float EaseInOut(float t)
