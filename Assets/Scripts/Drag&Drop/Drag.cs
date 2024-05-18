@@ -6,27 +6,23 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using Cinemachine;
 
-public class Drag : MonoBehaviour
+public class Drag : InformationManagerScr
 {
     public Collider currentCollider2;
     private Camera mainCamera;
     private Plane dragPlane;
-    private bool inputStart;
     private Vector3 offset;
     private Vector3 newPosition;
     [SerializeField] private GameObject selectedObject;
     private GameObject instantiatedPrefab;
     string free = "free";
     string busy = "busy";
-    GameObject parentObject;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     GameManagerScr GameManager;
     CardSpawnerScr Spawner;
     private Animator jutSpellAnimation, arrowsSpellAnimation;
     private GameEntryMenu gameEntryMenu;
-    public CinemachineVirtualCamera CameraWoman;
-    CameraChanger CameraMan;
     public Transform PlayerHand;
     public Transform[] predefinedObjects;
 
@@ -35,10 +31,8 @@ public class Drag : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        //ArrangeCards();
         GameManager = FindObjectOfType<GameManagerScr>();
         Spawner = FindObjectOfType<CardSpawnerScr>();
-        CameraMan = FindObjectOfType<CameraChanger>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellPlayer.GetComponent<Animator>();
         arrowsSpellAnimation = gameEntryMenu.arrowsSpellPlayer.GetComponent<Animator>();
@@ -48,7 +42,7 @@ public class Drag : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetMouseButtonDown(0) && GameManager.IsPlayerTurn)
+        if (Input.GetMouseButtonDown(0) && base.IsPlayerTurn)
         {
             SelectPart();
         }
@@ -65,7 +59,6 @@ public class Drag : MonoBehaviour
             Teleportation();
         }
 
-        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.5799999833106995,"y":11.950000762939454,"z":26.05999755859375},"rotation":{ "x":0.00031384939211420715,"y":0.9330788254737854,"z":-0.3596709370613098,"w":0.0008142059668898582},"scale":{ "x":1.0,"y":1.0,"z":1.0} }
 
     }
     private void SelectPart()
@@ -76,7 +69,7 @@ public class Drag : MonoBehaviour
         {
             currentCollider2 = hit.collider;
             selectedObject = hit.collider.gameObject;
-            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana > GameManager.PlayerMana)
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana > PlayerMana)
             {
                 selectedObject = null;
                 currentCollider2 = null;
@@ -104,15 +97,13 @@ public class Drag : MonoBehaviour
     private void StepFromAbove()
     {
         selectedObject.GetComponent<CardOnHover>().enabled = false;
-        Debug.Log("cn'g");
+        
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
 
         newPosition = new Vector3(1.588f, 34.428f, 15.976f);
-        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":1.5879707336425782,"y":34.42770004272461,"z":15.976553916931153},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.11999999731779099,"y":0.11999999731779099,"z":0.11999999731779099} }
         currentCollider2.transform.position = newPosition;
-        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.9802322387695315e-8,"y":8.940696716308594e-8,"z":9.5367431640625e-7},"rotation":{ "x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
-        Vector3 rotationAngles = new Vector3(0f, 0f, 0f); //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":0.6687134504318237,"y":36.89822769165039,"z":15.648843765258789},"rotation":{ "x":-3.090862321641907e-8,"y":0.7071068286895752,"z":-0.7071068286895752,"w":-3.090862321641907e-8},"scale":{ "x":0.14999999105930329,"y":0.19349999725818635,"z":0.05999999865889549} }
+        Vector3 rotationAngles = new Vector3(0f, 0f, 0f); 
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
     }
 
@@ -120,7 +111,7 @@ public class Drag : MonoBehaviour
     {
         selectedObject.GetComponent<CardOnHover>().enabled = true;
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
-        //ArrangeCards();
+        
         currentCollider2 = null;
     }
 
@@ -148,7 +139,7 @@ public class Drag : MonoBehaviour
             hit.collider.gameObject.tag = busy;
             selectedObject.transform.parent = hit.collider.gameObject.transform;
             ArrangeCards();
-            GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+            PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
             selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
@@ -171,12 +162,12 @@ public class Drag : MonoBehaviour
 
             ArrangeCards();
 
-            GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+            PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             GameManager.ShowMana();
 
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
             {
-                GameManager.PlayerCardsCount++;
+                PlayerCardsCount++;
                 Spawner.NotRandomSpawn();
 
             }
@@ -202,7 +193,7 @@ public class Drag : MonoBehaviour
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 JutSpellSpawn(hit.collider.transform.parent.gameObject);
-                GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                 GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
@@ -218,7 +209,7 @@ public class Drag : MonoBehaviour
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 ArrowsSpellSpawn(hit.collider.transform.parent.gameObject);
-                GameManager.PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
                 GameManager.ShowMana();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
@@ -274,14 +265,9 @@ public class Drag : MonoBehaviour
 
     public void ArrangeCards()
     {
-        Debug.Log("Запустился");
+        
         int numChildren = PlayerHand.childCount;  // Количество дочерних объектов
         int numPredefined = predefinedObjects.Length;  // Количество предопределенных объектов
-        if (numPredefined == 0)
-        {
-            Debug.LogError("No predefined objects set.");
-            return;
-        }
 
         for (int i = 0; i < numChildren; i++)
         {

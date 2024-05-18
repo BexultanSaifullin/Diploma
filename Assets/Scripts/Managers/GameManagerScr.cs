@@ -8,9 +8,8 @@ using System.Linq;
 //Debug.Log(count);
 
 
-public class GameManagerScr : MonoBehaviour
+public class GameManagerScr : InformationManagerScr
 {
-    int Turn, TurnTime = 30, increase = 1;
     public GameObject[] Models;
     public Button EndTurnBtn;
     CardSpawnerScr Spawner; CardSpawnerEnemyScr SpawnerEnemy;
@@ -24,12 +23,7 @@ public class GameManagerScr : MonoBehaviour
     public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
     public GameObject[] AllBoxes;
 
-    public int PlayerWallHP = 20, EnemyWallHP = 20, WallDMG = 1;
-
-    public int PlayerWarriorHP1 = 6, EnemyWarriorHP1 = 6, PlayerWarriorHP2 = 6, EnemyWarriorHP2 = 6,
-                    PlayerKhanHP = 10, EnemyKhanHP = 10;
-
-    public int PlayerMana = 1, EnemyMana = 1, PlayerCardsCount = 10, EnemyCardsCount = 10;
+    
 
     public TextMeshProUGUI PlayerManaTxt, EnemyManaTxt,
         PlayerWallHPTxt, EnemyWallHPTxt,
@@ -45,13 +39,7 @@ public class GameManagerScr : MonoBehaviour
     private Quaternion newRotation;
 
 
-    public bool IsPlayerTurn
-    {
-        get
-        {
-            return Turn % 2 == 0;
-        }
-    }
+    
 
     void Start()
     {
@@ -89,7 +77,7 @@ public class GameManagerScr : MonoBehaviour
     {
         TurnTime = 30;
         TurnTimeTxt.text = TurnTime.ToString();
-        if (IsPlayerTurn)
+        if (base.IsPlayerTurn)
         {
             while (TurnTime-- > 0)
             {
@@ -158,8 +146,12 @@ public class GameManagerScr : MonoBehaviour
     {
         StopAllCoroutines();
         Turn++;
-        EndTurnBtn.interactable = IsPlayerTurn;
-        if (IsPlayerTurn)
+        EndTurnBtn.interactable = base.IsPlayerTurn;
+        if (base.IsPlayerTurn)
+        {
+            Debug.Log("Работает");
+        }
+        if (base.IsPlayerTurn)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("Card");
             int PlayerLayerPlayed = LayerMask.NameToLayer("Played");
@@ -203,7 +195,7 @@ public class GameManagerScr : MonoBehaviour
                 EnemyMana = increase;
             ShowMana();
         }
-        else if (!IsPlayerTurn && Turn != 1)
+        else if (!base.IsPlayerTurn && Turn != 1)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("EnemyCard");
             int PlayerLayerPlayed = LayerMask.NameToLayer("EnemyPlayed");
@@ -801,7 +793,7 @@ public class GameManagerScr : MonoBehaviour
 
                         }
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
@@ -843,7 +835,7 @@ public class GameManagerScr : MonoBehaviour
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
 
@@ -886,7 +878,7 @@ public class GameManagerScr : MonoBehaviour
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
@@ -928,7 +920,7 @@ public class GameManagerScr : MonoBehaviour
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
@@ -973,7 +965,7 @@ public class GameManagerScr : MonoBehaviour
                         }
 
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
@@ -1017,7 +1009,7 @@ public class GameManagerScr : MonoBehaviour
                         }
 
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
@@ -1061,7 +1053,7 @@ public class GameManagerScr : MonoBehaviour
 
                         }
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
@@ -1105,7 +1097,7 @@ public class GameManagerScr : MonoBehaviour
 
                         }
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
@@ -1514,7 +1506,7 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
             }
-            else if (!IsPlayerTurn)
+            else if (!base.IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
@@ -1577,7 +1569,7 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
             }
-            else if (!IsPlayerTurn)
+            else if (!base.IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
@@ -1640,7 +1632,7 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
             }
-            else if (!IsPlayerTurn)
+            else if (!base.IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
@@ -1704,7 +1696,7 @@ public class GameManagerScr : MonoBehaviour
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
             }
-            else if (IsPlayerTurn)
+            else if (base.IsPlayerTurn)
             {
                 PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
@@ -1791,7 +1783,7 @@ public class GameManagerScr : MonoBehaviour
                     DestroyImmediate(EnemyWarrior2);
                 }
             }
-            else if (IsPlayerTurn)
+            else if (base.IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
@@ -1865,7 +1857,7 @@ public class GameManagerScr : MonoBehaviour
                     DestroyImmediate(EnemyWarrior2);
                 }
             }
-            else if (IsPlayerTurn)
+            else if (base.IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
@@ -1937,7 +1929,7 @@ public class GameManagerScr : MonoBehaviour
                     DestroyImmediate(EnemyWarrior1);
                 }
             }
-            else if (IsPlayerTurn)
+            else if (base.IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
@@ -2012,7 +2004,7 @@ public class GameManagerScr : MonoBehaviour
                     DestroyImmediate(EnemyWarrior1);
                 }
             }
-            else if (IsPlayerTurn)
+            else if (base.IsPlayerTurn)
             {
                 EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)

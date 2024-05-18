@@ -41,7 +41,7 @@ public static class CardManagerList
 }
 public class CardManager : MonoBehaviour
 {
-    public GameObject[] cardModels;
+    
     public void Awake()
     {
         CardManagerList.AllCards.Add(new Card("Warrior", 2, 4, 1, 3, "Unit", false, 1));
