@@ -97,13 +97,13 @@ public class Drag : InformationManagerScr
     private void StepFromAbove()
     {
         selectedObject.GetComponent<CardOnHover>().enabled = false;
-        
+
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
 
         newPosition = new Vector3(1.588f, 34.428f, 15.976f);
         currentCollider2.transform.position = newPosition;
-        Vector3 rotationAngles = new Vector3(0f, 0f, 0f); 
+        Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
     }
 
@@ -111,7 +111,7 @@ public class Drag : InformationManagerScr
     {
         selectedObject.GetComponent<CardOnHover>().enabled = true;
         currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
-        
+
         currentCollider2 = null;
     }
 
@@ -245,39 +245,40 @@ public class Drag : InformationManagerScr
         Debug.Log(posToSpell.name);
         // gameEntryMenu.jutSpell.transform.parent.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
         // jutSpellAnimation.Play(posToSpell.name);
-        
-        if (posToSpell.name == "A")
-            jutSpellAnimation.Play("D");
-        if (posToSpell.name == "B")
-            jutSpellAnimation.Play("C");
-        if (posToSpell.name == "C")
-            jutSpellAnimation.Play("B");
-        if (posToSpell.name == "D")
-            jutSpellAnimation.Play("A");
+
+        jutSpellAnimation.Play(posToSpell.name);
+        // if (posToSpell.name == "A")
+        //     jutSpellAnimation.Play("D");
+        // if (posToSpell.name == "B")
+        //     jutSpellAnimation.Play("C");
+        // if (posToSpell.name == "C")
+        //     jutSpellAnimation.Play("B");
+        // if (posToSpell.name == "D")
+        //     jutSpellAnimation.Play("A");
     }
 
     public void ArrowsSpellSpawn(GameObject posToSpell)
     {
-        
+
         Debug.Log(posToSpell.name);
         arrowsSpellAnimation.Play(posToSpell.name);
     }
 
     public void ArrangeCards()
     {
-        
-        int numChildren = PlayerHand.childCount;  // Количество дочерних объектов
-        int numPredefined = predefinedObjects.Length;  // Количество предопределенных объектов
+
+        int numChildren = PlayerHand.childCount;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        int numPredefined = predefinedObjects.Length;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
         for (int i = 0; i < numChildren; i++)
         {
             Transform child = PlayerHand.GetChild(i);
 
-            // Получаем объект из списка предопределенных объектов по модулю,
-            // чтобы избежать выхода за границы массива
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ,
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             Transform predefined = predefinedObjects[i % numPredefined];
 
-            // Присваиваем позицию и поворот из предопределенного объекта
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             child.position = predefined.position;
             child.rotation = predefined.rotation;
         }

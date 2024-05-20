@@ -23,7 +23,7 @@ public class GameManagerScr : InformationManagerScr
     public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
     public GameObject[] AllBoxes;
 
-    
+
 
     public TextMeshProUGUI PlayerManaTxt, EnemyManaTxt,
         PlayerWallHPTxt, EnemyWallHPTxt,
@@ -39,11 +39,11 @@ public class GameManagerScr : InformationManagerScr
     private Quaternion newRotation;
 
 
-    
+
 
     void Start()
     {
-        
+
         ShowMana();
         Turn = 0;
         StartCoroutine(TurnFunc());
@@ -149,7 +149,7 @@ public class GameManagerScr : InformationManagerScr
         EndTurnBtn.interactable = base.IsPlayerTurn;
         if (base.IsPlayerTurn)
         {
-            Debug.Log("Работает");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         }
         if (base.IsPlayerTurn)
         {
@@ -2024,54 +2024,56 @@ public class GameManagerScr : InformationManagerScr
 
     public void EnemyJutSpawn(GameObject posToSpell)
     {
+        jutSpellAnimation.Play(posToSpell.name);
         Debug.Log(posToSpell.name);
-        if (posToSpell.name == "A")
-            jutSpellAnimation.Play("D");
-        if (posToSpell.name == "B")
-            jutSpellAnimation.Play("C");
-        if (posToSpell.name == "C")
-            jutSpellAnimation.Play("B");
-        if (posToSpell.name == "D")
-            jutSpellAnimation.Play("A");
+        // if (posToSpell.name == "A")
+        //     jutSpellAnimation.Play("D");
+        // if (posToSpell.name == "B")
+        //     jutSpellAnimation.Play("C");
+        // if (posToSpell.name == "C")
+        //     jutSpellAnimation.Play("B");
+        // if (posToSpell.name == "D")
+        //     jutSpellAnimation.Play("A");
     }
     public void EnemyArrowsSpawn(GameObject posToSpell)
     {
+        // arrowsSpellAnimation.Play(posToSpell.name);
         Debug.Log(posToSpell.name);
         if (posToSpell.name == "A1")
-            arrowsSpellAnimation.Play("A4");
+            arrowsSpellAnimation.Play("D4");
         if (posToSpell.name == "A2")
-            arrowsSpellAnimation.Play("A3");
+            arrowsSpellAnimation.Play("D3");
         if (posToSpell.name == "A3")
-            arrowsSpellAnimation.Play("A2");
+            arrowsSpellAnimation.Play("D2");
         if (posToSpell.name == "A4")
-            arrowsSpellAnimation.Play("A1");
+            arrowsSpellAnimation.Play("D1");
 
         if (posToSpell.name == "B1")
-            arrowsSpellAnimation.Play("B4");
-        if (posToSpell.name == "B2")
-            arrowsSpellAnimation.Play("B3");
-        if (posToSpell.name == "B3")
-            arrowsSpellAnimation.Play("B2");
-        if (posToSpell.name == "B4")
-            arrowsSpellAnimation.Play("B1");
-
-        if (posToSpell.name == "C1")
             arrowsSpellAnimation.Play("C4");
-        if (posToSpell.name == "C2")
+        if (posToSpell.name == "B2")
             arrowsSpellAnimation.Play("C3");
-        if (posToSpell.name == "C3")
+        if (posToSpell.name == "B3")
             arrowsSpellAnimation.Play("C2");
-        if (posToSpell.name == "C4")
+        if (posToSpell.name == "B4")
             arrowsSpellAnimation.Play("C1");
 
+        if (posToSpell.name == "C1")
+            arrowsSpellAnimation.Play("B4");
+        if (posToSpell.name == "C2")
+            arrowsSpellAnimation.Play("B3");
+        if (posToSpell.name == "C3")
+            arrowsSpellAnimation.Play("B2");
+        if (posToSpell.name == "C4")
+            arrowsSpellAnimation.Play("B1");
+
         if (posToSpell.name == "D1")
-            arrowsSpellAnimation.Play("D4");
+            arrowsSpellAnimation.Play("A4");
         if (posToSpell.name == "D2")
-            arrowsSpellAnimation.Play("D3");
+            arrowsSpellAnimation.Play("A3");
         if (posToSpell.name == "D3")
-            arrowsSpellAnimation.Play("D2");
+            arrowsSpellAnimation.Play("A2");
         if (posToSpell.name == "D4")
-            arrowsSpellAnimation.Play("D1");
+            arrowsSpellAnimation.Play("A1");
     }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
