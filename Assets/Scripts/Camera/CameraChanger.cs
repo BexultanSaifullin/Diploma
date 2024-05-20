@@ -34,7 +34,7 @@ public class CameraChanger : MonoBehaviour
             }
         }
     }
-    private void SwitchCamera()
+    public void SwitchCamera()
     {
         if (gameEntryMenu.gameStarted)
         {

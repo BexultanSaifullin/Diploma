@@ -18,6 +18,7 @@ public class Drag : InformationManagerScr
     private GameObject instantiatedPrefab;
     string free = "free";
     string busy = "busy";
+    CameraChanger Cameraman;
     public Vector3 initialPosition;
     public Quaternion initialRotation;
     public GameManagerScr GameManager;
@@ -30,6 +31,7 @@ public class Drag : InformationManagerScr
     private void Start()
     {
         mainCamera = Camera.main;
+        Cameraman = FindObjectOfType<CameraChanger>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellPlayer.GetComponent<Animator>();
         arrowsSpellAnimation = gameEntryMenu.arrowsSpellPlayer.GetComponent<Animator>();
@@ -43,23 +45,19 @@ public class Drag : InformationManagerScr
         {
             SelectPart();
         }
-        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 11.95f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
-        {
-            StepFromAbove();
-        }
+        //if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 11.95f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        //{
+        //    StepFromAbove();
+        //}
         if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             BackFromAbove();
         }
-        else
-        {
-
-        }
+        
         if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 37.88f)
         {
             Teleportation();
         }
-
 
     }
     private void SelectPart()
@@ -87,11 +85,14 @@ public class Drag : InformationManagerScr
             //    selectedObject.transform.parent = parentObject.transform;
             //    a.gameObject.tag = free;
             //} COD CHTOBI SDELAT POLE NA KOTOROM STOYALA KARTA SVOBODNIM PRI PODNYTII
+            
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider2.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
             Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
+            Cameraman.SwitchCamera();
+            StepFromAbove();
         }
     }
 
@@ -111,7 +112,7 @@ public class Drag : InformationManagerScr
     private void BackFromAbove()
     {
         selectedObject.GetComponent<CardOnHover>().enabled = true;
-        currentCollider2.transform.SetPositionAndRotation(initialPosition, initialRotation);
+        ArrangeCards();
 
         currentCollider2 = null;
     }
