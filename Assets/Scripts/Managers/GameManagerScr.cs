@@ -43,13 +43,11 @@ public class GameManagerScr : InformationManagerScr
 
     void Start()
     {
-//<<<<<<< Updated upstream
+        PlayerMana = 1;
+        EnemyMana = 1;
+        increase = 1;
 
-//        ShowMana();
-//=======
-        base.ShowManaPlayer();
-        ShowManaEnemy();
-//>>>>>>> Stashed changes
+
         Turn = 0;
         StartCoroutine(TurnFunc());
         wonLostMenu = FindObjectOfType<WonLostMenu>();
@@ -150,14 +148,7 @@ public class GameManagerScr : InformationManagerScr
         StopAllCoroutines();
         Turn++;
         EndTurnBtn.interactable = base.IsPlayerTurn;
-//<<<<<<< Updated upstream
-//        if (base.IsPlayerTurn)
-//        {
-//            Debug.Log("��������");
-//        }
-//=======
-        
-//>>>>>>> Stashed changes
+
         if (base.IsPlayerTurn)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("Card");
@@ -2034,14 +2025,7 @@ public class GameManagerScr : InformationManagerScr
     {
         jutSpellAnimation.Play(posToSpell.name);
         Debug.Log(posToSpell.name);
-        // if (posToSpell.name == "A")
-        //     jutSpellAnimation.Play("D");
-        // if (posToSpell.name == "B")
-        //     jutSpellAnimation.Play("C");
-        // if (posToSpell.name == "C")
-        //     jutSpellAnimation.Play("B");
-        // if (posToSpell.name == "D")
-        //     jutSpellAnimation.Play("A");
+        
     }
     public void EnemyArrowsSpawn(GameObject posToSpell)
     {
