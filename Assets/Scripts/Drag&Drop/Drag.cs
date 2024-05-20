@@ -91,11 +91,11 @@ public class Drag : InformationManagerScr
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
             Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
+            
             Cameraman.SwitchCamera();
             StepFromAbove();
         }
     }
-
     private void StepFromAbove()
     {
 
@@ -103,7 +103,7 @@ public class Drag : InformationManagerScr
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
         
-        newPosition = new Vector3(1f, 34.434f, 0.952f);
+        newPosition = new Vector3(1f, 34.434f, 0.459f);
         currentCollider2.transform.position = newPosition;
         Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
