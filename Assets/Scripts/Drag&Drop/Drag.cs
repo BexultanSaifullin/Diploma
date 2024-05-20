@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using Cinemachine;
 
+
 public class Drag : InformationManagerScr
 {
     public Collider currentCollider2;
@@ -17,22 +18,18 @@ public class Drag : InformationManagerScr
     private GameObject instantiatedPrefab;
     string free = "free";
     string busy = "busy";
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    GameManagerScr GameManager;
-    CardSpawnerScr Spawner;
+    public Vector3 initialPosition;
+    public Quaternion initialRotation;
+    public GameManagerScr GameManager;
     private Animator jutSpellAnimation, arrowsSpellAnimation;
     private GameEntryMenu gameEntryMenu;
     public Transform PlayerHand;
     public Transform[] predefinedObjects;
 
 
-
     private void Start()
     {
         mainCamera = Camera.main;
-        GameManager = FindObjectOfType<GameManagerScr>();
-        Spawner = FindObjectOfType<CardSpawnerScr>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellPlayer.GetComponent<Animator>();
         arrowsSpellAnimation = gameEntryMenu.arrowsSpellPlayer.GetComponent<Animator>();
@@ -46,13 +43,17 @@ public class Drag : InformationManagerScr
         {
             SelectPart();
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 11.950000762939454f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 11.95f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             StepFromAbove();
         }
-        if (Input.GetButtonDown("Jump") && currentCollider2 != null && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             BackFromAbove();
+        }
+        else
+        {
+
         }
         if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 37.88f)
         {
@@ -96,12 +97,12 @@ public class Drag : InformationManagerScr
 
     private void StepFromAbove()
     {
-        selectedObject.GetComponent<CardOnHover>().enabled = false;
 
+        selectedObject.GetComponent<CardOnHover>().enabled = false;
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
-
-        newPosition = new Vector3(1.588f, 34.428f, 15.976f);
+        
+        newPosition = new Vector3(1f, 34.434f, 0.952f);
         currentCollider2.transform.position = newPosition;
         Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
@@ -135,17 +136,18 @@ public class Drag : InformationManagerScr
             Vector3 selPos = hit.collider.gameObject.transform.position;
             selPos.y += 0.01f;
             currentCollider2.transform.position = selPos;
+            
             selectedObject.layer = LayerMask.NameToLayer("Played");
             hit.collider.gameObject.tag = busy;
             selectedObject.transform.parent = hit.collider.gameObject.transform;
             ArrangeCards();
             PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-            GameManager.ShowMana();
+            base.ShowManaPlayer();
 
             selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
-
+            
             selectedObject = null;
             currentCollider2 = null;
 
@@ -158,12 +160,13 @@ public class Drag : InformationManagerScr
             selectedObject.transform.parent = hit.collider.gameObject.transform;
             selectedObject.layer = LayerMask.NameToLayer("Played");
             currentCollider2.transform.position = selPos;
+            
             hit.collider.gameObject.tag = busy;
 
             ArrangeCards();
 
             PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-            GameManager.ShowMana();
+            base.ShowManaPlayer();
 
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
             {
@@ -178,6 +181,7 @@ public class Drag : InformationManagerScr
             }
 
             selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
+           
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
 
@@ -194,7 +198,7 @@ public class Drag : InformationManagerScr
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 JutSpellSpawn(hit.collider.transform.parent.gameObject);
                 PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-                GameManager.ShowMana();
+                base.ShowManaPlayer();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
@@ -210,7 +214,7 @@ public class Drag : InformationManagerScr
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 ArrowsSpellSpawn(hit.collider.transform.parent.gameObject);
                 PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-                GameManager.ShowMana();
+                base.ShowManaPlayer();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                 {
@@ -226,7 +230,7 @@ public class Drag : InformationManagerScr
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        GameObject prefab = GameManager.Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
+        GameObject prefab = Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
         instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
         if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
         {
@@ -298,7 +302,7 @@ public class Drag : InformationManagerScr
         }
 
         float totalWidth = (cards.Length - 1) * distanceBetweenCards;
-        Vector3 centerPosition = new Vector3(0.513f, 10.132f, 9.884f);
+        Vector3 centerPosition = new Vector3(0.511f, 9.6f, -5.55f);
 
         float startX = centerPosition.x - totalWidth / 2;
 
@@ -308,5 +312,7 @@ public class Drag : InformationManagerScr
             Vector3 cardPosition = new Vector3(xPos, centerPosition.y, centerPosition.z);
             card.transform.position = cardPosition;
         }
+        //UnityEditor.TransformWorldPlacementJSON:{"position":{"x":0.5110000371932983,"y":9.59999942779541,"z":-5.550000190734863},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0}}
     }
+
 }

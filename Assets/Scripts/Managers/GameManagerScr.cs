@@ -10,9 +10,9 @@ using System.Linq;
 
 public class GameManagerScr : InformationManagerScr
 {
-    public GameObject[] Models;
     public Button EndTurnBtn;
-    CardSpawnerScr Spawner; CardSpawnerEnemyScr SpawnerEnemy;
+    
+    public CardSpawnerEnemyScr SpawnerEnemy;
 
     public Transform EnemyHand, PlayerHand;
 
@@ -25,7 +25,7 @@ public class GameManagerScr : InformationManagerScr
 
 
 
-    public TextMeshProUGUI PlayerManaTxt, EnemyManaTxt,
+    public TextMeshProUGUI EnemyManaTxt,
         PlayerWallHPTxt, EnemyWallHPTxt,
             PlayerWarriorHP1Txt, PlayerWarriorHP2Txt, EnemyWarriorHP1Txt, EnemyWarriorHP2Txt,
                 PlayerKhanHPTxt, EnemyKhanHPTxt,
@@ -43,12 +43,15 @@ public class GameManagerScr : InformationManagerScr
 
     void Start()
     {
+//<<<<<<< Updated upstream
 
-        ShowMana();
+//        ShowMana();
+//=======
+        base.ShowManaPlayer();
+        ShowManaEnemy();
+//>>>>>>> Stashed changes
         Turn = 0;
         StartCoroutine(TurnFunc());
-        Spawner = FindObjectOfType<CardSpawnerScr>();
-        SpawnerEnemy = FindObjectOfType<CardSpawnerEnemyScr>();
         wonLostMenu = FindObjectOfType<WonLostMenu>();
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
         jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
@@ -147,10 +150,14 @@ public class GameManagerScr : InformationManagerScr
         StopAllCoroutines();
         Turn++;
         EndTurnBtn.interactable = base.IsPlayerTurn;
-        if (base.IsPlayerTurn)
-        {
-            Debug.Log("��������");
-        }
+//<<<<<<< Updated upstream
+//        if (base.IsPlayerTurn)
+//        {
+//            Debug.Log("��������");
+//        }
+//=======
+        
+//>>>>>>> Stashed changes
         if (base.IsPlayerTurn)
         {
             GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("Card");
@@ -193,7 +200,8 @@ public class GameManagerScr : InformationManagerScr
                 PlayerMana = increase;
             if (EnemyMana < 10)
                 EnemyMana = increase;
-            ShowMana();
+            base.ShowManaPlayer();
+            ShowManaEnemy();
         }
         else if (!base.IsPlayerTurn && Turn != 1)
         {
@@ -276,7 +284,7 @@ public class GameManagerScr : InformationManagerScr
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowMana();
+                    ShowManaEnemy();
                     if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
                     {
                         SpawnerEnemy.NotRandomSpawnEnemy();
@@ -414,7 +422,7 @@ public class GameManagerScr : InformationManagerScr
                     EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowMana();
+                    ShowManaEnemy();
                 }
                 yield return new WaitForSeconds(3);
             }
@@ -512,7 +520,7 @@ public class GameManagerScr : InformationManagerScr
                         }
                     }
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowMana();
+                    ShowManaEnemy();
                     EnemyCardBuildings.RemoveAt(random);
                     EnemyCardBuildingsCount--;
                 }
@@ -530,7 +538,7 @@ public class GameManagerScr : InformationManagerScr
                     instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                     EnemyPlaces[i].gameObject.tag = "busy";
                     EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowMana();
+                    ShowManaEnemy();
                 }
                 else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
                 {
@@ -2097,11 +2105,12 @@ public class GameManagerScr : InformationManagerScr
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }
-    public void ShowMana()
+
+    public void ShowManaEnemy()
     {
-        PlayerManaTxt.text = PlayerMana.ToString();
         EnemyManaTxt.text = EnemyMana.ToString();
     }
+
     void ShowHPWall()
     {
         if (PlayerWallHP <= 0)
