@@ -89,11 +89,7 @@ public class GameManagerScr : InformationManagerScr
         }
         else
         {
-            //while (TurnTime-- > 27)
-            //{
-            //    TurnTimeTxt.text = TurnTime.ToString();
-            //    yield return new WaitForSeconds(1);
-            //}
+            StartCoroutine(EnemyTurn());
             List<GameObject> EnemyPlaces = new List<GameObject>();
             List<GameObject> EnemyCard = new List<GameObject>();
             List<GameObject> EnemyCardBuildings = new List<GameObject>();
@@ -133,11 +129,370 @@ public class GameManagerScr : InformationManagerScr
 
 
 
-            if (EnemyCard.Count > 0)
+            if (EnemyCard.Count == 0)
             {
-                StartCoroutine(EnemyTurn(EnemyCard, EnemyPlaces, EnemyCardBuildings));
+                ChangeTurn();
+                yield return new WaitForSeconds(1);
             }
+            System.Random rng = new System.Random();
+            int EnemyPlacesCount = EnemyPlaces.Count - 1;
+            int EnemyCardBuildingsCount = EnemyCardBuildings.Count;
+            int EnemyCardCount = EnemyCard.Count - 1;
+            EnemyCard = EnemyCard.OrderBy(x => Random.value).ToList();
+            EnemyPlaces = EnemyPlaces.OrderBy(x => Random.value).ToList();
+            EnemyCardBuildings = EnemyCardBuildings.OrderBy(x => Random.value).ToList();
 
+
+            if (EnemyPlacesCount >= EnemyCardCount)
+            {
+                for (int i = EnemyCardCount; i >= 0; i--)
+                {
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                        continue;
+                    }
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+                    {
+                        if (EnemyCardBuildings.Count == 0)
+                        {
+                            continue;
+                        }
+                        int random = Random.Range(0, EnemyCardBuildingsCount);
+
+                        Vector3 newPosition = EnemyCardBuildings[random].transform.position;
+                        newPosition.y += 0.01f;
+
+                        EnemyCard[i].transform.position = newPosition;
+                        Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+                        EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                        EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                        EnemyCardBuildings[random].gameObject.tag = "busy";
+                        EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
+                        EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
+                        EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                        instantiatedPrefab.transform.parent = EnemyCard[i].transform;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        ShowManaEnemy();
+                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                        {
+                            SpawnerEnemy.NotRandomSpawnEnemy();
+                            EnemyCardsCount++;
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                        {
+                            EnemyWarriorBaff++;
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (AllBoxes[j].tag == "busy")
+                                {
+                                    Transform childGameObject = AllBoxes[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                            if (EnemyHand.childCount > 0)
+                            {
+                                for (int j = 0; j < EnemyHand.childCount; j++)
+                                {
+                                    Transform childGameObject = EnemyHand.transform.GetChild(j);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                        {
+                            EnemyArcheryBaff++;
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (AllBoxes[j].tag == "busy")
+                                {
+                                    Transform childGameObject = AllBoxes[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                            if (EnemyHand.childCount > 0)
+                            {
+                                for (int j = 0; j < EnemyHand.childCount; j++)
+                                {
+                                    Transform childGameObject = EnemyHand.transform.GetChild(j);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                        }
+                        EnemyCardBuildings.RemoveAt(random);
+                        EnemyCardBuildingsCount--;
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+                    {
+                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+                        {
+                            List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
+                            shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (shallowCopy[j].tag == "busy")
+                                {
+                                    Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        EnemyArrowsSpawn(childTransform.transform.parent.gameObject);
+                                        DestroyImmediate(EnemyCard[i]);
+                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        {
+                                            shallowCopy[j].tag = "free";
+                                            DestroyImmediate(childTransform);
+                                        }
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                        {
+                            List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
+                            shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                            for (int j = 0; j < 4; j++)
+                            {
+                                if (shallowCopy[j].tag == "busy")
+                                {
+                                    Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        EnemyJutSpawn(childTransform.transform.parent.gameObject);
+                                        DestroyImmediate(EnemyCard[i]);
+                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        {
+                                            shallowCopy[j].tag = "free";
+                                            DestroyImmediate(childTransform);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        continue;
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
+                    {
+                        Vector3 newPosition = EnemyPlaces[i].transform.position;
+                        newPosition.y += 0.01f;
+                        EnemyCard[i].transform.position = newPosition;
+                        Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+                        EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                        EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                        EnemyPlaces[i].gameObject.tag = "busy";
+                        EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
+                        EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
+                        EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                        instantiatedPrefab.transform.parent = EnemyCard[i].transform;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        ShowManaEnemy();
+                    }
+                    yield return new WaitForSeconds(3);
+                }
+            }
+            else
+            {
+                for (int i = EnemyPlacesCount; i >= 0; i--)
+                {
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    {
+                        continue;
+                    }
+                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+                    {
+                        if (EnemyCardBuildings.Count == 0)
+                        {
+                            continue;
+                        }
+                        int random = Random.Range(0, EnemyCardBuildingsCount);
+                        Vector3 newPosition = EnemyCardBuildings[random].transform.position;
+                        newPosition.y += 0.01f;
+
+                        EnemyCard[i].transform.position = newPosition;
+                        Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+                        EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                        EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                        EnemyCardBuildings[random].gameObject.tag = "busy";
+                        EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
+                        EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
+                        EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                        instantiatedPrefab.transform.parent = EnemyCard[i].transform;
+                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                        {
+                            SpawnerEnemy.NotRandomSpawnEnemy();
+                            EnemyCardsCount++;
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                        {
+                            EnemyWarriorBaff++;
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (AllBoxes[j].tag == "busy")
+                                {
+                                    Transform childGameObject = AllBoxes[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                            if (EnemyHand.childCount > 0)
+                            {
+                                for (int j = 0; j < EnemyHand.childCount; j++)
+                                {
+                                    Transform childGameObject = EnemyHand.transform.GetChild(j);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                        {
+                            EnemyArcheryBaff++;
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (AllBoxes[j].tag == "busy")
+                                {
+                                    Transform childGameObject = AllBoxes[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                            if (EnemyHand.childCount > 0)
+                            {
+                                for (int j = 0; j < EnemyHand.childCount; j++)
+                                {
+                                    Transform childGameObject = EnemyHand.transform.GetChild(j);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    }
+                                }
+                            }
+                        }
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        ShowManaEnemy();
+                        EnemyCardBuildings.RemoveAt(random);
+                        EnemyCardBuildingsCount--;
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
+                    {
+                        Vector3 newPosition = EnemyPlaces[i].transform.position;
+                        newPosition.y += 0.01f;
+                        EnemyCard[i].transform.position = newPosition;
+                        Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+                        EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
+                        EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
+                        EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
+                        EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
+                        EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
+                        instantiatedPrefab.transform.parent = EnemyCard[i].transform;
+                        EnemyPlaces[i].gameObject.tag = "busy";
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        ShowManaEnemy();
+                    }
+                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+                    {
+                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+                        {
+                            List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
+                            shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                            for (int j = 0; j < 16; j++)
+                            {
+                                if (shallowCopy[j].tag == "busy")
+                                {
+                                    Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        DestroyImmediate(EnemyCard[i]);
+                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        {
+                                            shallowCopy[j].tag = "free";
+                                            DestroyImmediate(childTransform);
+                                        }
+                                        EnemyCard.RemoveAt(i);
+                                        i--;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                        {
+                            List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
+                            shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
+                            for (int j = 0; j < 4; j++)
+                            {
+                                if (shallowCopy[j].tag == "busy")
+                                {
+                                    Transform childGameObject = shallowCopy[j].transform.GetChild(0);
+                                    GameObject childTransform = childGameObject.gameObject;
+                                    if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                                    {
+                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        DestroyImmediate(EnemyCard[i]);
+                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        {
+                                            shallowCopy[j].tag = "free";
+                                            DestroyImmediate(childTransform);
+                                        }
+                                        EnemyCard.RemoveAt(i);
+                                        i--;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        continue;
+                    }
+                    yield return new WaitForSeconds(3);
+                }
+            }
+            yield return new WaitForSeconds(1);
+            ChangeTurn();
 
         }
 
@@ -198,7 +553,7 @@ public class GameManagerScr : InformationManagerScr
             base.ShowManaPlayer();
             ShowManaEnemy();
         }
-        else if (!base.IsPlayerTurn && Turn != 1)
+        else if (!base.IsPlayerTurn )
         {
             for (int i = 0; i < 16; i++)
             {
@@ -242,371 +597,19 @@ public class GameManagerScr : InformationManagerScr
             }
         }
         StartCoroutine(TurnFunc());
+
     }
 
-    IEnumerator EnemyTurn(List<GameObject> EnemyCard, List<GameObject> EnemyPlaces, List<GameObject> EnemyCardBuildings)
+    IEnumerator EnemyTurn()
     {
-        System.Random rng = new System.Random();
-        int EnemyPlacesCount = EnemyPlaces.Count - 1;
-        int EnemyCardBuildingsCount = EnemyCardBuildings.Count;
-        int EnemyCardCount = EnemyCard.Count - 1;
-        EnemyCard = EnemyCard.OrderBy(x => Random.value).ToList();
-        EnemyPlaces = EnemyPlaces.OrderBy(x => Random.value).ToList();
-        EnemyCardBuildings = EnemyCardBuildings.OrderBy(x => Random.value).ToList();
-
-
-        if (EnemyPlacesCount >= EnemyCardCount)
+        while (TurnTime-- > 0)
         {
-            for (int i = EnemyCardCount; i >= 0; i--)
-            {
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
-                {
-                    continue;
-                }
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
-                {
-                    if (EnemyCardBuildings.Count == 0)
-                    {
-                        continue;
-                    }
-                    int random = Random.Range(0, EnemyCardBuildingsCount);
-
-                    Vector3 newPosition = EnemyCardBuildings[random].transform.position;
-                    newPosition.y += 0.01f;
-
-                    EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
-                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                    EnemyCardBuildings[random].gameObject.tag = "busy";
-                    EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
-                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
-                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowManaEnemy();
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
-                    {
-                        SpawnerEnemy.NotRandomSpawnEnemy();
-                        EnemyCardsCount++;
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
-                    {
-                        EnemyWarriorBaff++;
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (AllBoxes[j].tag == "busy")
-                            {
-                                Transform childGameObject = AllBoxes[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                        if (EnemyHand.childCount > 0)
-                        {
-                            for (int j = 0; j < EnemyHand.childCount; j++)
-                            {
-                                Transform childGameObject = EnemyHand.transform.GetChild(j);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
-                    {
-                        EnemyArcheryBaff++;
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (AllBoxes[j].tag == "busy")
-                            {
-                                Transform childGameObject = AllBoxes[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                        if (EnemyHand.childCount > 0)
-                        {
-                            for (int j = 0; j < EnemyHand.childCount; j++)
-                            {
-                                Transform childGameObject = EnemyHand.transform.GetChild(j);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                    }
-                    EnemyCardBuildings.RemoveAt(random);
-                    EnemyCardBuildingsCount--;
-                }
-                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
-                {
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
-                    {
-                        List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
-                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (shallowCopy[j].tag == "busy")
-                            {
-                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                    EnemyArrowsSpawn(childTransform.transform.parent.gameObject);
-                                    DestroyImmediate(EnemyCard[i]);
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
-                                    {
-                                        shallowCopy[j].tag = "free";
-                                        DestroyImmediate(childTransform);
-                                    }
-                                    
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
-                    {
-                        List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
-                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                        for (int j = 0; j < 4; j++)
-                        {
-                            if (shallowCopy[j].tag == "busy")
-                            {
-                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                    EnemyJutSpawn(childTransform.transform.parent.gameObject);
-                                    DestroyImmediate(EnemyCard[i]);
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
-                                    {
-                                        shallowCopy[j].tag = "free";
-                                        DestroyImmediate(childTransform);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    continue;
-                }
-                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
-                {
-                    Vector3 newPosition = EnemyPlaces[i].transform.position;
-                    newPosition.y += 0.01f;
-                    EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
-                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                    EnemyPlaces[i].gameObject.tag = "busy";
-                    EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
-                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
-                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowManaEnemy();
-                }
-                yield return new WaitForSeconds(3);
-            }
+            TurnTimeTxt.text = TurnTime.ToString();
+            yield return new WaitForSeconds(1);
         }
-        else
-        {
-            for (int i = EnemyPlacesCount; i >= 0; i--)
-            {
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
-                {
-                    continue;
-                }
-                if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
-                {
-                    if (EnemyCardBuildings.Count == 0)
-                    {
-                        continue;
-                    }
-                    int random = Random.Range(0, EnemyCardBuildingsCount);
-                    Vector3 newPosition = EnemyCardBuildings[random].transform.position;
-                    newPosition.y += 0.01f;
-
-                    EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
-                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                    EnemyCardBuildings[random].gameObject.tag = "busy";
-                    EnemyCard[i].transform.parent = EnemyCardBuildings[random].transform;
-                    EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
-                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
-                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
-                    {
-                        SpawnerEnemy.NotRandomSpawnEnemy();
-                        EnemyCardsCount++;
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
-                    {
-                        EnemyWarriorBaff++;
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (AllBoxes[j].tag == "busy")
-                            {
-                                Transform childGameObject = AllBoxes[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                        if (EnemyHand.childCount > 0)
-                        {
-                            for (int j = 0; j < EnemyHand.childCount; j++)
-                            {
-                                Transform childGameObject = EnemyHand.transform.GetChild(j);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
-                    {
-                        EnemyArcheryBaff++;
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (AllBoxes[j].tag == "busy")
-                            {
-                                Transform childGameObject = AllBoxes[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                        if (EnemyHand.childCount > 0)
-                        {
-                            for (int j = 0; j < EnemyHand.childCount; j++)
-                            {
-                                Transform childGameObject = EnemyHand.transform.GetChild(j);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                }
-                            }
-                        }
-                    }
-                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowManaEnemy();
-                    EnemyCardBuildings.RemoveAt(random);
-                    EnemyCardBuildingsCount--;
-                }
-                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
-                {
-                    Vector3 newPosition = EnemyPlaces[i].transform.position;
-                    newPosition.y += 0.01f;
-                    EnemyCard[i].transform.position = newPosition;
-                    Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
-                    EnemyCard[i].transform.rotation = Quaternion.Euler(rotationAngles);
-                    EnemyCard[i].transform.parent = EnemyPlaces[i].transform;
-                    EnemyCard[i].layer = LayerMask.NameToLayer("EnemyPlayed");
-                    EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
-                    EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
-                    instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                    EnemyPlaces[i].gameObject.tag = "busy";
-                    EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
-                    ShowManaEnemy();
-                }
-                else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
-                {
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
-                    {
-                        List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
-                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                        for (int j = 0; j < 16; j++)
-                        {
-                            if (shallowCopy[j].tag == "busy")
-                            {
-                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                    DestroyImmediate(EnemyCard[i]);
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
-                                    {
-                                        shallowCopy[j].tag = "free";
-                                        DestroyImmediate(childTransform);
-                                    }
-                                    EnemyCard.RemoveAt(i);
-                                    i--;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
-                    {
-                        List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
-                        shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
-                        for (int j = 0; j < 4; j++)
-                        {
-                            if (shallowCopy[j].tag == "busy")
-                            {
-                                Transform childGameObject = shallowCopy[j].transform.GetChild(0);
-                                GameObject childTransform = childGameObject.gameObject;
-                                if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
-                                {
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
-                                    DestroyImmediate(EnemyCard[i]);
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
-                                    {
-                                        shallowCopy[j].tag = "free";
-                                        DestroyImmediate(childTransform);
-                                    }
-                                    EnemyCard.RemoveAt(i);
-                                    i--;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    continue;
-                }
-                yield return new WaitForSeconds(3);
-            }
-        }
-        ChangeTurn();
     }
 
-    
+
 
     void PlayerMoveCards()
     {
