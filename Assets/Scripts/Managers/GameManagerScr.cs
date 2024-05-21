@@ -151,18 +151,22 @@ public class GameManagerScr : InformationManagerScr
 
         if (base.IsPlayerTurn)
         {
-            GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("Card");
-            int PlayerLayerPlayed = LayerMask.NameToLayer("Played");
-            GameObject[] objectsOnLayerPlayed = objectsWithTagCard.Where(card => card.layer == PlayerLayerPlayed).ToArray();
-            foreach (GameObject obj in objectsOnLayerPlayed)
+            for (int i = 0; i < 16; i++)
             {
-                obj.layer = LayerMask.NameToLayer("Playing");
+                if (AllBoxes[i].tag == "busy")
+                {
+                    Transform childGameObject = AllBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+                    if (childTransform.layer == LayerMask.NameToLayer("Played"))
+                        childTransform.layer = LayerMask.NameToLayer("Playing");
+
+                }
             }
             AttackCards();
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
             DestroyCards();
-            PlayerMoveCards();
+            EnemyMoveCards();
             if (PlayerHand.childCount < PlayerCardsCount)
             {
                 Spawner.Spawn();
@@ -196,19 +200,24 @@ public class GameManagerScr : InformationManagerScr
         }
         else if (!base.IsPlayerTurn && Turn != 1)
         {
-            GameObject[] objectsWithTagCard = GameObject.FindGameObjectsWithTag("EnemyCard");
-            int PlayerLayerPlayed = LayerMask.NameToLayer("EnemyPlayed");
-            GameObject[] objectsOnLayerPlayed = objectsWithTagCard.Where(card => card.layer == PlayerLayerPlayed).ToArray();
-            foreach (GameObject obj in objectsOnLayerPlayed)
+            for (int i = 0; i < 16; i++)
             {
-                obj.layer = LayerMask.NameToLayer("EnemyPlaying");
+                if (AllBoxes[i].tag == "busy")
+                {
+                    Transform childGameObject = AllBoxes[i].transform.GetChild(0);
+                    GameObject childTransform = childGameObject.gameObject;
+                    if (childTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                        childTransform.layer = LayerMask.NameToLayer("EnemyPlaying");
+                    
+                }
             }
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
             AttackCards();
 
             DestroyCards();
-            EnemyMoveCards();
+            
+            PlayerMoveCards();
             if (EnemyHand.childCount < EnemyCardsCount)
             {
                 SpawnerEnemy.SpawnEnemy();
@@ -367,6 +376,7 @@ public class GameManagerScr : InformationManagerScr
                                         shallowCopy[j].tag = "free";
                                         DestroyImmediate(childTransform);
                                     }
+                                    
                                     break;
                                 }
                             }
@@ -398,6 +408,7 @@ public class GameManagerScr : InformationManagerScr
                             }
                         }
                     }
+                    continue;
                 }
                 else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
                 {
@@ -587,12 +598,15 @@ public class GameManagerScr : InformationManagerScr
                             }
                         }
                     }
+                    continue;
                 }
                 yield return new WaitForSeconds(3);
             }
         }
         ChangeTurn();
     }
+
+    
 
     void PlayerMoveCards()
     {

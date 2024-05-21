@@ -8613,8 +8613,8 @@ MonoBehaviour:
   VirtualCameras:
   - {fileID: 946255957}
   - {fileID: 879614745}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 30045004}
+  - {fileID: 141109387}
   - {fileID: 1988417527}
 --- !u!4 &1011418397
 Transform:
@@ -16706,8 +16706,8 @@ MonoBehaviour:
   gameCameras:
   - {fileID: 946255957}
   - {fileID: 879614745}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 30045004}
+  - {fileID: 141109387}
   - {fileID: 1988417527}
 --- !u!1 &1938533291 stripped
 GameObject:
@@ -17317,7 +17317,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 1
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
