@@ -49,12 +49,12 @@ public class Drag : InformationManagerScr
         //{
         //    StepFromAbove();
         //}
-        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y == 37.88f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y != 11.95f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
         {
             BackFromAbove();
         }
         
-        if (Input.GetMouseButtonDown(0) && mainCamera.transform.position.y == 37.88f)
+        if (Input.GetMouseButtonDown(0))
         {
             Teleportation();
         }
@@ -91,21 +91,66 @@ public class Drag : InformationManagerScr
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
             Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
+
+            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+            {
+                Cameraman.VirtualCameras[0].Priority = 0;
+                Cameraman.VirtualCameras[3].Priority = 1;
+                Cameraman.currentCameraIndex = 3;
+                StepFromAboveForJut();
+            } else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+            {
+                Cameraman.VirtualCameras[0].Priority = 0;
+                Cameraman.VirtualCameras[2].Priority = 1;
+                Cameraman.currentCameraIndex = 2;
+                StepFromAboveForUnit();
+            } else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+            {
+                Cameraman.VirtualCameras[0].Priority = 0;
+                Cameraman.VirtualCameras[4].Priority = 1;
+                Cameraman.currentCameraIndex = 4;
+                StepFromAboveForBuilding();
+            }
+            else 
+            {
+                Cameraman.SwitchCamera();
+            }
             
-            Cameraman.SwitchCamera();
-            StepFromAbove();
         }
     }
-    private void StepFromAbove()
+    private void StepFromAboveForUnit()
     {
 
         selectedObject.GetComponent<CardOnHover>().enabled = false;
         initialPosition = currentCollider2.transform.position;
         initialRotation = currentCollider2.transform.rotation;
-        
-        newPosition = new Vector3(1f, 34.434f, 0.459f);
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":1.3744081258773804,"y":10.089056015014649,"z":4.8812255859375},"rotation":{ "x":0.3289490044116974,"y":0.0,"z":0.0,"w":0.9443476796150208},"scale":{ "x":8.0,"y":8.0,"z":8.0} }
+        newPosition = new Vector3(1.374f, 10.09f, 4.88f);
         currentCollider2.transform.position = newPosition;
-        Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
+        Vector3 rotationAngles = new Vector3(38.41f, 0f, 0f);
+        currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+    }
+    private void StepFromAboveForJut()
+    {
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":1.4540218114852906,"y":13.819530487060547,"z":0.5195266008377075},"rotation":{ "x":0.2923717498779297,"y":0.0,"z":0.0,"w":0.9563047885894775},"scale":{ "x":8.0,"y":8.0,"z":8.0} }        //UnityEditor.TransformWorldPlacementJSON:{"position":{"x":-0.28999996185302737,"y":16.190000534057618,"z":1.6799999475479127},"rotation":{"x":0.0,"y":0.8829476237297058,"z":-0.4694715142250061,"w":0.0},"scale":{"x":1.0,"y":1.0,"z":1.0}}
+        selectedObject.GetComponent<CardOnHover>().enabled = false;
+        initialPosition = currentCollider2.transform.position;
+        initialRotation = currentCollider2.transform.rotation;
+        newPosition = new Vector3(1.454f, 13.82f, 0.52f);
+        currentCollider2.transform.position = newPosition;
+        Vector3 rotationAngles = new Vector3(34f, 0f, 0f);
+        currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
+    }
+
+    private void StepFromAboveForBuilding()
+    {
+        //UnityEditor.TransformWorldPlacementJSON:{ "position":{ "x":-2.0034916400909426,"y":11.800000190734864,"z":-0.009336352348327637},"rotation":{ "x":-1.5308051715123839e-8,"y":0.9366722106933594,"z":-0.3502073884010315,"w":-4.0943241685909018e-8},"scale":{ "x":8.0,"y":8.0,"z":8.0} }
+        selectedObject.GetComponent<CardOnHover>().enabled = false;
+        initialPosition = currentCollider2.transform.position;
+        initialRotation = currentCollider2.transform.rotation;
+        newPosition = new Vector3(-2f, 11.8f, -0.01f);
+        currentCollider2.transform.position = newPosition;
+        Vector3 rotationAngles = new Vector3(41f, 180f, 0f);
         currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
     }
 
@@ -127,6 +172,8 @@ public class Drag : InformationManagerScr
 
         if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free && hit.collider.gameObject.layer == LayerMask.NameToLayer("Default") && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
         {
+            Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
+            currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
             if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Abyllity == true)
             {
                 if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Ensign")
@@ -156,6 +203,8 @@ public class Drag : InformationManagerScr
         }
         else if (Physics.Raycast(ray, out hit) && hit.collider.gameObject.tag == free && hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerBuildings") && selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
         {
+            Vector3 rotationAngles = new Vector3(0f, 0f, 0f);
+            currentCollider2.transform.rotation = Quaternion.Euler(rotationAngles);
             Vector3 selPos = hit.collider.gameObject.transform.position;
             selPos.y += 0.01f;
             selectedObject.transform.parent = hit.collider.gameObject.transform;

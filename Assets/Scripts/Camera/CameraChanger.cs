@@ -5,7 +5,6 @@ using Cinemachine;
 
 public class CameraChanger : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] public CinemachineVirtualCamera[] VirtualCameras;
     public int currentCameraIndex;
     public bool flyMode = false;
@@ -15,7 +14,7 @@ public class CameraChanger : MonoBehaviour
     {
         gameEntryMenu = FindObjectOfType<GameEntryMenu>();
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (gameEntryMenu.gameStarted)
@@ -34,15 +33,24 @@ public class CameraChanger : MonoBehaviour
             }
         }
     }
+
     public void SwitchCamera()
     {
         if (gameEntryMenu.gameStarted)
         {
-            VirtualCameras[currentCameraIndex].Priority = 0;
-            currentCameraIndex++;
-            if (currentCameraIndex >= VirtualCameras.Length)
+            if (currentCameraIndex == 0 || currentCameraIndex == 1)
+            {
+                VirtualCameras[currentCameraIndex].Priority = 0;
+                currentCameraIndex = (currentCameraIndex == 0) ? 1 : 0;
+                VirtualCameras[currentCameraIndex].Priority = 1;
+            }
+            else
+            {
+
+                VirtualCameras[currentCameraIndex].Priority = 0;
                 currentCameraIndex = 0;
-            VirtualCameras[currentCameraIndex].Priority = 1;
+                VirtualCameras[0].Priority = 1;
+            }
         }
     }
 }
