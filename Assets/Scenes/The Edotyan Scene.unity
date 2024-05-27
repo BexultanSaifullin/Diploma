@@ -2884,7 +2884,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: be791ad685980d743afd6605c44ef786, type: 2}
     - target: {fileID: 919132149155446097, guid: 2b87f769bc49fd6409ef6cc580735e39, type: 3}
       propertyPath: m_Name
-      value: BackToMenu
+      value: BackToMenuBtn
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b87f769bc49fd6409ef6cc580735e39, type: 3}
       propertyPath: m_IsActive
@@ -4530,7 +4530,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 52.1
+  field of view: 37.84922
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -4556,8 +4556,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371417232}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.8829476, z: -0.4694715, w: 0}
-  m_LocalPosition: {x: -0.28999996, y: 16.2, z: 1.53}
+  m_LocalRotation: {x: 0, y: -0.9339864, z: 0.35730854, w: 0}
+  m_LocalPosition: {x: 0, y: 18.4, z: 21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18565,7 +18565,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8e8531fed02c0374bbf926bdffa224a1, type: 2}
     - target: {fileID: 919132149155446097, guid: 2b87f769bc49fd6409ef6cc580735e39, type: 3}
       propertyPath: m_Name
-      value: NewGame
+      value: NewGameBtn
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2b87f769bc49fd6409ef6cc580735e39, type: 3}
       propertyPath: m_IsActive
