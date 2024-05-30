@@ -224,7 +224,7 @@ public class Drag : InformationManagerScr
                 Spawner.NotRandomSpawn();
 
             }
-            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Barak" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Shield")
             {
                 GameManager.BaffUnits(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
 

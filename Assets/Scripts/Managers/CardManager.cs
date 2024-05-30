@@ -34,6 +34,14 @@ public struct Card
         Defense -= dmg;
         Attack -= dmg;
     }
+    public void SetShield(int dmg)
+    {
+        Defense += dmg;
+    }
+    public void GetShield(int dmg)
+    {
+        Defense -= dmg;
+    }
 }
 public static class CardManagerList
 {
@@ -55,5 +63,6 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Arrows", 1, 0, 1, 1, "Spell", false, 9));
         CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 2, "Spell", false, 10));
         CardManagerList.AllCards.Add(new Card("Batyr", 5, 7, 1, 6, "Unit", false, 11));
+        CardManagerList.AllCards.Add(new Card("Shield", 0, 4, 0, 4, "Building", false, 12));
     }
 }

@@ -57,7 +57,7 @@ MonoBehaviour:
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
-  - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
+  - {fileID: 919132149155446097, guid: 95e95e19a9cb66d4095b0eda2eb8dd6c, type: 3}
   PlayerManaTxt: {fileID: 7920978800323927204}
   Spawner: {fileID: 8222222488277091272}
   EndTurnBtn: {fileID: 8856305490771126184}
@@ -137,6 +137,8 @@ MonoBehaviour:
   EnemyWarriorBaff: 0
   ArcheryBaff: 0
   EnemyArcheryBaff: 0
+  ShieldBaff: 0
+  EnemyShieldBaff: 0
 --- !u!114 &2537058648778975295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +286,7 @@ MonoBehaviour:
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
   - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
-  - {fileID: 150429591980135321, guid: 8116a71d2b476c9458423b75726bed6a, type: 3}
+  - {fileID: 919132149155446097, guid: 95e95e19a9cb66d4095b0eda2eb8dd6c, type: 3}
   PlayerManaTxt: {fileID: 7920978800323927204}
   Spawner: {fileID: 8222222488277091272}
   currentCollider2: {fileID: 0}
