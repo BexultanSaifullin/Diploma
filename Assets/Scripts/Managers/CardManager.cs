@@ -64,5 +64,6 @@ public class CardManager : MonoBehaviour
         CardManagerList.AllCards.Add(new Card("Jut", 2, 0, 0, 2, "Spell", false, 10));
         CardManagerList.AllCards.Add(new Card("Batyr", 5, 7, 1, 6, "Unit", false, 11));
         CardManagerList.AllCards.Add(new Card("Shield", 0, 4, 0, 4, "Building", false, 12));
+        CardManagerList.AllCards.Add(new Card("Ñatapult", 3, 4, 0, 1, "Building", false, 13));
     }
 }

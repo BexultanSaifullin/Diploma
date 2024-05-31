@@ -577,6 +577,7 @@ public class GameManagerScr : InformationManagerScr
             AttackCards();
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
+            PlayerAttackBuildings();
             DestroyCards();
             EnemyMoveCards();
             if (PlayerHand.childCount < PlayerCardsCount)
@@ -631,7 +632,7 @@ public class GameManagerScr : InformationManagerScr
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
             AttackCards();
-
+            EnemyAttackBuildings();
             DestroyCards();
             
             PlayerMoveCards();
@@ -2110,8 +2111,147 @@ public class GameManagerScr : InformationManagerScr
         ShowHPWall();
     }
 
+    void PlayerAttackBuildings()
+    {
+        for(int i = 0; i <4; i++)
+        {
+            if (PlayerBuildingsBoxes[i].tag == "busy")
+            {
+                Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ñatapult")
+                {
+                    if (i == 0 || i == 1)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (ABoxes[j].tag == "busy")
+                            {
+                                Transform a = ABoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                            if (BBoxes[j].tag == "busy")
+                            {
+                                Transform a = BBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (i == 2 || i == 3)
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (DBoxes[j].tag == "busy")
+                            {
+                                Transform a = DBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                            if (CBoxes[j].tag == "busy")
+                            {
+                                Transform a = CBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-
+    void EnemyAttackBuildings()
+    {
+        for (int i = 0; i > 4; i++)
+        {
+            if (EnemyBuildingsBoxes[i].tag == "busy")
+            {
+                Transform childGameObject = EnemyBuildingsBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ñatapult")
+                {
+                    if (i == 0 || i == 1)
+                    {
+                        for (int j = 3; j > 0; j--)
+                        {
+                            if (ABoxes[j].tag == "busy")
+                            {
+                                Transform a = ABoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                            if (BBoxes[j].tag == "busy")
+                            {
+                                Transform a = BBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (i == 2 || i == 3)
+                    {
+                        for (int j = 3; j > 0; j--)
+                        {
+                            if (DBoxes[j].tag == "busy")
+                            {
+                                Transform a = DBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                            if (CBoxes[j].tag == "busy")
+                            {
+                                Transform a = CBoxes[j].transform.GetChild(0);
+                                GameObject b = a.gameObject;
+                                if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
+                                {
+                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     public void EnemyJutSpawn(GameObject posToSpell)
     {
         jutSpellAnimation.Play(posToSpell.name);
