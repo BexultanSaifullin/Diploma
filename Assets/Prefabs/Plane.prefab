@@ -126,6 +126,8 @@ MonoBehaviour:
   - {fileID: 6908693602587301157}
   - {fileID: 782242325792586835}
   - {fileID: 3003781378837431318}
+  PlayerWallBox: {fileID: 3608109584041164821}
+  EnemyWallBox: {fileID: 4482949894680338617}
   EnemyManaTxt: {fileID: 4035707669344965419}
   PlayerWallHPTxt: {fileID: 9050606753243231015}
   EnemyWallHPTxt: {fileID: 9125805449778463369}
@@ -1857,6 +1859,59 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &3608109584041164821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8915605917624686667}
+  - component: {fileID: 8895613803462562444}
+  m_Layer: 14
+  m_Name: PlayerWallBox
+  m_TagString: free
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8915605917624686667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608109584041164821}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.93, y: 6.0099998, z: 6.06}
+  m_LocalScale: {x: 2, y: 1, z: 3.41}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 788360030767943254}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &8895613803462562444
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608109584041164821}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2624687, y: 0.02, z: 1.7189579}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3965563685419626717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,6 +2462,59 @@ Transform:
   - {fileID: 2180400013315529684}
   m_Father: {fileID: 788360030767943254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4482949894680338617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5271885080585025908}
+  - component: {fileID: 2294389451124914791}
+  m_Layer: 15
+  m_Name: EnemyWallBox
+  m_TagString: free
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5271885080585025908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4482949894680338617}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.93, y: 6.0099998, z: -4.37}
+  m_LocalScale: {x: 2, y: 1, z: 3.41}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 788360030767943254}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &2294389451124914791
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4482949894680338617}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2624687, y: 0.02, z: 1.7189579}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4539416335224498188
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,8 +2600,6 @@ Transform:
   m_Children:
   - {fileID: 4542094384181641351}
   - {fileID: 4719592628640847933}
-  - {fileID: 7723247727080920989}
-  - {fileID: 4327559652547597597}
   - {fileID: 864782580288080747}
   - {fileID: 1866296953035003540}
   - {fileID: 502953099381731484}
@@ -2501,8 +2607,12 @@ Transform:
   - {fileID: 8318374943794855475}
   - {fileID: 6821560126055194043}
   - {fileID: 8234314648838512040}
+  - {fileID: 7723247727080920989}
+  - {fileID: 4327559652547597597}
   - {fileID: 150832680718098814}
   - {fileID: 9174325067467830813}
+  - {fileID: 8915605917624686667}
+  - {fileID: 5271885080585025908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4185611501833685555

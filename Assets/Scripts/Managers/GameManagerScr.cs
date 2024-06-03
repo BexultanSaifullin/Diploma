@@ -22,7 +22,7 @@ public class GameManagerScr : InformationManagerScr
 
     public GameObject[] ABoxes, BBoxes, CBoxes, DBoxes, PlayerBuildingsBoxes, EnemyBuildingsBoxes;
     public GameObject[] AllBoxes;
-
+    public GameObject PlayerWallBox, EnemyWallBox;
 
 
     public TextMeshProUGUI EnemyManaTxt,
@@ -323,6 +323,14 @@ public class GameManagerScr : InformationManagerScr
                                     }
                                 }
                             }
+                        } else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
+                        {
+                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Defense;
+
+                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                            ShowManaEnemy();
+                            ShowHPWall();
+                            DestroyImmediate(EnemyCard[i]);
                         }
                         continue;
                     }
@@ -542,6 +550,15 @@ public class GameManagerScr : InformationManagerScr
                                     }
                                 }
                             }
+                        }
+                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
+                        {
+                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Defense;
+
+                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                            ShowManaEnemy();
+                            ShowHPWall();
+                            DestroyImmediate(EnemyCard[i]);
                         }
                         continue;
                     }
@@ -2326,7 +2343,7 @@ public class GameManagerScr : InformationManagerScr
         EnemyManaTxt.text = EnemyMana.ToString();
     }
 
-    void ShowHPWall()
+    public void ShowHPWall()
     {
         if (PlayerWallHP <= 0)
         {

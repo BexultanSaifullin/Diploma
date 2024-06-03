@@ -98,19 +98,21 @@ public class Drag : InformationManagerScr
                 Cameraman.VirtualCameras[3].Priority = 1;
                 Cameraman.currentCameraIndex = 3;
                 StepFromAboveForJut();
-            } else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
-            {
-                Cameraman.VirtualCameras[0].Priority = 0;
-                Cameraman.VirtualCameras[2].Priority = 1;
-                Cameraman.currentCameraIndex = 2;
-                StepFromAboveForUnit();
-            } else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+            }
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Building" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal")
             {
                 Cameraman.VirtualCameras[0].Priority = 0;
                 Cameraman.VirtualCameras[4].Priority = 1;
                 Cameraman.currentCameraIndex = 4;
                 StepFromAboveForBuilding();
             }
+            else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+            {
+                Cameraman.VirtualCameras[0].Priority = 0;
+                Cameraman.VirtualCameras[2].Priority = 1;
+                Cameraman.currentCameraIndex = 2;
+                StepFromAboveForUnit();
+            } 
             else 
             {
                 Cameraman.SwitchCamera();
@@ -275,6 +277,14 @@ public class Drag : InformationManagerScr
                 }
             }
             ArrangeCards();
+        } else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox") ) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
+        {
+            PlayerWallHP += selectedObject.GetComponent<CardInfoScr>().SelfCard.Defense;
+            
+            PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+            base.ShowManaPlayer();
+            GameManager.ShowHPWall();
+            DestroyImmediate(selectedObject);
         }
     }
 
