@@ -285,6 +285,7 @@ public class Drag : InformationManagerScr
             base.ShowManaPlayer();
             GameManager.ShowHPWall();
             DestroyImmediate(selectedObject);
+            ArrangeCards();
         }
     }
 
