@@ -38,7 +38,7 @@ public class GameManagerTutorialScr : InformationManagerScr
     private Animator jutSpellAnimation, arrowsSpellAnimation;
     private Quaternion newRotation;
 
-
+    
 
 
     void Start()
