@@ -7,10 +7,10 @@ public class CardSpawnerEnemyScr : MonoBehaviour
     // Start is called before the first frame update
     public GameObject objectToSpawnEnemy;
     public Vector3 positionToSpawn;
-    Drag Arrange;
+    public DragTutorial Arrange;
     void Start()
     {
-        Arrange = FindObjectOfType<Drag>();
+        
     }
     public void SpawnEnemy()
     {

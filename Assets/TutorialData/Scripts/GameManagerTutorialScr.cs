@@ -8,7 +8,7 @@ using System.Linq;
 //Debug.Log(count);
 
 
-public class GameManagerTutorialScr : InformationManagerScr
+public class GameManagerTutorialScr : InformationManagerTutorialScr
 {
     public Button EndTurnBtn;
     
@@ -50,17 +50,17 @@ public class GameManagerTutorialScr : InformationManagerScr
 
         Turn = 0;
         StartCoroutine(TurnFunc());
-        wonLostMenu = FindObjectOfType<WonLostMenu>();
-        gameEntryMenu = FindObjectOfType<GameEntryMenu>();
-        jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
-        arrowsSpellAnimation = gameEntryMenu.arrowsSpellEnemy.GetComponent<Animator>();
+        //wonLostMenu = FindObjectOfType<WonLostMenu>();
+        //gameEntryMenu = FindObjectOfType<GameEntryMenu>();
+        //jutSpellAnimation = gameEntryMenu.jutSpellEnemy.GetComponent<Animator>();
+        //arrowsSpellAnimation = gameEntryMenu.arrowsSpellEnemy.GetComponent<Animator>();
         if (PlayerHand.childCount > 0)
         {
             for (int i = 0; i < PlayerHand.childCount; i++)
             {
                 Transform childGameObject = PlayerHand.transform.GetChild(i);
                 GameObject childTransform = childGameObject.gameObject;
-                childTransform.GetComponent<CardInfoScr>().RandomMethod();
+                childTransform.GetComponent<CardInfoTutorialScr>().RandomMethod();
             }
         }
         if (EnemyHand.childCount > 0)
@@ -69,7 +69,7 @@ public class GameManagerTutorialScr : InformationManagerScr
             {
                 Transform childGameObject = EnemyHand.transform.GetChild(i);
                 GameObject childTransform = childGameObject.gameObject;
-                childTransform.GetComponent<CardInfoScr>().RandomMethod();
+                childTransform.GetComponent<CardInfoTutorialScr>().RandomMethod();
             }
         }
     }
@@ -80,12 +80,7 @@ public class GameManagerTutorialScr : InformationManagerScr
         TurnTimeTxt.text = TurnTime.ToString();
         if (base.IsPlayerTurn)
         {
-            while (TurnTime-- > 0)
-            {
-                TurnTimeTxt.text = TurnTime.ToString();
-                yield return new WaitForSeconds(1);
-            }
-            ChangeTurn();
+           
         }
         else
         {

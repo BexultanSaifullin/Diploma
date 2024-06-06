@@ -9,7 +9,7 @@ public class CardInfoTutorialScr : MonoBehaviour
     public Material[] NewDefense, NewMana, NewAttack, NewLogo;
     public Card SelfCard;
     public GameObject Name, Attack, Defense, Mana, Logo;
-    Drag Arrange;
+    
 
     public void ShowCardInfo(Card card, int i)
     {
@@ -48,15 +48,7 @@ public class CardInfoTutorialScr : MonoBehaviour
     public void RandomMethod()
     {
         int randomNumber = Random.Range(0, 13);
-        if (randomNumber >= 0 && randomNumber < 6)
-        {
-            randomNumber = 4;
-        }
-        else if (randomNumber >= 6 && randomNumber <= 12)
-        {
-            randomNumber = 12;
-        }
-        ShowCardInfo(CardManagerList.AllCards[13], 13);
+        ShowCardInfo(CardManagerList.AllCards[4], 4);
     }
 
     public void NotRandom(int randomNumber)
