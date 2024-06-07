@@ -80,7 +80,6 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
         TurnTimeTxt.text = TurnTime.ToString();
         if (base.IsPlayerTurn)
         {
-           
         }
         else if(Turn == 1)
         {
@@ -183,6 +182,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             BBoxes[1].gameObject.tag = "free";
             BBoxes[0].gameObject.tag = "free";
             DBoxes[0].gameObject.tag = "free";
+            CBoxes[0].gameObject.tag = "free";
             ChangeTurn();
         }
         
@@ -695,7 +695,20 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             EnemyMoveCards();
             if (PlayerHand.childCount < PlayerCardsCount)
             {
-                Spawner.Spawn();
+                if(Turn == 2)
+                {
+                    Spawner.SpawnWarrior();
+                }
+                else if(Turn == 4)
+                {
+                    Spawner.SpawnArcher();
+                }
+                else
+                {
+                    Spawner.Spawn();
+                }
+
+                
             }
             if (PlayerHand.childCount > 0)
             {
@@ -752,6 +765,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 CBoxes[1].gameObject.tag = "free";
             }
             PlayerMoveCards();
+            if (Turn == 3)
+            {
+                CBoxes[0].gameObject.tag = "blocked";
+            }
             if (EnemyHand.childCount < EnemyCardsCount)
             {
                 SpawnerEnemy.SpawnEnemy();

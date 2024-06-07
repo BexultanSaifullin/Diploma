@@ -35,7 +35,7 @@ public class CardSpawnerTScr : MonoBehaviour
     {
         int a = PlayerHand.childCount;
         GameObject spawnedObject = Instantiate(objectToSpawn, qwd[a].transform.position, qwd[a].transform.rotation);
-        spawnedObject.GetComponent<CardInfoTutorialScr>().NotRandom(0);
+        spawnedObject.GetComponent<CardInfoTutorialScr>().NotRandom(14);
         spawnedObject.transform.parent = transform;
         spawnedObject.transform.localScale = new Vector3(8f, 8f, 8f);
     }

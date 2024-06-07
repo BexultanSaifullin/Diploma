@@ -1436,10 +1436,22 @@ PrefabInstance:
       propertyPath: m_TagString
       value: blocked
       objectReference: {fileID: 0}
+    - target: {fileID: 4475909734592423856, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 60.821045
+      objectReference: {fileID: 0}
     - target: {fileID: 4529903041894229696, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
       propertyPath: Spawner
       value: 
       objectReference: {fileID: 63843989}
+    - target: {fileID: 4529903041894229696, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: Models.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529903041894229696, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: Models.Array.data[15]
+      value: 
+      objectReference: {fileID: 4405893337171409271, guid: 2f7f11c6068ebf849a92d6a806c7ac8f, type: 3}
     - target: {fileID: 4539416335224498188, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
       propertyPath: m_TagString
       value: blocked

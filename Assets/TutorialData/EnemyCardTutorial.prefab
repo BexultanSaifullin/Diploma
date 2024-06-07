@@ -136,8 +136,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f4e9beee1fde5154e87be04d96c54cf5, type: 2}
   - {fileID: 2100000, guid: f4e9beee1fde5154e87be04d96c54cf5, type: 2}
   - {fileID: 2100000, guid: f4e9beee1fde5154e87be04d96c54cf5, type: 2}
-  - {fileID: 2100000, guid: f4e9beee1fde5154e87be04d96c54cf5, type: 2}
-  - {fileID: 2100000, guid: f4e9beee1fde5154e87be04d96c54cf5, type: 2}
+  - {fileID: 2100000, guid: c06a0babab58990489eef6b9b58dfe61, type: 2}
+  - {fileID: 2100000, guid: c06a0babab58990489eef6b9b58dfe61, type: 2}
   Name: {fileID: 5766767675425012368}
   Attack: {fileID: 8905548088836650908}
   Defense: {fileID: 9143489246848846994}
