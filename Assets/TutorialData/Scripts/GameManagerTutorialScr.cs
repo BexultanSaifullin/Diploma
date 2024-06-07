@@ -105,7 +105,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             EnemyMana -= EnemyCard[0].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
             ShowManaEnemy();
             yield return new WaitForSeconds(2);
+            DBoxes[1].gameObject.tag = "free";
+            
             ChangeTurn();
+            
         }
         else if(Turn == 3)
         {
@@ -144,11 +147,14 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             EnemyMana -= EnemyCard[1].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
             ShowManaEnemy();
             yield return new WaitForSeconds(2);
-            ChangeTurn();
             SpawnerEnemy.SpawnWarrior();
+            ABoxes[0].gameObject.tag = "free";
+            ChangeTurn();
+            
         }
         else if(Turn == 5)
         {
+            
             StartCoroutine(EnemyTurn());
             List<GameObject> EnemyCard = new List<GameObject>();
             foreach (Transform child in EnemyHand)
@@ -173,6 +179,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             EnemyMana -= EnemyCard[0].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
             ShowManaEnemy();
             yield return new WaitForSeconds(2);
+            ABoxes[1].gameObject.tag = "free";
+            BBoxes[1].gameObject.tag = "free";
+            BBoxes[0].gameObject.tag = "free";
+            DBoxes[0].gameObject.tag = "free";
             ChangeTurn();
         }
         
@@ -737,7 +747,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             AttackCards();
             EnemyAttackBuildings();
             DestroyCards();
-            
+            if(Turn == 3)
+            {
+                CBoxes[1].gameObject.tag = "free";
+            }
             PlayerMoveCards();
             if (EnemyHand.childCount < EnemyCardsCount)
             {
