@@ -123,6 +123,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &29006429 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1443964492568084079, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+  m_PrefabInstance: {fileID: 1750632719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1969dc4c2ab6645b294b746d53ff31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &63843989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3949418317015526226, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+  m_PrefabInstance: {fileID: 1750632719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 088d1cbc644b5764a8a0bf69fd9a9a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &184356836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,9 +1416,53 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1895559409941032411, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 2003559784226344402, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: Spawner
+      value: 
+      objectReference: {fileID: 63843989}
+    - target: {fileID: 2003559784226344402, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: SpawnerEnemy
+      value: 
+      objectReference: {fileID: 29006429}
+    - target: {fileID: 4145694052776675258, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: free
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152121138207685972, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529903041894229696, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: Spawner
+      value: 
+      objectReference: {fileID: 63843989}
+    - target: {fileID: 4539416335224498188, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
     - target: {fileID: 4662331781268600419, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
       propertyPath: m_Name
       value: PlaneForTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 5365175321735018271, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766817694348744698, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634963753005905921, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8646756340135079863, guid: 2af6ac69300238343b9ba49e7c317ec3, type: 3}
+      propertyPath: m_TagString
+      value: blocked
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
