@@ -12,7 +12,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 {
     public Button EndTurnBtn;
     
-    public CardSpawnerEnemyScr SpawnerEnemy;
+    public CardSpawnerEnemyTScr SpawnerEnemy;
 
     public Transform EnemyHand, PlayerHand;
 
@@ -82,7 +82,101 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
         {
            
         }
-        else
+        else if(Turn == 1)
+        {
+            
+            StartCoroutine(EnemyTurn());
+            List<GameObject> EnemyCard = new List<GameObject>();
+            foreach (Transform child in EnemyHand)
+            {
+                EnemyCard.Add(child.gameObject);
+            }
+            Vector3 newPosition = DBoxes[2].transform.position;
+            newPosition.y += 0.01f;
+            EnemyCard[0].transform.position = newPosition;
+            Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+            EnemyCard[0].transform.rotation = Quaternion.Euler(rotationAngles);
+            EnemyCard[0].layer = LayerMask.NameToLayer("EnemyPlayed");
+            DBoxes[2].gameObject.tag = "busy";
+            EnemyCard[0].transform.parent = DBoxes[2].transform;
+            EnemyCard[0].transform.localScale = new Vector3(8f, 8f, 8f);
+            EnemyCardModelSpawn(EnemyCard[0].transform.position, EnemyCard[0]);
+            instantiatedPrefab.transform.parent = EnemyCard[0].transform;
+            EnemyMana -= EnemyCard[0].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
+            ShowManaEnemy();
+            yield return new WaitForSeconds(2);
+            ChangeTurn();
+        }
+        else if(Turn == 3)
+        {
+            StartCoroutine(EnemyTurn());
+            List<GameObject> EnemyCard = new List<GameObject>();
+            foreach (Transform child in EnemyHand)
+            {
+                EnemyCard.Add(child.gameObject);
+            }
+            Vector3 newPosition = CBoxes[3].transform.position;
+            newPosition.y += 0.01f;
+            EnemyCard[0].transform.position = newPosition;
+            Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+            EnemyCard[0].transform.rotation = Quaternion.Euler(rotationAngles);
+            EnemyCard[0].layer = LayerMask.NameToLayer("EnemyPlayed");
+            CBoxes[3].gameObject.tag = "busy";
+            EnemyCard[0].transform.parent = CBoxes[3].transform;
+            EnemyCard[0].transform.localScale = new Vector3(8f, 8f, 8f);
+            EnemyCardModelSpawn(EnemyCard[0].transform.position, EnemyCard[0]);
+            instantiatedPrefab.transform.parent = EnemyCard[0].transform;
+            EnemyMana -= EnemyCard[0].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
+            ShowManaEnemy();
+            yield return new WaitForSeconds(2);
+            
+            newPosition = ABoxes[3].transform.position;
+            newPosition.y += 0.01f;
+            EnemyCard[1].transform.position = newPosition;
+            rotationAngles = new Vector3(180f, 0f, -180f);
+            EnemyCard[1].transform.rotation = Quaternion.Euler(rotationAngles);
+            EnemyCard[1].layer = LayerMask.NameToLayer("EnemyPlayed");
+            ABoxes[3].gameObject.tag = "busy";
+            EnemyCard[1].transform.parent = ABoxes[3].transform;
+            EnemyCard[1].transform.localScale = new Vector3(8f, 8f, 8f);
+            EnemyCardModelSpawn(EnemyCard[1].transform.position, EnemyCard[1]);
+            instantiatedPrefab.transform.parent = EnemyCard[1].transform;
+            EnemyMana -= EnemyCard[1].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
+            ShowManaEnemy();
+            yield return new WaitForSeconds(2);
+            ChangeTurn();
+            SpawnerEnemy.SpawnWarrior();
+        }
+        else if(Turn == 5)
+        {
+            StartCoroutine(EnemyTurn());
+            List<GameObject> EnemyCard = new List<GameObject>();
+            foreach (Transform child in EnemyHand)
+            {
+                if (child.gameObject.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior")
+                {
+                    EnemyCard.Add(child.gameObject);
+                }
+                
+            }
+            Vector3 newPosition = BBoxes[3].transform.position;
+            newPosition.y += 0.01f;
+            EnemyCard[0].transform.position = newPosition;
+            Vector3 rotationAngles = new Vector3(180f, 0f, -180f);
+            EnemyCard[0].transform.rotation = Quaternion.Euler(rotationAngles);
+            EnemyCard[0].layer = LayerMask.NameToLayer("EnemyPlayed");
+            BBoxes[3].gameObject.tag = "busy";
+            EnemyCard[0].transform.parent = BBoxes[3].transform;
+            EnemyCard[0].transform.localScale = new Vector3(8f, 8f, 8f);
+            EnemyCardModelSpawn(EnemyCard[0].transform.position, EnemyCard[0]);
+            instantiatedPrefab.transform.parent = EnemyCard[0].transform;
+            EnemyMana -= EnemyCard[0].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
+            ShowManaEnemy();
+            yield return new WaitForSeconds(2);
+            ChangeTurn();
+        }
+        
+        else 
         {
             StartCoroutine(EnemyTurn());
             List<GameObject> EnemyPlaces = new List<GameObject>();
@@ -91,10 +185,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             int EnemyLayer = LayerMask.NameToLayer("EnemyPlace");
             for (int i = 0; i < 4; i++)
             {
-                if (ABoxes[i].layer == EnemyLayer && ABoxes[i].tag == "free")
-                {
-                    EnemyPlaces.Add(ABoxes[i]);
-                }
+                
                 if (BBoxes[i].layer == EnemyLayer && BBoxes[i].tag == "free")
                 {
                     EnemyPlaces.Add(BBoxes[i]);
@@ -142,11 +233,11 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 for (int i = EnemyCardCount; i >= 0; i--)
                 {
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana > EnemyMana)
                     {
                         continue;
                     }
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+                    if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Building")
                     {
                         if (EnemyCardBuildings.Count == 0)
                         {
@@ -166,14 +257,14 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                         EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
                         EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                         instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                         ShowManaEnemy();
-                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                        if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Yurt")
                         {
                             SpawnerEnemy.NotRandomSpawnEnemy();
                             EnemyCardsCount++;
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Barak")
                         {
                             EnemyWarriorBaff++;
                             for (int j = 0; j < 16; j++)
@@ -182,10 +273,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = AllBoxes[j].transform.GetChild(0);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -195,15 +286,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior")
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Bowrange")
                         {
                             EnemyArcheryBaff++;
                             for (int j = 0; j < 16; j++)
@@ -212,10 +303,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = AllBoxes[j].transform.GetChild(0);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -225,14 +316,14 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer")
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
-                        } else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Shield")
+                        } else if(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Shield")
                         {
                             EnemyShieldBaff++;
                             for (int j = 0; j < 16; j++)
@@ -243,8 +334,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -255,8 +346,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
 
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(1);
+                                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
 
                                 }
                             }
@@ -264,9 +355,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                         EnemyCardBuildings.RemoveAt(random);
                         EnemyCardBuildingsCount--;
                     }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+                    else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Spell")
                     {
-                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+                        if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Arrows")
                         {
                             List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
                             shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -278,11 +369,11 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                         EnemyArrowsSpawn(childTransform.transform.parent.gameObject);
                                         DestroyImmediate(EnemyCard[i]);
-                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                                         {
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
@@ -293,7 +384,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Jut")
                         {
                             List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
                             shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -305,11 +396,11 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                         EnemyJutSpawn(childTransform.transform.parent.gameObject);
                                         DestroyImmediate(EnemyCard[i]);
-                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                                         {
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
@@ -318,18 +409,18 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     }
                                 }
                             }
-                        } else if(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
+                        } else if(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
                         {
-                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Defense;
+                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Defense;
 
-                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                             ShowManaEnemy();
                             ShowHPWall();
                             DestroyImmediate(EnemyCard[i]);
                         }
                         continue;
                     }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
+                    else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Unit")
                     {
                         Vector3 newPosition = EnemyPlaces[i].transform.position;
                         newPosition.y += 0.01f;
@@ -342,7 +433,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                         EnemyCard[i].transform.localScale = new Vector3(8f, 8f, 8f);
                         EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                         instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                         ShowManaEnemy();
                     }
                     yield return new WaitForSeconds(3);
@@ -352,11 +443,11 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 for (int i = EnemyPlacesCount; i >= 0; i--)
                 {
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana > EnemyMana)
+                    if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana > EnemyMana)
                     {
                         continue;
                     }
-                    if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Building")
+                    if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Building")
                     {
                         if (EnemyCardBuildings.Count == 0)
                         {
@@ -375,12 +466,12 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                         EnemyCard[i].transform.localScale = new Vector3(9.5f, 9.5f, 9.5f);
                         EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                         instantiatedPrefab.transform.parent = EnemyCard[i].transform;
-                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                        if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Yurt")
                         {
                             SpawnerEnemy.NotRandomSpawnEnemy();
                             EnemyCardsCount++;
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Barak")
                         {
                             EnemyWarriorBaff++;
                             for (int j = 0; j < 16; j++)
@@ -389,10 +480,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = AllBoxes[j].transform.GetChild(0);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -402,15 +493,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior")
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Bowrange")
                         {
                             EnemyArcheryBaff++;
                             for (int j = 0; j < 16; j++)
@@ -419,10 +510,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = AllBoxes[j].transform.GetChild(0);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -432,15 +523,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 {
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
-                                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer")
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Shield")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Shield")
                         {
                             EnemyShieldBaff++;
                             for (int j = 0; j < 16; j++)
@@ -451,8 +542,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") || childTransform.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(1);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(1);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                     }
                                 }
                             }
@@ -463,18 +554,18 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     Transform childGameObject = EnemyHand.transform.GetChild(j);
                                     GameObject childTransform = childGameObject.gameObject;
 
-                                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
 
                                 }
                             }
                         }
-                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                         ShowManaEnemy();
                         EnemyCardBuildings.RemoveAt(random);
                         EnemyCardBuildingsCount--;
                     }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
+                    else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Unit")
                     {
                         Vector3 newPosition = EnemyPlaces[i].transform.position;
                         newPosition.y += 0.01f;
@@ -487,12 +578,12 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                         EnemyCardModelSpawn(EnemyCard[i].transform.position, EnemyCard[i]);
                         instantiatedPrefab.transform.parent = EnemyCard[i].transform;
                         EnemyPlaces[i].gameObject.tag = "busy";
-                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                        EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                         ShowManaEnemy();
                     }
-                    else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+                    else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Type == "Spell")
                     {
-                        if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+                        if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Arrows")
                         {
                             List<GameObject> shallowCopy = new List<GameObject>(AllBoxes);
                             shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -504,10 +595,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                         DestroyImmediate(EnemyCard[i]);
-                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                                         {
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
@@ -519,7 +610,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Jut")
                         {
                             List<GameObject> shallowCopy = new List<GameObject>(PlayerBuildingsBoxes);
                             shallowCopy = shallowCopy.OrderBy(x => Random.value).ToList();
@@ -531,10 +622,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                     GameObject childTransform = childGameObject.gameObject;
                                     if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                                     {
-                                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Attack);
-                                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                         DestroyImmediate(EnemyCard[i]);
-                                        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                                        if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                                         {
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
@@ -546,11 +637,11 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 }
                             }
                         }
-                        else if (EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
+                        else if (EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Heal" && EnemyWallHP > 0)
                         {
-                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Defense;
+                            EnemyWallHP += EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Defense;
 
-                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoScr>().SelfCard.Mana;
+                            EnemyMana -= EnemyCard[i].GetComponent<CardInfoTutorialScr>().SelfCard.Mana;
                             ShowManaEnemy();
                             ShowHPWall();
                             DestroyImmediate(EnemyCard[i]);
@@ -602,20 +693,20 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = PlayerHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 4)
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == 4)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(WarriorBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(WarriorBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 2)
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == 2)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(ArcheryBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(ArcheryBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
-                    if (ShieldBaff > 0 && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == CardManagerList.AllCards[childTransform.GetComponent<CardInfoScr>().SelfCard.Id-1].Defense)
+                    if (ShieldBaff > 0 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == CardManagerList.AllCards[childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Id-1].Defense)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(ShieldBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(ShieldBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -658,20 +749,20 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = EnemyHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 4)
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == 4)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyWarriorBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(EnemyWarriorBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == 2)
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == 2)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(EnemyArcheryBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(EnemyArcheryBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
-                    if (EnemyShieldBaff > 0 && childTransform.GetComponent<CardInfoScr>().SelfCard.Defense == CardManagerList.AllCards[childTransform.GetComponent<CardInfoScr>().SelfCard.Id - 1].Defense)
+                    if (EnemyShieldBaff > 0 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense == CardManagerList.AllCards[childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Id - 1].Defense)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(EnemyShieldBaff);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(EnemyShieldBaff);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -701,7 +792,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
                 {
 
                     Vector3 newPositiona = ABoxes[i + 1].transform.position;
@@ -720,7 +811,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
                 {
                     Vector3 newPositiona = BBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -737,7 +828,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
                 {
                     Vector3 newPositiona = CBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -754,7 +845,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("Playing") && (i != 2 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || EnemyWallHP <= 0))
                 {
                     Vector3 newPositiona = DBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -774,8 +865,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
     }
@@ -789,7 +880,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
                 {
                     Vector3 newPositiona = ABoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -806,7 +897,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
                 {
                     Vector3 newPositiona = BBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -822,7 +913,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
                 {
                     Vector3 newPositiona = CBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -839,7 +930,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
 
-                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
+                if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying") && (i != 1 || childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range != 2 || PlayerWallHP <= 0))
                 {
                     Vector3 newPositiona = DBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
@@ -857,8 +948,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 Transform childGameObject = EnemyBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
     }
@@ -871,7 +962,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i + range < 4)
                     {
@@ -882,16 +973,16 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
                                         childTransform.layer == LayerMask.NameToLayer("Playing"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -912,7 +1003,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i + range < 4)
                     {
@@ -923,17 +1014,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
                                         childTransform.layer == LayerMask.NameToLayer("Playing"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
 
                         if (EnemyWallHP < 10)
                         {
@@ -955,7 +1046,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i + range < 4)
                     {
@@ -966,17 +1057,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
                                         childTransform.layer == LayerMask.NameToLayer("Playing"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -997,7 +1088,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i + range < 4)
                     {
@@ -1008,17 +1099,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("EnemyPlaying") &&
                                         childTransform.layer == LayerMask.NameToLayer("Playing"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
 
                     }
-                    else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
+                    else if (i == 2 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
-                        EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -1042,7 +1133,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i - range >= 0)
                     {
@@ -1053,17 +1144,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
                                         childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
 
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
-                        PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1086,7 +1177,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i - range >= 0)
                     {
@@ -1097,17 +1188,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
                                         childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
 
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
-                        PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1131,7 +1222,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i - range >= 0)
                     {
@@ -1142,16 +1233,16 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
                                         childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
-                        PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1175,7 +1266,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = 1; range <= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range; range++)
                 {
                     if (i - range >= 0)
                     {
@@ -1186,16 +1277,16 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             if (EnemychildTransform.layer == LayerMask.NameToLayer("Playing") &&
                                         childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                             {
-                                EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                EnemychildTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 break;
                             }
 
                         }
                     }
-                    else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
+                    else if (i == 1 && childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
-                        PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1222,9 +1313,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Mystan")
                     {
                         if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
@@ -1253,7 +1344,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             }
                         }
                     }
-                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
+                    Debug.Log(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     ABoxes[i].tag = "free";
                 }
@@ -1262,9 +1353,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Mystan")
                     {
                         if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
@@ -1293,7 +1384,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             }
                         }
                     }
-                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
+                    Debug.Log(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     BBoxes[i].tag = "free";
 
@@ -1303,9 +1394,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Mystan")
                     {
                         if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
@@ -1334,7 +1425,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             }
                         }
                     }
-                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
+                    Debug.Log(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
                     CBoxes[i].tag = "free";
 
@@ -1344,9 +1435,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 0)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Mystan")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Mystan")
                     {
                         if ((childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")) && i != 3)
                         {
@@ -1375,7 +1466,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             }
                         }
                     }
-                    Debug.Log(childTransform.GetComponent<CardInfoScr>().SelfCard.Name);
+                    Debug.Log(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name);
                     DestroyImmediate(childTransform);
 
                     DBoxes[i].tag = "free";
@@ -1386,13 +1477,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 1)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 1)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Yurt")
                     {
                         PlayerCardsCount--;
                     }
-                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                    else if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Barak")
                     {
                         WarriorBaff--;
                         if (PlayerHand.childCount > 0)
@@ -1401,10 +1492,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = PlayerHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
@@ -1415,16 +1506,16 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
 
                         }
                     }
-                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                    else if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Bowrange")
                     {
                         ArcheryBaff--;
                         if (PlayerHand.childCount > 0)
@@ -1433,10 +1524,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = PlayerHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
@@ -1447,15 +1538,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played")) && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
 
                         }
-                    } else if(childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Shield")
+                    } else if(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Shield")
                     {
                         ShieldBaff--;
                     }
@@ -1472,13 +1563,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = EnemyBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 1)
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Defense <= 1)
                 {
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Yurt")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Yurt")
                     {
                         EnemyCardsCount--;
                     }
-                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Barak")
+                    else if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Barak")
                     {
                         EnemyWarriorBaff--;
                         if (EnemyHand.childCount > 0)
@@ -1487,10 +1578,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = EnemyHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
@@ -1501,15 +1592,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 4)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 4)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
                     }
-                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Bowrange")
+                    else if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Bowrange")
                     {
                         EnemyArcheryBaff--;
                         if (EnemyHand.childCount > 0)
@@ -1518,10 +1609,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = EnemyHand.transform.GetChild(j);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoScr>().SelfCard.Defense > 2)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 2)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
@@ -1532,15 +1623,15 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                             {
                                 Transform a = AllBoxes[j].transform.GetChild(0);
                                 GameObject b = a.gameObject;
-                                if (b.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoScr>().SelfCard.Defense > 2)
+                                if (b.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed")) && b.GetComponent<CardInfoTutorialScr>().SelfCard.Defense > 2)
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetBaff(1);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetBaff(1);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                             }
                         }
                     }
-                    else if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Shield")
+                    else if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Shield")
                     {
                         EnemyShieldBaff--;
                     }
@@ -1566,9 +1657,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     if (PlayerWallHP < 10)
                     {
                         PlayerWall.SetActive(false);
@@ -1587,37 +1678,37 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (PlayerWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (PlayerWarriorHP2 > 0)
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (!base.IsPlayerTurn)
             {
-                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
                 {
                     wonLostMenu.LostMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         if (BBoxes[0].tag == "busy")
@@ -1629,9 +1720,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (PlayerWallHP < 10)
                 {
@@ -1650,37 +1741,37 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (PlayerWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (PlayerWarriorHP2 > 0)
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (!base.IsPlayerTurn)
             {
-                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
                 {
                     wonLostMenu.LostMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
 
@@ -1692,9 +1783,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (PlayerWallHP < 10)
                 {
@@ -1713,37 +1804,37 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (PlayerWarriorHP1 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (PlayerWarriorHP1 > 0)
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (!base.IsPlayerTurn)
             {
-                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
                 {
                     wonLostMenu.LostMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
 
@@ -1755,9 +1846,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (PlayerWallHP < 10)
                 {
@@ -1777,37 +1868,37 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (PlayerWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (PlayerWarriorHP1 > 0)
             {
                 if (childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                 {
-                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
             }
             else if (base.IsPlayerTurn)
             {
-                PlayerKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                PlayerKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (PlayerKhanHP <= 0)
                 {
                     wonLostMenu.LostMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         if (PlayerWarriorHP1 <= 0)
@@ -1833,9 +1924,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     if (EnemyWallHP < 10)
                     {
                         EnemyWall.SetActive(false);
@@ -1856,17 +1947,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (EnemyWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -1877,9 +1968,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -1888,13 +1979,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             }
             else if (base.IsPlayerTurn)
             {
-                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
                 {
                     wonLostMenu.WonMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         //BBoxes
@@ -1907,9 +1998,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -1929,17 +2020,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (EnemyWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -1951,9 +2042,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -1962,13 +2053,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             }
             else if (base.IsPlayerTurn)
             {
-                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
                 {
                     wonLostMenu.WonMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         //CBoxes
@@ -1980,9 +2071,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -2002,17 +2093,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (EnemyWarriorHP1 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -2023,9 +2114,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -2034,13 +2125,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             }
             else if (base.IsPlayerTurn)
             {
-                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
                 {
                     wonLostMenu.WonMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         //DBoxes
@@ -2053,9 +2144,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWallHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -2076,17 +2167,17 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                    EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                     if (EnemyWarriorHP2 > 0)
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(8);
                     }
                     else
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
 
                     }
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -2098,9 +2189,9 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
 
                 if (childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(4);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -2109,13 +2200,13 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             }
             else if (base.IsPlayerTurn)
             {
-                EnemyKhanHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                EnemyKhanHP -= childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack;
                 if (EnemyKhanHP <= 0)
                 {
                     wonLostMenu.WonMenu();
                 }
-                childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
-                childTransform.GetComponent<CardInfoScr>().RefreshData();
+                childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(1);
+                childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
             }
         }
         ShowHPKhan();
@@ -2131,7 +2222,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ñatapult")
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Ñatapult")
                 {
                     if (i == 0 || i == 1)
                     {
@@ -2143,8 +2234,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2154,8 +2245,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2171,8 +2262,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2182,8 +2273,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("EnemyPlaying") || b.layer == LayerMask.NameToLayer("EnemyPlayed"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2202,7 +2293,7 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = EnemyBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ñatapult")
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Ñatapult")
                 {
                     if (i == 0 || i == 1)
                     {
@@ -2214,8 +2305,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2225,8 +2316,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2242,8 +2333,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2253,8 +2344,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                                 GameObject b = a.gameObject;
                                 if (b.layer == LayerMask.NameToLayer("Playing") || b.layer == LayerMask.NameToLayer("Played"))
                                 {
-                                    b.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
-                                    b.GetComponent<CardInfoScr>().RefreshData();
+                                    b.GetComponent<CardInfoTutorialScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Attack);
+                                    b.GetComponent<CardInfoTutorialScr>().RefreshData();
                                 }
                                 break;
                             }
@@ -2312,18 +2403,18 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
     }
     public void EnemyCardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
-        GameObject prefab = Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
-        //if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Prefab == null)
+        GameObject prefab = Models[selectedObject.GetComponent<CardInfoTutorialScr>().SelfCard.Id];
+        //if (selectedObject.GetComponent<CardInfoTutorialScr>().SelfCard.Prefab == null)
         //{
         //    Debug.Log("Error");
         //    return;
         //}
         instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
-        if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
+        if (selectedObject.GetComponent<CardInfoTutorialScr>().SelfCard.Id == 2)
         {
             instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
         }
-        else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
+        else if (selectedObject.GetComponent<CardInfoTutorialScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoTutorialScr>().SelfCard.Id == 4)
         {
             instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
@@ -2423,10 +2514,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = AllBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior" && (childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -2436,10 +2527,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = PlayerHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Warrior")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Warrior")
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -2453,10 +2544,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = AllBoxes[i].transform.GetChild(0);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer" && (childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played")))
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -2466,10 +2557,10 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                 {
                     Transform childGameObject = PlayerHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
-                    if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Archer")
+                    if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Archer")
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -2484,8 +2575,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                     GameObject childTransform = childGameObject.gameObject;
                     if (childTransform.layer == LayerMask.NameToLayer("Playing") || childTransform.layer == LayerMask.NameToLayer("Played"))
                     {
-                        childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(1);
-                        childTransform.GetComponent<CardInfoScr>().RefreshData();
+                        childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(1);
+                        childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
                     }
                 }
             }
@@ -2496,8 +2587,8 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
                     Transform childGameObject = PlayerHand.transform.GetChild(i);
                     GameObject childTransform = childGameObject.gameObject;
 
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetShield(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetShield(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
 
                 }
             }
@@ -2512,14 +2603,14 @@ public class GameManagerTutorialScr : InformationManagerTutorialScr
             {
                 Transform childGameObject = AllBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "Ensign")
+                if (childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.Name == "Ensign")
                 {
                     continue;
                 }
                 else if (childTransform.layer == LayerMask.NameToLayer("Played") || childTransform.layer == LayerMask.NameToLayer("Playing"))
                 {
-                    childTransform.GetComponent<CardInfoScr>().SelfCard.SetBaff(1);
-                    childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    childTransform.GetComponent<CardInfoTutorialScr>().SelfCard.SetBaff(1);
+                    childTransform.GetComponent<CardInfoTutorialScr>().RefreshData();
 
                 }
             }

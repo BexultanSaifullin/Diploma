@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardSpawnerEnemyScr : MonoBehaviour
+public class CardSpawnerEnemyTScr : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject objectToSpawnEnemy;
     public Vector3 positionToSpawn;
-    public Drag Arrange;
+    public DragTutorial Arrange;
     void Start()
     {
         
@@ -15,7 +15,7 @@ public class CardSpawnerEnemyScr : MonoBehaviour
     public void SpawnEnemy()
     {
         GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(135, 0, -180));
-        spawnedObject.GetComponent<CardInfoScr>().RandomMethod();
+        spawnedObject.GetComponent<CardInfoTutorialScr>().RandomMethod();
         spawnedObject.transform.parent = transform;
         Arrange.ArrangeCardsToEnemy();
     }
@@ -23,7 +23,14 @@ public class CardSpawnerEnemyScr : MonoBehaviour
     public void NotRandomSpawnEnemy()
     {
         GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(135, 0, -180));
-        spawnedObject.GetComponent<CardInfoScr>().NotRandom(4);
+        spawnedObject.GetComponent<CardInfoTutorialScr>().NotRandom(4);
+        spawnedObject.transform.parent = transform;
+        Arrange.ArrangeCardsToEnemy();
+    }
+    public void SpawnWarrior()
+    {
+        GameObject spawnedObject = Instantiate(objectToSpawnEnemy, positionToSpawn, Quaternion.Euler(135, 0, -180));
+        spawnedObject.GetComponent<CardInfoTutorialScr>().NotRandom(0);
         spawnedObject.transform.parent = transform;
         Arrange.ArrangeCardsToEnemy();
     }

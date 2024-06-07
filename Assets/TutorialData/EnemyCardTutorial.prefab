@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4342508853790504115}
-  - component: {fileID: 442458564796938976}
   - component: {fileID: 7503998651406099139}
+  - component: {fileID: 7974987287317293438}
   m_Layer: 7
   m_Name: EnemyCardTutorial
   m_TagString: EnemyCard
@@ -34,7 +34,28 @@ Transform:
   - {fileID: 2913267773848325579}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 135, y: 0, z: -180}
---- !u!114 &442458564796938976
+--- !u!65 &7503998651406099139
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245197936468926157}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17, y: 0.02, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7974987287317293438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,7 +64,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1245197936468926157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f87fe87b4e51e0429fc2bf2eef55229, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a2fc42b9a715b043aeb08655930e589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NewDefense:
@@ -122,27 +143,6 @@ MonoBehaviour:
   Defense: {fileID: 9143489246848846994}
   Mana: {fileID: 6733974980129697085}
   Logo: {fileID: 2755786774225751923}
---- !u!65 &7503998651406099139
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245197936468926157}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.17, y: 0.02, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3451086519256738336
 PrefabInstance:
   m_ObjectHideFlags: 0

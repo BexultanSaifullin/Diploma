@@ -12,7 +12,7 @@ public class InformationManagerTutorialScr : MonoBehaviour
                             Turn, TurnTime = 30, increase = 1;
     public GameObject[] Models;
     public TextMeshProUGUI PlayerManaTxt;
-    public CardSpawnerScr Spawner;
+    public CardSpawnerTScr Spawner;
     public bool IsPlayerTurn
     {
         get
