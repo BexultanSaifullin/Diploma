@@ -4007,6 +4007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToSpawnEnemy: {fileID: 1245197936468926157, guid: 171ffa8970e06a84eb09c75a0883330e, type: 3}
   positionToSpawn: {x: 1.381, y: 10.48, z: -4.67}
+  Arrange: {fileID: 3299541989427838605}
 --- !u!1 &6417583192555903124
 GameObject:
   m_ObjectHideFlags: 0
