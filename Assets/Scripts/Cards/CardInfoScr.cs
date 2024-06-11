@@ -47,7 +47,7 @@ public class CardInfoScr : MonoBehaviour
     }
     public void RandomMethod()
     {
-        int randomNumber = Random.Range(0, 13);
+        int randomNumber = Random.Range(0, 11);
         if (randomNumber >= 0 && randomNumber < 6)
         {
             randomNumber = 4;
@@ -56,7 +56,7 @@ public class CardInfoScr : MonoBehaviour
         {
             randomNumber = 12;
         }
-        ShowCardInfo(CardManagerList.AllCards[13], 13);
+        ShowCardInfo(CardManagerList.AllCards[randomNumber], randomNumber);
     }
 
     public void NotRandom(int randomNumber)
