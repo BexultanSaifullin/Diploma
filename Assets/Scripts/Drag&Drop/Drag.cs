@@ -295,7 +295,7 @@ public class Drag : InformationManagerScr
         instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
         if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
         {
-            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180f, instantiatedPrefab.transform.rotation.z));
+            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y+180, instantiatedPrefab.transform.rotation.z));
         }
         else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
         {
