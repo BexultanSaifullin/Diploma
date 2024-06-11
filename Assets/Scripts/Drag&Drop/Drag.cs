@@ -49,7 +49,7 @@ public class Drag : InformationManagerScr
         //{
         //    StepFromAbove();
         //}
-        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y != 11.95f && currentCollider2.CompareTag("Card") && selectedObject.layer == LayerMask.NameToLayer("Robot"))
+        if (Input.GetButtonDown("Jump") && mainCamera.transform.position.y != 11.95f)
         {
             BackFromAbove();
         }
@@ -158,10 +158,14 @@ public class Drag : InformationManagerScr
 
     private void BackFromAbove()
     {
-        selectedObject.GetComponent<CardOnHover>().enabled = true;
-        ArrangeCards();
+        if (selectedObject != null)
+        {
+            selectedObject.GetComponent<CardOnHover>().enabled = true;
+            ArrangeCards();
 
-        currentCollider2 = null;
+            currentCollider2 = null;
+            selectedObject = null;
+        }
     }
 
 
@@ -258,9 +262,12 @@ public class Drag : InformationManagerScr
                     GameObject childTransform = parentTransform.gameObject;
                     childTransform.tag = "free";
                     DestroyImmediate(hit.collider.gameObject);
+                    selectedObject = null;
+                    currentCollider2 = null;
                 }
+                ArrangeCards();
             }
-            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Arrows")
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Arrows" && hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit")
             {
                 hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.GetDamage(selectedObject.GetComponent<CardInfoScr>().SelfCard.Attack);
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
@@ -274,10 +281,13 @@ public class Drag : InformationManagerScr
                     GameObject childTransform = parentTransform.gameObject;
                     childTransform.tag = "free";
                     DestroyImmediate(hit.collider.gameObject);
+                    selectedObject = null;
+                    currentCollider2 = null;
                 }
+                ArrangeCards();
             }
-            ArrangeCards();
-        } else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox") ) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
+            
+        } else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
         {
             PlayerWallHP += selectedObject.GetComponent<CardInfoScr>().SelfCard.Defense;
             
@@ -285,6 +295,8 @@ public class Drag : InformationManagerScr
             base.ShowManaPlayer();
             GameManager.ShowHPWall();
             DestroyImmediate(selectedObject);
+            selectedObject = null;
+            currentCollider2 = null;
             ArrangeCards();
         }
     }
@@ -300,7 +312,7 @@ public class Drag : InformationManagerScr
         else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
         {
             instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        }
+        } 
         Animator anim = instantiatedPrefab.GetComponent<Animator>();
         anim.Play("SpawnAnimationTest");
     }
