@@ -8,10 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/The Edotyan Scene.unity
     guid: ca72adc2f13f68c4ea9923952eaa12d0
-  - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: 9a6dc6ae1a455bb4fb75bf1fda11bb72
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: a0916405dc5010140aae52f05619d467
   m_configObjects: {}

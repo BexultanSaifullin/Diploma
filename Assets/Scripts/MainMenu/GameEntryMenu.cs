@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class GameEntryMenu : MonoBehaviour
 {
+    public GameObject cutsceneCamera;
+    public GameObject mainBtnObj;
     public GameObject playBtn;
     public GameObject myCollectionBtn;
     public GameObject exitBtn;
     public GameObject spawnPlayDeskBtn;
     public GameObject backMenuBtn;
+    public GameObject tutorialBtn;
     public GameObject book;
     public GameObject paper;
     public GameObject playDesk;
@@ -18,7 +22,7 @@ public class GameEntryMenu : MonoBehaviour
     private GameObject gameStart;
     private AudioManager audioManager;
     public GameObject objectToSpawn;
-    public GameObject cutsene;
+    public GameObject cutscene;
     public GameObject buttons3D;
     //public GameObject backBtn;
     public GameObject cameraChangerObj;
@@ -26,15 +30,34 @@ public class GameEntryMenu : MonoBehaviour
     public GameObject jutSpellEnemy;
     public GameObject arrowsSpellPlayer;
     public GameObject arrowsSpellEnemy;
+    private GameObject cashedCamera;
     public bool gameStarted = false;
     public GameObject[] myCollectionObjects;
     public List<CinemachineVirtualCamera> gameCameras;
+    private static int launchCount = 0;
+    private const int MaxLaunchCount = 1;
 
 
     void Start()
     {
+        if (launchCount >= MaxLaunchCount)
+        {
+            cutscene.GetComponent<PlayableDirector>().Stop();
+            // DestroyImmediate(cutscene);
+            // isCutsceneDestroyed = true;
+            gameCameras[4].Priority = 1;
+            buttons3D.SetActive(true);
+            mainBtnObj.SetActive(false);
+        }
+        else
+        {
+            cutscene.GetComponent<PlayableDirector>().Play();
+            cutsceneCamera.SetActive(true);
+            launchCount++;
+            StartCoroutine(WaitCutscene());
+        }
         audioManager = FindObjectOfType<AudioManager>();
-        StartCoroutine(WaitCutscene());
+        // StartCoroutine(WaitCutscene());
     }
 
     void Update()
@@ -79,6 +102,7 @@ public class GameEntryMenu : MonoBehaviour
                     playDesk.SetActive(true);
                     spawnPlayDeskBtn.SetActive(false);
                     backMenuBtn.SetActive(false);
+                    tutorialBtn.SetActive(false);
                     book.SetActive(false);
                     paper.SetActive(false);
                     gameStart = Instantiate(objectToSpawn);
@@ -88,7 +112,7 @@ public class GameEntryMenu : MonoBehaviour
                     isNewGameClicked = true;
                     audioManager.CleanUp();
                     audioManager.InitializeMenuMusic(FMODEvents.instance.BackgroundMusic);
-                    Destroy(cutsene);
+                    //Destroy(cutscene);
                     // foreach (var camera in introCameras)
                     // {
                     //     camera.gameObject.SetActive(false);
@@ -112,7 +136,15 @@ public class GameEntryMenu : MonoBehaviour
                 {
                     spawnPlayDeskBtn.SetActive(false);
                     backMenuBtn.SetActive(false);
+                    tutorialBtn.SetActive(false);
                     RestartGame();
+                }
+                else if (hitInfo.collider.gameObject == tutorialBtn)
+                {
+                    spawnPlayDeskBtn.SetActive(false);
+                    backMenuBtn.SetActive(false);
+                    tutorialBtn.SetActive(false);
+                    SceneTransition.SwitchToScene("Tutorial");
                 }
             }
         }
@@ -156,6 +188,7 @@ public class GameEntryMenu : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         spawnPlayDeskBtn.SetActive(true);
         backMenuBtn.SetActive(true);
+        tutorialBtn.SetActive(true);
     }
     IEnumerator Wait5Sec()
     {
@@ -165,6 +198,10 @@ public class GameEntryMenu : MonoBehaviour
     IEnumerator WaitCutscene()
     {
         yield return new WaitForSeconds(21f);
+        mainBtnObj.SetActive(false);
+        // DestroyImmediate(cutscene);
+        // isCutsceneDestroyed = true;
         buttons3D.SetActive(true);
+        cutsceneCamera.SetActive(false);
     }
 }
