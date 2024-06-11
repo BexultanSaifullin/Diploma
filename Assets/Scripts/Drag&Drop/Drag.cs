@@ -26,6 +26,7 @@ public class Drag : InformationManagerScr
     private GameEntryMenu gameEntryMenu;
     public Transform PlayerHand;
     public Transform[] predefinedObjects;
+    private GameObject copyObj;
 
 
     private void Start()
@@ -53,7 +54,7 @@ public class Drag : InformationManagerScr
         {
             BackFromAbove();
         }
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             Teleportation();
@@ -85,14 +86,14 @@ public class Drag : InformationManagerScr
             //    selectedObject.transform.parent = parentObject.transform;
             //    a.gameObject.tag = free;
             //} COD CHTOBI SDELAT POLE NA KOTOROM STOYALA KARTA SVOBODNIM PRI PODNYTII
-            
+
             dragPlane = new Plane(mainCamera.transform.forward, currentCollider2.transform.position);
             float planeDist;
             dragPlane.Raycast(camRay, out planeDist);
             offset = currentCollider2.transform.position - camRay.GetPoint(planeDist);
             Debug.Log(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name);
 
-            if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
+            if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Jut")
             {
                 Cameraman.VirtualCameras[0].Priority = 0;
                 Cameraman.VirtualCameras[3].Priority = 1;
@@ -106,18 +107,18 @@ public class Drag : InformationManagerScr
                 Cameraman.currentCameraIndex = 4;
                 StepFromAboveForBuilding();
             }
-            else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
+            else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Unit" || selectedObject.GetComponent<CardInfoScr>().SelfCard.Type == "Spell")
             {
                 Cameraman.VirtualCameras[0].Priority = 0;
                 Cameraman.VirtualCameras[2].Priority = 1;
                 Cameraman.currentCameraIndex = 2;
                 StepFromAboveForUnit();
-            } 
-            else 
+            }
+            else
             {
                 Cameraman.SwitchCamera();
             }
-            
+
         }
     }
     private void StepFromAboveForUnit()
@@ -190,7 +191,7 @@ public class Drag : InformationManagerScr
             Vector3 selPos = hit.collider.gameObject.transform.position;
             selPos.y += 0.01f;
             currentCollider2.transform.position = selPos;
-            
+
             selectedObject.layer = LayerMask.NameToLayer("Played");
             hit.collider.gameObject.tag = busy;
             selectedObject.transform.parent = hit.collider.gameObject.transform;
@@ -201,7 +202,7 @@ public class Drag : InformationManagerScr
             selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
             CardModelSpawn(selPos, selectedObject);
             instantiatedPrefab.transform.parent = selectedObject.transform;
-            
+
             selectedObject = null;
             currentCollider2 = null;
 
@@ -216,7 +217,7 @@ public class Drag : InformationManagerScr
             selectedObject.transform.parent = hit.collider.gameObject.transform;
             selectedObject.layer = LayerMask.NameToLayer("Played");
             currentCollider2.transform.position = selPos;
-            
+
             hit.collider.gameObject.tag = busy;
 
             ArrangeCards();
@@ -237,9 +238,9 @@ public class Drag : InformationManagerScr
             }
 
             selectedObject.transform.localScale = new Vector3(8f, 8f, 8f);
-           
+
             CardModelSpawn(selPos, selectedObject);
-            instantiatedPrefab.transform.parent = selectedObject.transform;
+            instantiatedPrefab.transform.SetParent(selectedObject.transform, true);
 
             selectedObject = null;
             currentCollider2 = null;
@@ -286,11 +287,12 @@ public class Drag : InformationManagerScr
                 }
                 ArrangeCards();
             }
-            
-        } else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
+            ArrangeCards();
+        }
+        else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
         {
             PlayerWallHP += selectedObject.GetComponent<CardInfoScr>().SelfCard.Defense;
-            
+
             PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
             base.ShowManaPlayer();
             GameManager.ShowHPWall();
@@ -304,17 +306,57 @@ public class Drag : InformationManagerScr
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
     {
         GameObject prefab = Models[selectedObject.GetComponent<CardInfoScr>().SelfCard.Id];
-        instantiatedPrefab = Instantiate(prefab, selPos, Quaternion.identity);
-        if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
-        {
-            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y+180, instantiatedPrefab.transform.rotation.z));
-        }
-        else if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
+        instantiatedPrefab = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity);
+        copyObj = instantiatedPrefab;
+        if (selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 3 || selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 4)
         {
             instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-        } 
-        Animator anim = instantiatedPrefab.GetComponent<Animator>();
-        anim.Play("SpawnAnimationTest");
+        }
+        else
+        {
+            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180, instantiatedPrefab.transform.rotation.z));
+        }
+        // instantiatedPrefab.GetComponent<Animator>().Play("SpawnAnimationTest");
+        instantiatedPrefab.GetComponent<Animator>().SetTrigger("StandUp");
+        instantiatedPrefab.GetComponent<Animator>().SetTrigger("Idle");
+        // instantiatedPrefab.GetComponent<Animator>().SetTrigger("Attack");
+        // StartCoroutine(PlayInitialAnimations());
+
+        // instantiatedPrefab.GetComponent<Animator>().Play("StandUp");
+
+        // instantiatedPrefab.GetComponent<Animator>().Play("Idle 0");
+    }
+
+    private IEnumerator PlayInitialAnimations()
+    {
+        Debug.Log(instantiatedPrefab.transform.GetChild(0).name);
+        instantiatedPrefab.GetComponent<Animator>().Play("SpawnAnimationTest");
+        yield return new WaitForSeconds(instantiatedPrefab.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+        ResetPositionAndRotation(instantiatedPrefab, copyObj.transform);
+
+        instantiatedPrefab.GetComponent<Animator>().Play("StandUp");
+        yield return new WaitForSeconds(instantiatedPrefab.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+
+        instantiatedPrefab.GetComponent<Animator>().Play("Idle 1");
+    }
+    private void ResetPositionAndRotation(GameObject model, Transform transform)
+    {
+        // If the GameObject has a parent
+        if (model.transform.parent != null)
+        {
+            // Unparent temporarily to reset position and rotation
+            model.transform.parent = null;
+            model.transform.localPosition = transform.localPosition;
+            model.transform.localRotation = transform.localRotation;
+            // Reassign the original parent
+            model.transform.parent = transform.parent;
+        }
+        else // If the GameObject doesn't have a parent
+        {
+            // Reset position and rotation directly
+            model.transform.localPosition = transform.localPosition;
+            model.transform.localRotation = transform.localRotation;
+        }
     }
 
     public void JutSpellSpawn(GameObject posToSpell)

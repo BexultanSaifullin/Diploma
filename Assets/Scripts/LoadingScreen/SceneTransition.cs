@@ -9,10 +9,11 @@ using UnityEngine.UI;
 public class SceneTransition : MonoBehaviour
 {
     public TextMeshProUGUI LoadingPercentage;
-    public Slider LoadingSlider;
+    public Image ProgressBar;
+    public GameObject PressAnyKey;
 
     private static SceneTransition instance;
-    private static bool shouldPlayAnimation = false;
+    private static bool shouldPlayOpeningAnimation = false;
 
     private Animator componentAnimator;
     private AsyncOperation loadingSceneOperation;
@@ -23,7 +24,6 @@ public class SceneTransition : MonoBehaviour
 
         instance.loadingSceneOperation = SceneManager.LoadSceneAsync(sceneName);
         instance.loadingSceneOperation.allowSceneActivation = false;
-        instance.LoadingSlider.value = 0;
     }
     void Start()
     {
@@ -31,28 +31,46 @@ public class SceneTransition : MonoBehaviour
 
         componentAnimator = GetComponent<Animator>();
 
-        if (shouldPlayAnimation) componentAnimator.SetTrigger("opening");
+        if (shouldPlayOpeningAnimation)
+        {
+            componentAnimator.SetTrigger("opening");
+            instance.ProgressBar.fillAmount = 1;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (loadingSceneOperation != null)
         {
-            LoadingPercentage.text = Mathf.RoundToInt(loadingSceneOperation.progress * 100) + "%";
-            LoadingSlider.value = Mathf.Lerp(LoadingSlider.value, loadingSceneOperation.progress, Time.deltaTime * 5);
+            float loading_progress = Mathf.Clamp01(loadingSceneOperation.progress / 0.9f);
+            LoadingPercentage.text = $"{(loading_progress * 100).ToString("0")}%";
+            // ProgressBar.fillAmount = loading_progress;
+            if (loading_progress >= 0.8) ProgressBar.fillAmount = 1;
+            else ProgressBar.fillAmount = Mathf.Lerp(loading_progress, loadingSceneOperation.progress, Time.deltaTime * 5);
+        }
+        if (PressAnyKey.activeSelf)
+        {
+            if (Input.anyKey)
+            {
+                loadingSceneOperation.allowSceneActivation = true;
+            }
         }
     }
 
     public void OnAnimationOver()
     {
-        shouldPlayAnimation = true;
-        loadingSceneOperation.allowSceneActivation = true;
-        //StartCoroutine(wait5Sec());
+        shouldPlayOpeningAnimation = true;
+        if (loadingSceneOperation.progress >= 0.9f && !loadingSceneOperation.allowSceneActivation)
+        {
+            PressAnyKey.SetActive(true);
+            PressAnyKey.GetComponent<Animator>().Play("PressAnyKey");
+        }
+        // loadingSceneOperation.allowSceneActivation = true;
+        // StartCoroutine(wait3Sec());
     }
-    IEnumerator wait5Sec()
+    IEnumerator wait3Sec()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         loadingSceneOperation.allowSceneActivation = true;
     }
 }

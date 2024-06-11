@@ -6697,6 +6697,8 @@ PlayableDirector:
     value: {fileID: 1671337745}
   - key: {fileID: -8854681869219525247, guid: 12b950a113791a24db513a21e7ebee91, type: 2}
     value: {fileID: 1671337747}
+  - key: {fileID: -6765219122766305469, guid: 12b950a113791a24db513a21e7ebee91, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &755644422
@@ -12292,7 +12294,7 @@ GameObject:
   - component: {fileID: 1337673093}
   - component: {fileID: 1337673092}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: LoadingScreenCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
