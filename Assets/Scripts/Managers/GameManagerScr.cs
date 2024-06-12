@@ -997,6 +997,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 

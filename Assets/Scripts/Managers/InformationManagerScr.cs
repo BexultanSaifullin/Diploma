@@ -11,6 +11,7 @@ public class InformationManagerScr : MonoBehaviour
                         PlayerMana = 1, EnemyMana = 1, PlayerCardsCount = 10, EnemyCardsCount = 10,
                             Turn, TurnTime = 30, increase = 1;
     public GameObject[] Models;
+    public GameObject[] Damage;
     public TextMeshProUGUI PlayerManaTxt;
     public CardSpawnerScr Spawner;
     public bool IsPlayerTurn
