@@ -1006,7 +1006,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1055,7 +1055,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1105,7 +1105,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1154,7 +1154,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1206,7 +1206,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1257,7 +1257,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1309,7 +1309,7 @@ public class GameManagerScr : InformationManagerScr
                                 animationattack = true;
                                 GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
                                 GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
+                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
