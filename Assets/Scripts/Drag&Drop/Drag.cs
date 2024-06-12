@@ -205,6 +205,7 @@ public class Drag : InformationManagerScr
 
             selectedObject = null;
             currentCollider2 = null;
+            
 
 
         }
@@ -445,8 +446,6 @@ public class Drag : InformationManagerScr
         animation.GetComponent<Animator>().SetTrigger("Defeated");
         yield return new WaitForSeconds(3f);
         DestroyImmediate(destroy);
-
-
         
     }
 

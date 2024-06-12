@@ -50,7 +50,7 @@ public class CardInfoScr : MonoBehaviour
     {
         int randomNumber = Random.Range(0, 11);
 
-        ShowCardInfo(CardManagerList.AllCards[4], 4);
+        ShowCardInfo(CardManagerList.AllCards[randomNumber], randomNumber);
     }
 
     public void NotRandom(int randomNumber)

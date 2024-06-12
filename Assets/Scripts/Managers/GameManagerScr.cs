@@ -608,12 +608,13 @@ public class GameManagerScr : InformationManagerScr
                 }
             }
 
-            if (AttackCards())
-            {
-                yield return new WaitForSeconds(1.5f);
-            }
-            PlayerAttackWallAndWarrior();
+            bool t = PlayerAttackWallAndWarrior();
+
+
             EnemyAttackWallAndWarrior();
+            bool v = AttackCards();
+            if (t || v)
+                yield return new WaitForSeconds(1.5f);
             PlayerAttackBuildings();
             if (DestroyAnim())
             {
@@ -672,9 +673,12 @@ public class GameManagerScr : InformationManagerScr
 
                 }
             }
-            PlayerAttackWallAndWarrior();
+            bool t = PlayerAttackWallAndWarrior();
+            
+           
             EnemyAttackWallAndWarrior();
-            if (AttackCards())
+            bool v = AttackCards();
+            if (t || v)
                 yield return new WaitForSeconds(1.5f);
             EnemyAttackBuildings();
             if (DestroyAnim())
@@ -1046,6 +1050,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1093,6 +1100,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1139,6 +1149,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1188,6 +1201,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1236,6 +1252,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1285,6 +1304,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1333,6 +1355,9 @@ public class GameManagerScr : InformationManagerScr
                                 GameObject animation = animationTransform.gameObject;
                                 animation.GetComponent<Animator>().SetTrigger("Attack");
                                 animationattack = true;
+                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1718,13 +1743,15 @@ public class GameManagerScr : InformationManagerScr
                     animation.GetComponent<Animator>().SetTrigger("Defeated");
 
                     anim = true;
+
                 }
             }
         }
         return anim;
     }
-    void PlayerAttackWallAndWarrior()
+    bool PlayerAttackWallAndWarrior()
     {
+        bool animationattack = false;
         if (ABoxes[0].tag == "busy")
         {
             Transform childGameObject = ABoxes[0].transform.GetChild(0);
@@ -1736,6 +1763,10 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    //
+                    WallAnim(1, childTransform);
+                    animationattack = true;
+                    //
                     if (PlayerWallHP < 10)
                     {
                         PlayerWall.SetActive(false);
@@ -1758,11 +1789,18 @@ public class GameManagerScr : InformationManagerScr
                     if (PlayerWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        //
+                        WallAnim(8, childTransform);
+                        animationattack = true;
+                        //
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
-
+                        //
+                        WallAnim(4, childTransform);
+                        animationattack = true;
+                        //
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
@@ -1774,6 +1812,10 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    //
+                    WallAnim(4, childTransform);
+                    animationattack = true;
+                    //
                 }
             }
             else if (!base.IsPlayerTurn)
@@ -1785,6 +1827,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         if (BBoxes[0].tag == "busy")
@@ -1799,6 +1843,8 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                 }
                 if (PlayerWallHP < 10)
                 {
@@ -1821,10 +1867,14 @@ public class GameManagerScr : InformationManagerScr
                     if (PlayerWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -1837,6 +1887,8 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
             }
             else if (!base.IsPlayerTurn)
@@ -1848,6 +1900,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
 
@@ -1861,6 +1915,8 @@ public class GameManagerScr : InformationManagerScr
                 {
                     PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
                 if (PlayerWallHP < 10)
@@ -1884,10 +1940,14 @@ public class GameManagerScr : InformationManagerScr
                     if (PlayerWarriorHP1 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -1899,6 +1959,8 @@ public class GameManagerScr : InformationManagerScr
                 {
                     PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
                 }
             }
@@ -1910,6 +1972,8 @@ public class GameManagerScr : InformationManagerScr
                     wonLostMenu.LostMenu();
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
+                WallAnim(1, childTransform);
+                animationattack = true;
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
             }
         }
@@ -1925,6 +1989,8 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                 }
                 if (PlayerWallHP < 10)
                 {
@@ -1948,10 +2014,14 @@ public class GameManagerScr : InformationManagerScr
                     if (PlayerWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -1964,6 +2034,8 @@ public class GameManagerScr : InformationManagerScr
                     PlayerWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
             }
             else if (base.IsPlayerTurn)
@@ -1975,6 +2047,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         if (PlayerWarriorHP1 <= 0)
@@ -1988,6 +2062,7 @@ public class GameManagerScr : InformationManagerScr
         ShowHPWarrior();
         ShowHPWall();
         ShowHPKhan();
+        return animationattack;
     }
     void EnemyAttackWallAndWarrior()
     {
@@ -2298,7 +2373,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = PlayerBuildingsBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "�atapult")
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Name == "catapult")
                 {
                     if (i == 0 || i == 1)
                     {
@@ -2694,5 +2769,18 @@ public class GameManagerScr : InformationManagerScr
                 }
             }
         }
+    }
+
+    public void WallAnim(int a, GameObject childTransform)
+    {
+        //
+        Transform animationTransform = childTransform.transform.GetChild(1);
+        GameObject animation = animationTransform.gameObject;
+        animation.GetComponent<Animator>().SetTrigger("Attack");
+        
+        GameObject damageUI = Damage[a-1];
+        GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+        instantiatedObj.transform.SetParent(childTransform.transform, true);
+        //
     }
 }
