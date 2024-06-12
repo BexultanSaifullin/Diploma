@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WonLostMenu : MonoBehaviour
 {
-    public GameObject wonMenu, lostMenu, lostText, lostBtn, wonText, wonBtn;
+    public GameObject wonMenu, lostMenu, lostImg, lostBtn, wonImg, wonBtn, confetti1, confetti2;
     private GameEntryMenu gameEntryMenu;
 
     public CinemachineVirtualCamera[] VirtualCameras;
@@ -15,21 +15,23 @@ public class WonLostMenu : MonoBehaviour
     }
     public void WonMenu()
     {
-        StartCoroutine(wait1sec());
+        StartCoroutine(wait2sec());
+        Instantiate(confetti1);
+        Instantiate(confetti2);
         wonMenu.SetActive(true);
-        wonText.GetComponent<Animator>().Play("TextAnimation");
-        wonBtn.GetComponent<Animator>().Play("ButtonAnimation");
+        wonImg.GetComponent<Animator>().Play("win_img");
+        wonBtn.GetComponent<Animator>().Play("win_btn");
     }
     public void LostMenu()
     {
-        StartCoroutine(wait1sec());
+        StartCoroutine(wait2sec());
         lostMenu.SetActive(true);
-        lostText.GetComponent<Animator>().Play("TextAnimation");
-        lostBtn.GetComponent<Animator>().Play("ButtonAnimation");
+        lostImg.GetComponent<Animator>().Play("win_img");
+        lostBtn.GetComponent<Animator>().Play("win_btn");
     }
-    IEnumerator wait1sec()
+    IEnumerator wait2sec()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
         Time.timeScale = 0f;
     }
     public void GoMainMenu()
