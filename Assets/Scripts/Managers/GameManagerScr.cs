@@ -731,7 +731,16 @@ public class GameManagerScr : InformationManagerScr
 
                     Vector3 newPositiona = ABoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = ABoxes[i + 1].transform;
                     ABoxes[i + 1].tag = "busy";
                     ABoxes[i].tag = "free";
@@ -749,7 +758,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = BBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = BBoxes[i + 1].transform;
                     BBoxes[i + 1].tag = "busy";
                     BBoxes[i].tag = "free";
@@ -766,7 +784,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = CBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = CBoxes[i + 1].transform;
                     CBoxes[i + 1].tag = "busy";
                     CBoxes[i].tag = "free";
@@ -783,7 +810,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = DBoxes[i + 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = DBoxes[i + 1].transform;
                     DBoxes[i + 1].tag = "busy";
                     DBoxes[i].tag = "free";
@@ -818,7 +854,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = ABoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = ABoxes[i - 1].transform;
                     ABoxes[i - 1].tag = "busy";
                     ABoxes[i].tag = "free";
@@ -835,7 +880,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = BBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = BBoxes[i - 1].transform;
                     BBoxes[i - 1].tag = "busy";
                     BBoxes[i].tag = "free";
@@ -851,7 +905,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = CBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = CBoxes[i - 1].transform;
                     CBoxes[i - 1].tag = "busy";
                     CBoxes[i].tag = "free";
@@ -868,7 +931,16 @@ public class GameManagerScr : InformationManagerScr
                 {
                     Vector3 newPositiona = DBoxes[i - 1].transform.position;
                     newPositiona.y += 0.01f;
-                    childTransform.transform.position = newPositiona;
+
+                    SmoothTransition smoothTransition = childTransform.GetComponent<SmoothTransition>();
+                    if (smoothTransition == null)
+                    {
+                        smoothTransition = childTransform.gameObject.AddComponent<SmoothTransition>();
+                    }
+
+                    smoothTransition.SetTargetPosition(newPositiona);
+
+                    // childTransform.transform.position = newPositiona;
                     childTransform.transform.parent = DBoxes[i - 1].transform;
                     DBoxes[i - 1].tag = "busy";
                     DBoxes[i].tag = "free";
@@ -1274,7 +1346,7 @@ public class GameManagerScr : InformationManagerScr
         }
         return animationattack;
     }
-    
+
     void DestroyCards()
     {
         for (int i = 0; i < 4; i++)
@@ -1620,7 +1692,7 @@ public class GameManagerScr : InformationManagerScr
     bool DestroyAnim()
     {
         bool anim = false;
-        for(int i = 0; i < 16; i++)
+        for (int i = 0; i < 16; i++)
         {
             if (AllBoxes[i].tag == "busy")
             {
@@ -1631,7 +1703,7 @@ public class GameManagerScr : InformationManagerScr
                     Transform animationTransform = childTransform.transform.GetChild(1);
                     GameObject animation = animationTransform.gameObject;
                     animation.GetComponent<Animator>().SetTrigger("Defeated");
-                    
+
                     anim = true;
                 }
             }
