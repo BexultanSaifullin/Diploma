@@ -291,18 +291,18 @@ public class Drag : InformationManagerScr
             }
             ArrangeCards();
         }
-        else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
-        {
-            PlayerWallHP += selectedObject.GetComponent<CardInfoScr>().SelfCard.Defense;
+        //else if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlayerWallBox")) && selectedObject.GetComponent<CardInfoScr>().SelfCard.Name == "Heal" && PlayerWallHP > 0)
+        //{
+        //    PlayerWallHP += selectedObject.GetComponent<CardInfoScr>().SelfCard.Defense;
 
-            PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
-            base.ShowManaPlayer();
-            GameManager.ShowHPWall();
-            DestroyImmediate(selectedObject);
-            selectedObject = null;
-            currentCollider2 = null;
-            ArrangeCards();
-        }
+        //    PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+        //    base.ShowManaPlayer();
+        //    GameManager.ShowHPWall();
+        //    DestroyImmediate(selectedObject);
+        //    selectedObject = null;
+        //    currentCollider2 = null;
+        //    ArrangeCards();
+        //}
     }
 
     public void CardModelSpawn(Vector3 selPos, GameObject selectedObject)
@@ -314,13 +314,17 @@ public class Drag : InformationManagerScr
         {
             instantiatedPrefab.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
-        else
+        else if(selectedObject.GetComponent<CardInfoScr>().SelfCard.Id == 2)
         {
             instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180, instantiatedPrefab.transform.rotation.z));
         }
-        // instantiatedPrefab.GetComponent<Animator>().Play("SpawnAnimationTest");
-        instantiatedPrefab.GetComponent<Animator>().SetTrigger("StandUp");
-        instantiatedPrefab.GetComponent<Animator>().SetTrigger("Idle");
+        else
+        {
+            instantiatedPrefab.transform.rotation = Quaternion.Euler(new Vector3(instantiatedPrefab.transform.rotation.x, instantiatedPrefab.transform.rotation.y + 180, instantiatedPrefab.transform.rotation.z));
+            instantiatedPrefab.GetComponent<Animator>().SetTrigger("StandUp");
+            instantiatedPrefab.GetComponent<Animator>().SetTrigger("Idle");
+        }
+        
         // instantiatedPrefab.GetComponent<Animator>().SetTrigger("Attack");
         // StartCoroutine(PlayInitialAnimations());
 

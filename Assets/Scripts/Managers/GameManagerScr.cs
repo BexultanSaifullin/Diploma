@@ -291,6 +291,11 @@ public class GameManagerScr : InformationManagerScr
                                         DestroyImmediate(EnemyCard[i]);
                                         if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                                         {
+                                            yield return new WaitForSeconds(1.1f);
+                                            Transform animationTransform = childTransform.transform.GetChild(1);
+                                            GameObject animation = animationTransform.gameObject;
+                                            animation.GetComponent<Animator>().SetTrigger("Defeated");
+                                            yield return new WaitForSeconds(3f);
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
                                         }
@@ -517,6 +522,11 @@ public class GameManagerScr : InformationManagerScr
                                         DestroyImmediate(EnemyCard[i]);
                                         if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
                                         {
+                                            yield return new WaitForSeconds(1.1f);
+                                            Transform animationTransform = childTransform.transform.GetChild(1);
+                                            GameObject animation = animationTransform.gameObject;
+                                            animation.GetComponent<Animator>().SetTrigger("Defeated");
+                                            yield return new WaitForSeconds(3f);
                                             shallowCopy[j].tag = "free";
                                             DestroyImmediate(childTransform);
                                         }
