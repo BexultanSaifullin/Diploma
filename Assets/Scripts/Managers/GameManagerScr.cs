@@ -48,6 +48,7 @@ public class GameManagerScr : InformationManagerScr
         increase = 1;
         PlayerWallHP = 20;
         EnemyWallHP = 20;
+        PlayerWarriorHP1 = 6; EnemyWarriorHP1 = 6;
         PlayerWarriorHP2 = 6; EnemyWarriorHP2 = 6;
         Turn = 0;
         StartCoroutine(TurnFunc());
