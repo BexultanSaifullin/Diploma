@@ -46,8 +46,9 @@ public class GameManagerScr : InformationManagerScr
         PlayerMana = 1;
         EnemyMana = 1;
         increase = 1;
-
-
+        PlayerWallHP = 20;
+        EnemyWallHP = 20;
+        PlayerWarriorHP2 = 6; EnemyWarriorHP2 = 6;
         Turn = 0;
         StartCoroutine(TurnFunc());
         wonLostMenu = FindObjectOfType<WonLostMenu>();
@@ -579,7 +580,10 @@ public class GameManagerScr : InformationManagerScr
         StopAllCoroutines();
         Turn++;
         EndTurnBtn.interactable = base.IsPlayerTurn;
-
+        StartCoroutine(MyCoroutine());
+    }
+    IEnumerator MyCoroutine()
+    {
         if (base.IsPlayerTurn)
         {
             for (int i = 0; i < 16; i++)
@@ -593,12 +597,22 @@ public class GameManagerScr : InformationManagerScr
 
                 }
             }
-            AttackCards();
+
+            if (AttackCards())
+            {
+                yield return new WaitForSeconds(1.5f);
+            }
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
             PlayerAttackBuildings();
+            if (DestroyAnim())
+            {
+                yield return new WaitForSeconds(3f);
+            }
             DestroyCards();
             EnemyMoveCards();
+
+
             if (PlayerHand.childCount < PlayerCardsCount)
             {
                 Spawner.Spawn();
@@ -650,8 +664,13 @@ public class GameManagerScr : InformationManagerScr
             }
             PlayerAttackWallAndWarrior();
             EnemyAttackWallAndWarrior();
-            AttackCards();
+            if (AttackCards())
+                yield return new WaitForSeconds(1.5f);
             EnemyAttackBuildings();
+            if (DestroyAnim())
+            {
+                yield return new WaitForSeconds(3f);
+            }
             DestroyCards();
 
             PlayerMoveCards();
@@ -684,7 +703,6 @@ public class GameManagerScr : InformationManagerScr
             }
         }
         StartCoroutine(TurnFunc());
-
     }
 
     IEnumerator EnemyTurn()
@@ -870,8 +888,9 @@ public class GameManagerScr : InformationManagerScr
         }
     }
 
-    void AttackCards()
+    bool AttackCards()
     {
+        bool animationattack = false;
         for (int i = 2; i >= 0; i--)
         {
             if (ABoxes[i].transform.childCount > 0)
@@ -891,6 +910,11 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                //
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -932,6 +956,11 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                //
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -975,6 +1004,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1017,6 +1050,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1062,6 +1099,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1106,6 +1147,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1151,6 +1196,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1195,6 +1244,10 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
+                                Transform animationTransform = childTransform.transform.GetChild(1);
+                                GameObject animation = animationTransform.gameObject;
+                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                animationattack = true;
                                 break;
                             }
 
@@ -1219,8 +1272,9 @@ public class GameManagerScr : InformationManagerScr
                 }
             }
         }
+        return animationattack;
     }
-
+    
     void DestroyCards()
     {
         for (int i = 0; i < 4; i++)
@@ -1563,7 +1617,27 @@ public class GameManagerScr : InformationManagerScr
 
     }
 
-
+    bool DestroyAnim()
+    {
+        bool anim = false;
+        for(int i = 0; i < 16; i++)
+        {
+            if (AllBoxes[i].tag == "busy")
+            {
+                Transform childGameObject = AllBoxes[i].transform.GetChild(0);
+                GameObject childTransform = childGameObject.gameObject;
+                if (childTransform.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
+                {
+                    Transform animationTransform = childTransform.transform.GetChild(1);
+                    GameObject animation = animationTransform.gameObject;
+                    animation.GetComponent<Animator>().SetTrigger("Defeated");
+                    
+                    anim = true;
+                }
+            }
+        }
+        return anim;
+    }
     void PlayerAttackWallAndWarrior()
     {
         if (ABoxes[0].tag == "busy")
