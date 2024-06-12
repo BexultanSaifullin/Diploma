@@ -50,6 +50,8 @@ public class GameManagerScr : InformationManagerScr
         EnemyWallHP = 20;
         PlayerWarriorHP1 = 6; EnemyWarriorHP1 = 6;
         PlayerWarriorHP2 = 6; EnemyWarriorHP2 = 6;
+        PlayerKhanHPT = 10;
+        EnemyKhanHP = 10;
         Turn = 0;
         StartCoroutine(TurnFunc());
         wonLostMenu = FindObjectOfType<WonLostMenu>();
