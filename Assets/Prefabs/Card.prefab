@@ -123,6 +123,16 @@ MonoBehaviour:
   Defense: {fileID: 9143489246848846994}
   Mana: {fileID: 6733974980129697085}
   Logo: {fileID: 2755786774225751923}
+  Damage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &7503998651406099139
 BoxCollider:
   m_ObjectHideFlags: 0

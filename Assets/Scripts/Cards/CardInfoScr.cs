@@ -9,6 +9,7 @@ public class CardInfoScr : MonoBehaviour
     public Material[] NewDefense, NewMana, NewAttack, NewLogo;
     public Card SelfCard;
     public GameObject Name, Attack, Defense, Mana, Logo;
+    public GameObject[] Damage;
     Drag Arrange;
 
     public void ShowCardInfo(Card card, int i)
