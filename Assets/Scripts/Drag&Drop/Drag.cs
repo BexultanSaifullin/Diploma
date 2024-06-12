@@ -275,6 +275,9 @@ public class Drag : InformationManagerScr
                 hit.collider.gameObject.GetComponent<CardInfoScr>().RefreshData();
                 ArrowsSpellSpawn(hit.collider.transform.parent.gameObject);
                 PlayerMana -= selectedObject.GetComponent<CardInfoScr>().SelfCard.Mana;
+                GameObject damageUI = Damage[0];
+                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+                instantiatedObj.transform.SetParent(hit.collider.gameObject.transform, true);
                 base.ShowManaPlayer();
                 DestroyImmediate(selectedObject);
                 if (hit.collider.gameObject.GetComponent<CardInfoScr>().SelfCard.Defense <= 0)
@@ -446,7 +449,6 @@ public class Drag : InformationManagerScr
         animation.GetComponent<Animator>().SetTrigger("Defeated");
         yield return new WaitForSeconds(3f);
         DestroyImmediate(destroy);
-        
     }
 
 }
