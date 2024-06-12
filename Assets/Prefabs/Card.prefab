@@ -124,15 +124,15 @@ MonoBehaviour:
   Mana: {fileID: 6733974980129697085}
   Logo: {fileID: 2755786774225751923}
   Damage:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4433886363568553188, guid: c01709c6e19772e4494ed19b483e834b, type: 3}
+  - {fileID: 7918900180181963085, guid: 77018be57166b7f4e9e027e96c9d5f77, type: 3}
+  - {fileID: 9078854574146998992, guid: a4e813e05fd1c6e4ea6ed4f2dae451df, type: 3}
+  - {fileID: 496366882211909619, guid: 3e332fdb90edee0408f323031ac8cd03, type: 3}
+  - {fileID: 4132621089730205950, guid: 7abd33c371d9bf244b5180f319596edb, type: 3}
+  - {fileID: 7847156671999268195, guid: 4b6e49724ee1ca8498ac647f7afb5dda, type: 3}
+  - {fileID: 1351773083325302657, guid: fe808284230371c40b32098533dd5223, type: 3}
+  - {fileID: 986621565531422889, guid: ece8bfce3f2761c4093bf12f90fa8831, type: 3}
+  - {fileID: 6997435856588041543, guid: e7fa933e9bc55fe4da963eaaa05357a6, type: 3}
 --- !u!65 &7503998651406099139
 BoxCollider:
   m_ObjectHideFlags: 0
