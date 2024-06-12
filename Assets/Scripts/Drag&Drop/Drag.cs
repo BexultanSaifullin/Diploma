@@ -281,9 +281,11 @@ public class Drag : InformationManagerScr
                     Transform parentTransform = hit.collider.gameObject.transform.parent;
                     GameObject childTransform = parentTransform.gameObject;
                     childTransform.tag = "free";
-                    DestroyImmediate(hit.collider.gameObject);
+                    StartCoroutine(DestroyAnim(hit.collider.gameObject));
+                    
                     selectedObject = null;
                     currentCollider2 = null;
+
                 }
                 ArrangeCards();
             }
@@ -428,6 +430,20 @@ public class Drag : InformationManagerScr
             card.transform.position = cardPosition;
         }
         //UnityEditor.TransformWorldPlacementJSON:{"position":{"x":0.5110000371932983,"y":9.59999942779541,"z":-5.550000190734863},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0}}
+    }
+
+    IEnumerator DestroyAnim(GameObject destroy)
+    {
+
+        yield return new WaitForSeconds(1.1f);
+        Transform animationTransform = destroy.transform.GetChild(1);
+        GameObject animation = animationTransform.gameObject;
+        animation.GetComponent<Animator>().SetTrigger("Defeated");
+        yield return new WaitForSeconds(3f);
+        DestroyImmediate(destroy);
+
+
+        
     }
 
 }
