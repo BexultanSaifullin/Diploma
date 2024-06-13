@@ -614,9 +614,9 @@ public class GameManagerScr : InformationManagerScr
             bool t = PlayerAttackWallAndWarrior();
 
 
-            EnemyAttackWallAndWarrior();
+            bool s = EnemyAttackWallAndWarrior();
             bool v = AttackCards();
-            if (t || v)
+            if (t || v || s)
                 yield return new WaitForSeconds(1.5f);
             PlayerAttackBuildings();
             if (DestroyAnim())
@@ -679,9 +679,9 @@ public class GameManagerScr : InformationManagerScr
             bool t = PlayerAttackWallAndWarrior();
             
            
-            EnemyAttackWallAndWarrior();
+            bool s = EnemyAttackWallAndWarrior();
             bool v = AttackCards();
-            if (t || v)
+            if (t || v || s)
                 yield return new WaitForSeconds(1.5f);
             EnemyAttackBuildings();
             if (DestroyAnim())
@@ -986,7 +986,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i + range < 4)
                     {
@@ -1000,13 +1000,8 @@ public class GameManagerScr : InformationManagerScr
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 //
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1015,6 +1010,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -1035,7 +1031,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i + range < 4)
                     {
@@ -1049,13 +1045,8 @@ public class GameManagerScr : InformationManagerScr
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
                                 //
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1065,7 +1056,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
-
+                        AttackanimArcherWall(childTransform);
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -1086,7 +1077,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i + range < 4)
                     {
@@ -1099,13 +1090,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1115,6 +1101,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -1135,7 +1122,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i + range < 4)
                     {
@@ -1148,13 +1135,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1164,6 +1146,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 2 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && EnemyWallHP > 0 && base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("Playing"))
                     {
                         EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (EnemyWallHP < 10)
                         {
                             EnemyWall.SetActive(false);
@@ -1187,7 +1170,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = ABoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i - range >= 0)
                     {
@@ -1200,13 +1183,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1216,6 +1194,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1238,7 +1217,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = BBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i - range >= 0)
                     {
@@ -1251,13 +1230,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1267,6 +1241,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1290,7 +1265,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = CBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i - range >= 0)
                     {
@@ -1303,13 +1278,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
                                 break;
                             }
 
@@ -1318,6 +1288,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -1341,7 +1312,7 @@ public class GameManagerScr : InformationManagerScr
             {
                 Transform childGameObject = DBoxes[i].transform.GetChild(0);
                 GameObject childTransform = childGameObject.gameObject;
-                for (int range = 1; range <= childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range++)
+                for (int range = childTransform.GetComponent<CardInfoScr>().SelfCard.Range; range >= 1; range--)
                 {
                     if (i - range >= 0)
                     {
@@ -1354,13 +1325,8 @@ public class GameManagerScr : InformationManagerScr
                             {
                                 EnemychildTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(childTransform.GetComponent<CardInfoScr>().SelfCard.Attack);
                                 EnemychildTransform.GetComponent<CardInfoScr>().RefreshData();
-                                Transform animationTransform = childTransform.transform.GetChild(1);
-                                GameObject animation = animationTransform.gameObject;
-                                animation.GetComponent<Animator>().SetTrigger("Attack");
+                                Attackanim(childTransform, EnemychildTransform);
                                 animationattack = true;
-                                GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
-                                GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
-                                instantiatedObj.transform.SetParent(childTransform.transform, true);
                                 break;
                             }
 
@@ -1369,6 +1335,7 @@ public class GameManagerScr : InformationManagerScr
                     else if (i == 1 && childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 2 && PlayerWallHP > 0 && !base.IsPlayerTurn && childTransform.layer == LayerMask.NameToLayer("EnemyPlaying"))
                     {
                         PlayerWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
+                        AttackanimArcherWall(childTransform);
                         if (PlayerWallHP < 10)
                         {
                             PlayerWall.SetActive(false);
@@ -2067,8 +2034,9 @@ public class GameManagerScr : InformationManagerScr
         ShowHPKhan();
         return animationattack;
     }
-    void EnemyAttackWallAndWarrior()
+    bool EnemyAttackWallAndWarrior()
     {
+        bool animationattack = false;
         //ABoxes
         if (ABoxes[3].tag == "busy")
         {
@@ -2081,6 +2049,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                     if (EnemyWallHP < 10)
                     {
                         EnemyWall.SetActive(false);
@@ -2105,10 +2075,14 @@ public class GameManagerScr : InformationManagerScr
                     if (EnemyWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -2125,6 +2099,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -2140,6 +2116,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         //BBoxes
@@ -2155,6 +2133,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -2178,10 +2158,14 @@ public class GameManagerScr : InformationManagerScr
                     if (EnemyWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -2199,6 +2183,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWarriorHP2 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWarriorHP2 <= 0)
                 {
@@ -2214,6 +2200,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         //CBoxes
@@ -2228,6 +2216,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -2251,10 +2241,14 @@ public class GameManagerScr : InformationManagerScr
                     if (EnemyWarriorHP1 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -2271,6 +2265,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -2286,6 +2282,8 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         //DBoxes
@@ -2301,6 +2299,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWallHP -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(1, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWallHP < 10)
                 {
@@ -2325,10 +2325,14 @@ public class GameManagerScr : InformationManagerScr
                     if (EnemyWarriorHP2 > 0)
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(8);
+                        WallAnim(8, childTransform);
+                        animationattack = true;
                     }
                     else
                     {
                         childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
+                        WallAnim(4, childTransform);
+                        animationattack = true;
 
                     }
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
@@ -2346,6 +2350,8 @@ public class GameManagerScr : InformationManagerScr
                     EnemyWarriorHP1 -= childTransform.GetComponent<CardInfoScr>().SelfCard.Attack;
                     childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(4);
                     childTransform.GetComponent<CardInfoScr>().RefreshData();
+                    WallAnim(4, childTransform);
+                    animationattack = true;
                 }
                 if (EnemyWarriorHP1 <= 0)
                 {
@@ -2361,11 +2367,14 @@ public class GameManagerScr : InformationManagerScr
                 }
                 childTransform.GetComponent<CardInfoScr>().SelfCard.GetDamage(1);
                 childTransform.GetComponent<CardInfoScr>().RefreshData();
+                WallAnim(1, childTransform);
+                animationattack = true;
             }
         }
         ShowHPKhan();
         ShowHPWarrior();
         ShowHPWall();
+        return animationattack;
     }
 
     void PlayerAttackBuildings()
@@ -2786,4 +2795,30 @@ public class GameManagerScr : InformationManagerScr
         instantiatedObj.transform.SetParent(childTransform.transform, true);
         //
     }
+
+    public void Attackanim(GameObject childTransform, GameObject EnemychildTransform)
+    {
+        Transform animationTransform = childTransform.transform.GetChild(1);
+        GameObject animation = animationTransform.gameObject;
+        if (childTransform.GetComponent<CardInfoScr>().SelfCard.Range == 1)
+        {
+            animation.GetComponent<Animator>().SetTrigger("Attack");
+        }
+        else
+        {
+            animation.GetComponent<Animator>().SetTrigger("AttackFar");
+        }
+        
+        GameObject damageUI = Damage[childTransform.GetComponent<CardInfoScr>().SelfCard.Attack - 1];
+        GameObject instantiatedObj = Instantiate(damageUI, new Vector3(0, 0, 0), Quaternion.identity);
+        instantiatedObj.transform.SetParent(EnemychildTransform.transform, true);
+    }
+    public void AttackanimArcherWall(GameObject childTransform)
+    {
+        Transform animationTransform = childTransform.transform.GetChild(1);
+        GameObject animation = animationTransform.gameObject;
+        animation.GetComponent<Animator>().SetTrigger("AttackFar");
+
+    }
+
 }
