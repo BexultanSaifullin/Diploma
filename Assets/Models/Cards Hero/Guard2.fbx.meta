@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff331abe80a5be746a5fec3a29bfba6f
+guid: 21a11e7f487e8fa47a3d7292a8fcf7d6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Guard1
-    second: {fileID: 2100000, guid: f74e37a6894e6ad43a32d326483982d9, type: 2}
+    second: {fileID: 2100000, guid: 68d27fef7acdb0d4d80decbf1d88bebd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
