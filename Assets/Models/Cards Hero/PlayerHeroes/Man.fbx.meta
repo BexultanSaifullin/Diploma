@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b8a1a437700a62419c78836c930ce30
+guid: d7140e7e103b37a45ac0db0298222b54
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Ensh1
-    second: {fileID: 2100000, guid: 6553f87ff8ec4ea40a582dd60d3ddb24, type: 2}
+      name: Pastuh
+    second: {fileID: 2100000, guid: 5d96d85ba07aa7749bf797a68f2424a3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: pasted__props1
-    second: {fileID: 2100000, guid: 46e89bb23639411429407bd6b128036a, type: 2}
+      name: PastuhSub
+    second: {fileID: 2100000, guid: a28161f677399e04696783ef025b2987, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface2
+    second: {fileID: 2100000, guid: b6ab8fadd1fca4e40bd42cb58cc9b270, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -46,7 +51,7 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: 0
+      firstFrame: -1
       lastFrame: 198
       wrapMode: 0
       orientationOffsetY: 0

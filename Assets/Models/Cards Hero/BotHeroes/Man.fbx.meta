@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7ad2214be296c4e4ba2b129ca2a48168
+guid: 729b41010567cc94096767fd9ae315db
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Warrior1
+      name: Pastuh
     second: {fileID: 2100000, guid: 8c6f6113bdd630c49af228333b373b4e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PastuhSub
+    second: {fileID: 2100000, guid: c4044e89f6d24ec42bbf69d8ef2a2f86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: standardSurface2
+    second: {fileID: 2100000, guid: b6ab8fadd1fca4e40bd42cb58cc9b270, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4820aa9ce7f4abd4d94aab29a3978ea4
+guid: 9b8a1a437700a62419c78836c930ce30
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Batyr1
-    second: {fileID: 2100000, guid: 68d27fef7acdb0d4d80decbf1d88bebd, type: 2}
+      name: Ensh1
+    second: {fileID: 2100000, guid: 6553f87ff8ec4ea40a582dd60d3ddb24, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: BatyrSub1
-    second: {fileID: 2100000, guid: 06185d7ab1eadaf44bb9a34d8467ca2e, type: 2}
+      name: EnshSub1
+    second: {fileID: 2100000, guid: 7b02cb57b19bb0548bc6de4d69ab41c2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__props1
+    second: {fileID: 2100000, guid: 46e89bb23639411429407bd6b128036a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -46,7 +51,7 @@ ModelImporter:
       name: Take 001
       takeName: Take 001
       internalID: 1827226128182048838
-      firstFrame: -1
+      firstFrame: 0
       lastFrame: 198
       wrapMode: 0
       orientationOffsetY: 0
