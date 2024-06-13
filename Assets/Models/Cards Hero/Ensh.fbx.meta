@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Ensh1
     second: {fileID: 2100000, guid: 6553f87ff8ec4ea40a582dd60d3ddb24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__props1
+    second: {fileID: 2100000, guid: f762282bf241faa40bb67a03f2affeb6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
