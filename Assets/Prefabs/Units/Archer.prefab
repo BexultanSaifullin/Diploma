@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7abe2c6340704c64c84e6593b80b5a39, type: 3}
       propertyPath: m_Name
-      value: Archer 1
+      value: Archer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -87,7 +87,7 @@ Animator:
   m_GameObject: {fileID: 7046361707781874712}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c8d3c97bbd8539844a763b80db663842, type: 2}
+  m_Controller: {fileID: 9100000, guid: f8afa1e161049e6439cc7ae517dcf402, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
