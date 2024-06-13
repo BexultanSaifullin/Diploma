@@ -15,6 +15,7 @@ TagManager:
   - NextBtn
   - PrevBtn
   - blocked
+  - LvlBtn
   layers:
   - Default
   - TransparentFX
